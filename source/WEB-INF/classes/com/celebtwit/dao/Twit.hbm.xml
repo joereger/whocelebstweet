@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 17, 2006 3:45:28 PM by Hibernate Tools 3.1.0.beta4 -->
+<hibernate-mapping>
+    <class name="com.celebtwit.dao.Twit" table="twit">
+        <cache usage="transactional"/>
+        <id name="twitid" type="int">
+            <column name="twitid" />
+            <generator class="native" />
+        </id>
+        <property name="twitterusername" type="string">
+            <column name="twitterusername" not-null="true" />
+        </property>
+        <property name="realname" type="string">
+            <column name="realname" not-null="true" />
+        </property>
+        <property name="isceleb" type="boolean">
+            <column name="isceleb" not-null="true" />
+        </property>
+        <property name="totalmentions" type="int">
+            <column name="totalmentions" not-null="true" />
+        </property>
+        <property name="totalcelebswhomentioned" type="int">
+            <column name="totalcelebswhomentioned" not-null="true" />
+        </property>
+        <property name="since_id" type="string">
+            <column name="since_id" not-null="true" />
+        </property>
+        <property name="lastprocessed" type="timestamp">
+            <column name="lastprocessed" not-null="true" />
+        </property>
+        <property name="profile_image_url" type="string">
+            <column name="profile_image_url" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
