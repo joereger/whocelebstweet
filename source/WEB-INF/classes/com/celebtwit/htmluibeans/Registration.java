@@ -134,12 +134,7 @@ public class Registration implements Serializable {
         user.setIsenabled(true);
         user.setFacebookappremoveddate(new Date());
         user.setIsfacebookappremoved(false);
-        user.setNextexercisetime(new Date());
-        user.setUpcomingexercises("1");
-        user.setExerciseeveryxminutes(20);
-        user.setExercisechooserid(0);
-        user.setExerciselistid(1);
-        user.setCurrentexercisenum(1);
+
         try{
             user.save();
             userid = user.getUserid();

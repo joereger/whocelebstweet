@@ -30,6 +30,8 @@
 
 
 
+
+
     <filter>
         <filter-name>HibernateSessionCloser</filter-name>
         <filter-class>com.celebtwit.dao.hibernate.HibernateSessionCloser</filter-class>
@@ -46,6 +48,15 @@
     <filter-mapping>
         <filter-name>FilterMain</filter-name>
         <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+       <filter-name>UrlRewriteFilter</filter-name>
+       <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+    </filter>
+    <filter-mapping>
+       <filter-name>UrlRewriteFilter</filter-name>
+       <url-pattern>/*</url-pattern>
     </filter-mapping>
 
 

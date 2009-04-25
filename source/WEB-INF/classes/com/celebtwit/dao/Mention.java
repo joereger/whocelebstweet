@@ -15,7 +15,10 @@ public class Mention extends BasePersistentClass implements java.io.Serializable
      private int mentionid;
      private int twitidceleb;
      private int twitidmentioned;
+     private boolean ismentionedaceleb;
      private int twitpostid;
+     private Date created_at;
+
 
 
 
@@ -84,5 +87,21 @@ public class Mention extends BasePersistentClass implements java.io.Serializable
 
     public void setTwitpostid(int twitpostid) {
         this.twitpostid=twitpostid;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at=created_at;
+    }
+
+    public boolean getIsmentionedaceleb() {
+        return ismentionedaceleb;
+    }
+
+    public void setIsmentionedaceleb(boolean ismentionedaceleb) {
+        this.ismentionedaceleb=ismentionedaceleb;
     }
 }

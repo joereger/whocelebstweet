@@ -367,7 +367,7 @@ public class Time {
         //Get time on the physical server (probably in Atlanta)
         Calendar now = Calendar.getInstance();
         //Convert from server (not GMT... server in Atlanta) time to gmt timezone.
-        now = Time.convertFromOneTimeZoneToAnother(now, now.getTimeZone().getID(), "GMT");
+        //now = Time.convertFromOneTimeZoneToAnother(now, now.getTimeZone().getID(), "GMT");
 
 		
 		//Calculate datediff at various units
@@ -384,17 +384,17 @@ public class Time {
 		String result="";
 		
 		//Used for debugging
-		//String tmp="";
-		//tmp = tmp + "<br>yearsago:" + yearsago;
-		//tmp = tmp + "<br>monthsago:" + monthsago;
-		//tmp = tmp + "<br>daysago:" + daysago;
-		//tmp = tmp + "<br>hoursago:" + hoursago;
-		//tmp = tmp + "<br>minutesago:" + minutesago;
-		//tmp = tmp + "<br>secondsago:" + secondsago;
-		//tmp = tmp + "<br>millisago:" + millisago;
-		//tmp = tmp + "<br>";
-		
-		//Reminder:Need to deal with "Yesterday" case
+//		String tmp="";
+//		tmp = tmp + "yearsago:" + yearsago;
+//		tmp = tmp + " monthsago:" + monthsago;
+//		tmp = tmp + " daysago:" + daysago;
+//		tmp = tmp + " hoursago:" + hoursago;
+//		tmp = tmp + " minutesago:" + minutesago;
+//		tmp = tmp + " secondsago:" + secondsago;
+//		tmp = tmp + " millisago:" + millisago;
+        //logger.error("tmp="+tmp);
+
+        //Reminder:Need to deal with "Yesterday" case
 		
 		//Determine the best way to say it
 		if (Num.absoluteValue(secondsago) < 60) {

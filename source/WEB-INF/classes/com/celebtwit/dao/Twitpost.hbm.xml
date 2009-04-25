@@ -21,7 +21,5 @@
         <property name="created_at" type="timestamp">
             <column name="created_at" not-null="true" />
         </property>
-
-
     </class>
 </hibernate-mapping>

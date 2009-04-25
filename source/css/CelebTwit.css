@@ -2,17 +2,29 @@ body {
     padding:0px;
     margin:0px;
     background:#FFFFFF;
-    background-image: url("/images/bg_purple_star.jpg");
+    background-image: url("/images/bg_green_star.jpg");
+    min-width:750px;
+    background-image:url('/images/bg.jpg');
+    background-attachment:fixed;
+    background-position: top center;
+    background-color:#FFFFFF;
+    background-repeat:no-repeat;
     font-family: Verdana, Arial, Helvetica, sans-serif;
     font-size: 12px;
     font-weight: normal;
     color: #000000;
-    background-color: #ffffff;
 }
+
+
 
 a, a:link, a:visited, a:active {
     color: #596697;
     background-color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 .tinyfont {
@@ -77,10 +89,7 @@ td, th {
     vertical-align: top;
 }
 
-a:hover {
-    color: #0000ff;
-    background-color: inherit;
-}
+
 
 hr {
     height: 1px;
@@ -300,4 +309,10 @@ padding: 5px;
 clear: left;
 }
 /* End dhtml tabpanel */
+
+
+
+
+
+
 

@@ -18,6 +18,13 @@
         <property name="twitpostid" type="int">
             <column name="twitpostid" not-null="true" />
         </property>
+        <property name="created_at" type="timestamp">
+            <column name="created_at" not-null="true" />
+        </property>
+        <property name="ismentionedaceleb" type="boolean">
+            <column name="ismentionedaceleb" not-null="true" />
+        </property>
+
 
     </class>
 </hibernate-mapping>

@@ -69,18 +69,18 @@ public class FilterMain implements Filter {
                 }
 
 
-                //Production redirect to www.pingfit.com for https
+                //Production redirect to www.whocelebstwitter.com for https
                 //@todo make this configurable... i.e. no hard-coded urls
                 UrlSplitter urlSplitter = new UrlSplitter(httpServletRequest);
-                if (urlSplitter.getRawIncomingServername().equals("celebtwit.com")){
-                    if (urlSplitter.getMethod().equals("GET")){
-                        httpServletResponse.sendRedirect(urlSplitter.getScheme()+"://"+"www.celebtwit.com"+urlSplitter.getServletPath()+urlSplitter.getParametersAsQueryStringQuestionMarkIfRequired());
-                        return;
-                    } else {
-                        httpServletResponse.sendRedirect(urlSplitter.getScheme()+"://"+"www.celebtwit.com/");
-                        return;
-                    }
-                }
+//                if (urlSplitter.getRawIncomingServername().equals("whocelebstwitter.com")){
+//                    if (urlSplitter.getMethod().equals("GET")){
+//                        httpServletResponse.sendRedirect(urlSplitter.getScheme()+"://"+"www.whocelebstwitter.com"+urlSplitter.getServletPath()+urlSplitter.getParametersAsQueryStringQuestionMarkIfRequired());
+//                        return;
+//                    } else {
+//                        httpServletResponse.sendRedirect(urlSplitter.getScheme()+"://"+"www.whocelebstwitter.com/");
+//                        return;
+//                    }
+//                }
 
                 //Redirect login page to https
                 if (SystemProperty.getProp(SystemProperty.PROP_ISSSLON).equals("1") && urlSplitter.getScheme().equals("http") && urlSplitter.getServletPath().equals("login.jsp")){

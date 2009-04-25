@@ -10,16 +10,16 @@ public class RoundCorners {
     public static String start(int widthInPixels){
         StringBuffer out = new StringBuffer();
         out.append("<div style=\"width:"+widthInPixels+";");
-        out.append("<div class=\"dialog\">\n" +
-                " <div class=\"content\">\n" +
-                "  <div class=\"t\"></div>");
+        out.append("<div class=\"roundedcornr_box_507644\">\n" +
+                "   <div class=\"roundedcornr_top_507644\"><div></div></div>\n" +
+                "      <div class=\"roundedcornr_content_507644\">\n");
         return out.toString();
     }
 
     public static String end(){
         StringBuffer out = new StringBuffer();
-        out.append(" </div>\n" +
-                " <div class=\"b\"><div></div></div>\n" +
+        out.append("   </div>\n" +
+                "   <div class=\"roundedcornr_bottom_507644\"><div></div></div>\n" +
                 "</div>");
         out.append("</div>");
         return out.toString();

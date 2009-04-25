@@ -35,12 +35,7 @@ public class User extends BasePersistentClass implements java.io.Serializable, A
      private int facebookuserid;
      private boolean isfacebookappremoved;
      private Date facebookappremoveddate;
-     private int exerciseeveryxminutes;
-     private Date nextexercisetime;
-     private String upcomingexercises;
-     private int exercisechooserid;
-     private int exerciselistid;
-     private int currentexercisenum;
+
 
 
      //Association
@@ -236,55 +231,4 @@ public class User extends BasePersistentClass implements java.io.Serializable, A
     }
 
 
-
-    public int getExerciseeveryxminutes() {
-        return exerciseeveryxminutes;
-    }
-
-    public void setExerciseeveryxminutes(int exerciseeveryxminutes) {
-        this.exerciseeveryxminutes = exerciseeveryxminutes;
-    }
-
-    public Date getNextexercisetime() {
-        return nextexercisetime;
-    }
-
-    public void setNextexercisetime(Date nextexercisetime) {
-        this.nextexercisetime = nextexercisetime;
-    }
-
-    public String getUpcomingexercises() {
-        return upcomingexercises;
-    }
-
-    public void setUpcomingexercises(String upcomingexercises) {
-        this.upcomingexercises = upcomingexercises;
-    }
-
-    public int getExercisechooserid() {
-        return exercisechooserid;
-    }
-
-    public void setExercisechooserid(int exercisechooserid) {
-        this.exercisechooserid = exercisechooserid;
-    }
-
-    public int getExerciselistid() {
-        return exerciselistid;
-    }
-
-    public void setExerciselistid(int exerciselistid) {
-        this.exerciselistid = exerciselistid;
-    }
-
-    public int getCurrentexercisenum() {
-        return currentexercisenum;
-    }
-
-    public void setCurrentexercisenum(int currentexercisenum) {
-        this.currentexercisenum = currentexercisenum;
-    }
-
-
-    
 }

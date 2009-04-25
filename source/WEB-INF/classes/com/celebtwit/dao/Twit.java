@@ -16,8 +16,6 @@ public class Twit extends BasePersistentClass implements java.io.Serializable, A
      private String twitterusername;
      private String realname;
      private boolean isceleb;
-     private int totalmentions;
-     private int totalcelebswhomentioned;
      private String since_id;
      private Date lastprocessed;
      private String profile_image_url;
@@ -90,22 +88,6 @@ public class Twit extends BasePersistentClass implements java.io.Serializable, A
 
     public void setIsceleb(boolean isceleb) {
         this.isceleb=isceleb;
-    }
-
-    public int getTotalmentions() {
-        return totalmentions;
-    }
-
-    public void setTotalmentions(int totalmentions) {
-        this.totalmentions=totalmentions;
-    }
-
-    public int getTotalcelebswhomentioned() {
-        return totalcelebswhomentioned;
-    }
-
-    public void setTotalcelebswhomentioned(int totalcelebswhomentioned) {
-        this.totalcelebswhomentioned=totalcelebswhomentioned;
     }
 
     public String getSince_id() {

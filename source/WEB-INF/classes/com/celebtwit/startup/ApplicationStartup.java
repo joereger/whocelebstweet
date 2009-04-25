@@ -5,6 +5,9 @@ import com.celebtwit.systemprops.InstanceProperties;
 import com.celebtwit.systemprops.SystemProperty;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.dao.hibernate.HibernateSessionQuartzCloser;
+import com.celebtwit.dao.hibernate.NumFromUniqueResult;
+import com.celebtwit.dao.User;
+import com.celebtwit.dao.Userrole;
 import com.celebtwit.xmpp.SendXMPPMessage;
 import com.celebtwit.scheduledjobs.SystemStats;
 import com.celebtwit.pageperformance.PagePerformanceUtil;
@@ -23,6 +26,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Date;
 
 /**
  * User: Joe Reger Jr
@@ -73,6 +77,8 @@ public class ApplicationStartup implements ServletContextListener {
         //Refresh SystemStats
         SystemStats ss = new SystemStats();
         try{ss.execute(null);}catch(Exception ex){logger.error("",ex);}
+        //Usercheck
+        userCheck();
         //Initialize Quartz
         initQuartz(cse.getServletContext());
         //Add Quartz listener
@@ -273,6 +279,51 @@ public class ApplicationStartup implements ServletContextListener {
                 "MMMMMn    '\"\"???\"\"   :MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM \n" +
                 "MMMMMMMMhnx.......nHMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM \n\n\n");
         return out.toString();
+    }
+
+    private void userCheck(){
+        //@todo remove once in production and working... or make the default user more like "Admin:adminpass"
+        Logger logger = Logger.getLogger(this.getClass().getName());
+        int users = NumFromUniqueResult.getInt("select count(*) from User");
+        if (users==0){
+            try{
+                //Create user
+                User user = new User();
+                user.setChargemethod(0);
+                user.setChargemethodcreditcardid(0);
+                user.setCreatedate(new Date());
+                user.setEmail("joe@joereger.com");
+                user.setEmailactivationkey("aaassdd");
+                user.setEmailactivationlastsent(new Date());
+                user.setFacebookappremoveddate(new Date());
+                user.setFacebookuserid(0);
+                user.setFirstname("Joe");
+                user.setIsactivatedbyemail(true);
+                user.setIsenabled(true);
+                user.setIsfacebookappremoved(false);
+                user.setLastname("Reger");
+                user.setNickname("Joe Reger");
+                user.setPassword("physics");
+                user.save();
+                //Permissions
+                Userrole userrole = new Userrole();
+                userrole.setUserid(user.getUserid());
+                userrole.setRoleid(Userrole.USER);
+                userrole.save();
+                Userrole userrole2 = new Userrole();
+                userrole2.setUserid(user.getUserid());
+                userrole2.setRoleid(Userrole.SYSADMIN);
+                userrole2.save();
+                Userrole userrole3 = new Userrole();
+                userrole3.setUserid(user.getUserid());
+                userrole3.setRoleid(Userrole.CUSTOMERSUPPORT);
+                userrole3.save();
+                //Refresh user
+                user.refresh();
+            } catch (Exception ex){
+                logger.error("", ex);
+            }
+        }
     }
 
 

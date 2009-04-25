@@ -1,52 +1,90 @@
 <%@ page import="com.celebtwit.htmlui.Pagez" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;CHARSET=iso-8859-1"/>
-    <title>CelebTwit</title>
+    <%
+        String finalTitle = "whoCelebsTweet.com - See Who Celebs Tweet on Twitter! Have they tweeted you?";
+        if (pagetitle!=null && !pagetitle.equals("")){
+            finalTitle = pagetitle;
+        }
+    %>
+    <title><%=finalTitle%></title>
     <link rel="stylesheet" type="text/css" href="/css/basic.css"/>
     <link rel="stylesheet" type="text/css" href="/css/CelebTwit.css"/>
-    <meta name="description" content="CelebTwit"/>
-    <meta name="keywords" content="filestorage"/>
-    <!--<script type="text/javascript" src="/js/mootools/mootools-release-1.11.js"></script>-->
-    <!--<link rel="stylesheet" href="/css/evenmoreroundedcorners/dialog.css" media="screen" />-->
-    <!--<link rel="stylesheet" href="/css/evenmoreroundedcorners/example-variants.css" media="screen" /> --><!-- optional: black drip style -->
-
-    <script type="text/javascript" src="/js/shadedborder/shadedborder.js"></script>
+    <meta name="description" content="<%=finalTitle%> Celebrities on Twitter!  See who the celebs are twittering!"/>
+    <meta name="keywords" content="celebrities celebrity twitter twit tweet celeb lance armstrong oprah"/>
 
 
-
-
-    <script language="javascript" type="text/javascript">
-      var celebsRtCol       = RUZEE.ShadedBorder.create({ corner:15, border:8, borderOpacity:0.1 });
-    </script>
-    <style type="text/css">
-        /* <![CDATA[ */
-        #celebsRtCol { margin:20px auto; padding:14px 20px; background:#FFF; color:#222; }
-        #celebsRtCol .sb-border { background:#FFF; }
-        /* ]]> */
-    </style>
-
-
-    <%--<script type="text/javascript" src="/js/niftycube/niftycube.js"></script>--%>
-    <%--<script type="text/javascript">--%>
-        <%--NiftyLoad=function() {--%>
-            <%--Nifty("div.rounded", "big");--%>
-        <%--}--%>
-    <%--</script>--%>
-    <!--[if IE]>
-    <style type="text/css">
-    p.iepara{ /*Conditional CSS- For IE (inc IE7), create 1em spacing between menu and paragraph that follows*/
-    padding-top: 1em;
+    <script type="text/JavaScript" src="/js/curvycorners/curvycorners.js"></script>
+    <style>
+    .roundedBox{
+        margin: 0 auto;
+        border: 0px solid #ffffff;
+        color: #000000;
+        padding: 20px;
+        text-align: left;
+        background-color: #d7d7d7;
+        border: 8px solid #ffffff;
+        background-image: url(/js/curvycorners/bg_grey_fade.gif);
+        background-repeat: repeat-x;
+        /* Do rounding (native in Firefox and Safari, CC in IE) */
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        CCborderRadius: 20px;
+    }
+    .roundedBoxYellow{
+        margin: 0 auto;
+        border: 0px solid #ffffff;
+        color: #000000;
+        padding: 20px;
+        text-align: left;
+        background-color: #ffffff;
+        border: 8px solid #ffffff;
+        background: #ffffff url(/js/curvycorners/cell_bg_yellow.gif) repeat-x left top;
+        background-image: url(/js/curvycorners/cell_bg_yellow.gif);
+        background-repeat: repeat-x;
+        /* Do rounding (native in Firefox and Safari, CC in IE) */
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        CCborderRadius: 20px;
+    }
+    .notRoundedBoxYellow{
+        margin: 0 auto;
+        border: 0px solid #ffffff;
+        color: #000000;
+        padding: 20px;
+        text-align: left;
+        background-color: #ffffff;
+        border: 8px solid #ffffff;
+        background: #ffffff url(/js/curvycorners/cell_bg_yellow.gif) repeat-x left top;
+        background-image: url(/js/curvycorners/cell_bg_yellow.gif);
+        background-repeat: repeat-x;
+    }
+    .roundedBoxThinBorder{
+        margin: 0 auto;
+        border: 0px solid #ffffff;
+        color: #000000;
+        padding: 20px;
+        text-align: left;
+        background-color: #ffffff;
+        border: 2px solid #ffffff;
+        background-image: url(/js/curvycorners/cell_bg_yellow.gif);
+        background-repeat: repeat-x;
+        /* Do rounding (native in Firefox and Safari, CC in IE) */
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        CCborderRadius: 20px;
     }
     </style>
-    <![endif]-->
 
-    
+
+
+
 
 </head>
-<body background="/images/bg_purple_star.jpg" LEFTMARGIN="0" TOPMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0"><center>
+<body LEFTMARGIN="0" TOPMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0"><center>
 <%--<table width="786" cellspacing="0" border="0" cellpadding="0">--%>
 <%--<tr>--%>
     <%--<td rowspan="2"><font class="largefont"><a href="/">CelebTwit</a></font><br/><br/><br/><br/></td>--%>
@@ -89,17 +127,18 @@
             <%--<%}%>--%>
         <%--<%}%>--%>
 
-        <%--<%if (navtab.equals("sysadmin")){%>--%>
-            <%--<%if (Pagez.getUserSession().getIsloggedin() && Pagez.getUserSession().getIsSysadmin()){%>--%>
-                <%--<a href="/sysadmin/errorlist.jsp"><font class="subnavfont" style=" color: #000000;">Log</font></a>--%>
-                <%--<a href="/sysadmin/userlist.jsp"><font class="subnavfont" style=" color: #000000;">Users</font></a>--%>
-                <%--<a href="/sysadmin/manuallyrunscheduledtask.jsp"><font class="subnavfont" style=" color: #000000;">Scheds</font></a>--%>
-                <%--<a href="/sysadmin/systemprops.jsp"><font class="subnavfont" style=" color: #000000;">SysProps</font></a>--%>
-                <%--<a href="/sysadmin/instanceprops.jsp"><font class="subnavfont" style=" color: #000000;">InsProps</font></a>--%>
-                <%--<a href="/sysadmin/hibernatecache.jsp"><font class="subnavfont" style=" color: #000000;">Cache</font></a>--%>
-                <%--<a href="/sysadmin/pageperformance.jsp"><font class="subnavfont" style=" color: #000000;">Perf</font></a>--%>
-            <%--<%}%>--%>
-        <%--<%}%>--%>
+        <%if (navtab.equals("sysadmin")){%>
+            <%if (Pagez.getUserSession().getIsloggedin() && Pagez.getUserSession().getIsSysadmin()){%>
+                <a href="/sysadmin/errorlist.jsp"><font class="subnavfont" style=" color: #000000;">Log</font></a>
+                <a href="/sysadmin/userlist.jsp"><font class="subnavfont" style=" color: #000000;">Users</font></a>
+                <a href="/sysadmin/manuallyrunscheduledtask.jsp"><font class="subnavfont" style=" color: #000000;">Scheds</font></a>
+                <a href="/sysadmin/systemprops.jsp"><font class="subnavfont" style=" color: #000000;">SysProps</font></a>
+                <a href="/sysadmin/instanceprops.jsp"><font class="subnavfont" style=" color: #000000;">InsProps</font></a>
+                <a href="/sysadmin/hibernatecache.jsp"><font class="subnavfont" style=" color: #000000;">Cache</font></a>
+                <a href="/sysadmin/pageperformance.jsp"><font class="subnavfont" style=" color: #000000;">Perf</font></a>
+                <a href="/sysadmin/celebs.jsp"><font class="subnavfont" style=" color: #000000;">Celebs</font></a>
+            <%}%>
+        <%}%>
 	<%--</td>--%>
 <%--</tr>--%>
 <%--</table><table width="786" cellspacing="0" border="0" cellpadding="0">--%>
@@ -139,12 +178,17 @@
     <%--</tr>--%>
 <%--</table>--%>
 
-<table width="786" cellspacing="0" border="0" cellpadding="5">
+<table width="850" cellspacing="0" border="0" cellpadding="5">
 <tr>
     <td>
     <div style="text-align: left;">
-        
+    <a href="/">
+    <img src="/images/logo.gif" alt="whoCelebsTweet.com" width="478" height="132" border="0">
+    </a>   
+
+    <br/><br/><br/>
+
 <!-- Start Body -->
-<table cellpadding="0" cellspacing="0" border="0">
+<table cellpadding="0" cellspacing="5" border="0">
     <tr>
-        <td valign="top">
+        <td valign="top" width="660">

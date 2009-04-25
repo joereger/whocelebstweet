@@ -18,12 +18,6 @@
         <property name="isceleb" type="boolean">
             <column name="isceleb" not-null="true" />
         </property>
-        <property name="totalmentions" type="int">
-            <column name="totalmentions" not-null="true" />
-        </property>
-        <property name="totalcelebswhomentioned" type="int">
-            <column name="totalcelebswhomentioned" not-null="true" />
-        </property>
         <property name="since_id" type="string">
             <column name="since_id" not-null="true" />
         </property>

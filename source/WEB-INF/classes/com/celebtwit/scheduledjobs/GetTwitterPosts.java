@@ -19,6 +19,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import com.celebtwit.dao.*;
 import com.celebtwit.dao.hibernate.HibernateUtil;
+import com.celebtwit.dao.hibernate.NumFromUniqueResult;
 import com.celebtwit.util.GeneralException;
 import com.celebtwit.util.Time;
 import com.celebtwit.util.Num;
@@ -82,7 +83,8 @@ public class GetTwitterPosts implements Job {
             long since_id_curr = 1;
             long since_id_orig = 1;
             if (Num.islong(twit.getSince_id())){ since_id_orig = Long.parseLong(twit.getSince_id());}
-            String profile_image_url = "";
+            String profile_image_url = twit.getProfile_image_url();
+            boolean foundAPost = false;
             //Iterate pages
             for(int page=1; page<20; page++){
                 logger.debug("page="+page);
@@ -91,6 +93,8 @@ public class GetTwitterPosts implements Job {
                 if (statuses==null || statuses.size()<=0){
                     logger.debug("statuses==null || statuses.size()<=0 so breaking out of page 1->100 loop page="+page);
                     break; //Save api calls
+                } else {
+                    foundAPost = true;
                 }
                 for (Iterator<TwitterStatus> statusIterator=statuses.iterator(); statusIterator.hasNext();) {
                     TwitterStatus status=statusIterator.next();
@@ -105,18 +109,21 @@ public class GetTwitterPosts implements Job {
 
                 }
             }
-            //Save twit update
-            if (Num.islong(twit.getSince_id())){
-                if (since_id_curr<Long.parseLong(twit.getSince_id())){
-                    //Just make sure I don't set to an older since_id than what's stored currently
-                    since_id_curr = Long.parseLong(twit.getSince_id());
+            //Only if a post was found
+            if (foundAPost){
+                //Save twit update
+                if (Num.islong(twit.getSince_id())){
+                    if (since_id_curr<Long.parseLong(twit.getSince_id())){
+                        //Just make sure I don't set to an older since_id than what's stored currently
+                        since_id_curr = Long.parseLong(twit.getSince_id());
+                    }
                 }
+                //Update this twit
+                twit.setProfile_image_url(profile_image_url);
+                twit.setSince_id(String.valueOf(since_id_curr));
+                twit.setLastprocessed(new Date());
+                twit.save();
             }
-            //Update this twit
-            twit.setProfile_image_url(profile_image_url);
-            twit.setSince_id(String.valueOf(since_id_curr));
-            twit.setLastprocessed(new Date());
-            twit.save();
             //Report on RateLimitStatus
             //RateLimitStatus rls = twitter.rateLimitStatus();
             //logger.debug("Twitter RateLimitStatus: hourlylimit="+rls.getHourlyLimit()+" remaininghits="+rls.getRemainingHits()+" resettimeinseconds="+rls.getResetTimeInSeconds()+" datetime="+Time.dateformatcompactwithtime(Time.getCalFromDate(rls.getDateTime())));
@@ -198,9 +205,10 @@ public class GetTwitterPosts implements Job {
         // "www.verisign.com", to authenticate against
         // an arbitrary realm or host change the appropriate argument to null.
         client.getState().setCredentials(
-            new AuthScope(null, 80, null),
+            new AuthScope(null, -1, null),
             new UsernamePasswordCredentials(twitterusername, twitterpassword)
         );
+        client.getParams().setAuthenticationPreemptive(true);
 
         // create a GET method that reads a file over HTTPS, we're assuming
         // that this file requires basic authentication using the realm above.
@@ -270,28 +278,7 @@ public class GetTwitterPosts implements Job {
 
 
 
-    public static void main(String[] args) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
-        SimpleTimeZone utc = new SimpleTimeZone(0, "UTC");
-        Calendar c = new GregorianCalendar(); // this picks up the system timezone
-        try {
-            Date d = sdf.parse(args[0]); // this assumes the system timezone
-            c.setTimeInMillis(d.getTime());
-            if (args.length > 1 && "utc".equals(args[1])) {
-            // normalise the value
-            c.setTimeInMillis(c.getTimeInMillis() +
-                                            c.get(Calendar.ZONE_OFFSET) +
-                                            c.get(Calendar.DST_OFFSET));
-            }
 
-            SimpleDateFormat outformat = new SimpleDateFormat("dd MMM yyyy HH:mm Z");
-            outformat.setTimeZone(utc);
-            System.out.println(outformat.format(new Date(c.getTimeInMillis())));
-        }
-        catch (ParseException e) {
-            System.out.println("Try a date formatted dd MMM yyyy");
-        }
-   }
 
 
 
@@ -334,14 +321,17 @@ public class GetTwitterPosts implements Job {
         logger.debug("---");
         logger.debug("processStatus("+twit.getTwitterusername()+", "+status.getText()+")");
         try{
-            Twitpost twitpost = new Twitpost();
-            twitpost.setTwitid(twit.getTwitid());
-            twitpost.setCreated_at(status.getCreated_at());
-            twitpost.setTwitterguid(String.valueOf(status.getId()));
-            twitpost.setPost(status.getText());
-            twitpost.save();
-            //Process it
-            processTwitpost(twitpost);
+            int numberWithSameTwitterGuid =NumFromUniqueResult.getInt("select count(*) from Twitpost where twitterguid='"+status.getId()+"'");
+            if (numberWithSameTwitterGuid==0){
+                Twitpost twitpost = new Twitpost();
+                twitpost.setTwitid(twit.getTwitid());
+                twitpost.setCreated_at(status.getCreated_at());
+                twitpost.setTwitterguid(String.valueOf(status.getId()));
+                twitpost.setPost(status.getText());
+                twitpost.save();
+                //Process it
+                processTwitpost(twitpost);
+            }
         } catch (Exception ex) {
             logger.error("", ex);
         }
@@ -408,8 +398,6 @@ public class GetTwitterPosts implements Job {
                     newTwit.setLastprocessed(new Date());
                     newTwit.setRealname("");
                     newTwit.setSince_id("1");
-                    newTwit.setTotalcelebswhomentioned(0);
-                    newTwit.setTotalmentions(0);
                     newTwit.setTwitterusername(mentionedUsername);
                     newTwit.setProfile_image_url("");
                     newTwit.save();
@@ -419,11 +407,11 @@ public class GetTwitterPosts implements Job {
                 Mention mention = new Mention();
                 mention.setTwitidceleb(twitpost.getTwitid());
                 mention.setTwitidmentioned(twitToUpdate.getTwitid());
+                mention.setIsmentionedaceleb(twitToUpdate.getIsceleb());
                 mention.setTwitpostid(twitpost.getTwitpostid());
+                mention.setCreated_at(twitpost.getCreated_at());
                 mention.save();
                 //Increment mentions counters
-                twitToUpdate.setTotalmentions(twitToUpdate.getTotalmentions() + 1);
-                twitToUpdate.setTotalcelebswhomentioned(countUniqueCelebsWhoMentionedTwit(twitToUpdate));
                 twitToUpdate.setLastprocessed(new Date());
                 twitToUpdate.save();
             }
@@ -436,16 +424,27 @@ public class GetTwitterPosts implements Job {
         Logger logger = Logger.getLogger(GetTwitterPosts.class);
         ArrayList<String> out = new ArrayList<String>();
         try{
-            Pattern p = Pattern.compile("@(\\w)+");
+            //Pattern p = Pattern.compile("(\\w)+");
+            Pattern p = Pattern.compile("(^|\\W)@(\\w)+");
             Matcher matcher = p.matcher(post);
             while(matcher.find()){
                 //logger.debug("parseOutTwitterUsernames() matcher.group()="+matcher.group());
                 String s = matcher.group();
-                if (s.length()>2){
-                    s = s.substring(1, s.length());
-                    logger.debug("parseOutTwitterUsernames() -- @"+s);
-                    out.add(s);
+                logger.debug("parseOutTwitterUsernames() -- matcher.group()="+s);
+                logger.debug("parseOutTwitterUsernames() -- s.indexOf(\"@\")="+s.indexOf("@"));
+                if(s.indexOf("@")>-1){
+                    if (s.length()>s.indexOf("@")+1){
+                        s = s.substring(s.indexOf("@")+1, s.length());
+                        logger.debug("parseOutTwitterUsernames() -- s="+s);
+                        out.add(s);
+                    }
                 }
+
+//                if (s.length()>2){
+//                    s = s.substring(1, s.length());
+//                    logger.debug("parseOutTwitterUsernames() -- @"+s);
+//                    out.add(s);
+//                }
             }
         } catch (Exception ex) {
             logger.error("", ex);
@@ -453,21 +452,7 @@ public class GetTwitterPosts implements Job {
         return out;
     }
 
-    public static int countUniqueCelebsWhoMentionedTwit(Twit twit){
-        Logger logger = Logger.getLogger(GetTwitterPosts.class);
-        logger.debug("countUniqueCelebsWhoMentionedTwit("+twit.getTwitterusername()+")");
-        List<Integer> twitidcelebs = HibernateUtil.getSession().createCriteria(Mention.class)
-                                           .add(Restrictions.eq("twitidmentioned", twit.getTwitid()))
-                                           .setProjection(Projections.distinct(Projections.property("twitidceleb")))
-                                           .setCacheable(true)
-                                           .list();
-        logger.debug(" twitidcelebs.size()="+twitidcelebs.size());
-        for (Iterator<Integer> it=twitidcelebs.iterator(); it.hasNext();) {
-            Integer twitidceleb=it.next();
-            logger.debug("   found a mention, twitidceleb="+twitidceleb);
-        }
-        return twitidcelebs.size();
-    }
+
 
 
 
