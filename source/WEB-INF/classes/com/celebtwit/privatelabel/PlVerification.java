@@ -17,10 +17,7 @@ import java.util.List;
 public class PlVerification {
 
     public static boolean isValid(Pl pl){
-        if (!isSubdomainUnique(pl)){
-            return false;
-        }
-        if (!isCustomdomain1Unique(pl)){
+        if (!isCustomdomainUnique(pl)){
             return false;
         }
         if (pl.getName()==null || pl.getName().equals("")){
@@ -29,20 +26,7 @@ public class PlVerification {
         return true;
     }
 
-    private static boolean isSubdomainUnique(Pl pl){
-        List<Pl> pls = HibernateUtil.getSession().createCriteria(Pl.class)
-                                           .add(Restrictions.ne("plid", pl.getPlid()))
-                                           .add(Restrictions.ne("customdomain1", ""))
-                                           .setCacheable(true)
-                                           .list();
-        if (pls!=null && pls.size()>0){
-            Pagez.getUserSession().setMessage("Pl not unique or customdomain1 is null.");
-            return false;
-        }
-        return true;
-    }
-
-    private static boolean isCustomdomain1Unique(Pl pl){
+    private static boolean isCustomdomainUnique(Pl pl){
         if (!isSpecificCustomdomainUnique(pl, pl.getCustomdomain1())){
             Pagez.getUserSession().setMessage("Customdomain1 not unique.");
             return false;

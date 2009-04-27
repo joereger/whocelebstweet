@@ -31,7 +31,7 @@ if (twit!=null){
 }
 %>
 <%
-pagetitle = pagetitleName + "'s Twitter Tweets on whoCelebsTweet.com! "+pagetitleName+" Celebrity Twitter!";
+pagetitle = pagetitleName + "'s Twitter Tweets on "+Pagez.getUserSession().getPl().getName()+"! "+pagetitleName+" Celebrity Twitter!";
 %>
 
 <%@ include file="/template/header.jsp" %>
@@ -43,10 +43,11 @@ StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
 <div class="roundedBox" style="width:630px;">
     <%if (twit!=null && twit.getIsceleb()){%>
         <img src="<%=twitimageurl%>" width="48" height="48" border="0" align="left">
-        <font class="largefont"> <%=twit.getRealname()%></font>
+        <font class="largefont"> <%=twit.getRealname()%> </font>
     <%} else {%>
-        <font class="largefont"> @<%=twitterusername%></font>
+        <font class="largefont"> @<%=twitterusername%> </font>
     <%}%>
+    <a href="http://www.twitter.com/<%=twitterusername%>/"><img src="/images/twitter-16x16.png" width=16 height=16 border=0></a>
     <br/>
     <script language="javascript">
     function toggleA() {
@@ -73,7 +74,7 @@ StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
                     <%=JsCelebMentions.get(twit, twitterusername)%>
                     <a href="javascript:toggleA();"><font class="tinyfont">embed in your blog/website</font></a>
                     <div id="toggleTextA" style="display: none">
-                        <input type="text" name="embedB" value="<%=Str.cleanForHtml("<script src=\"http://"+SystemProperty.getProp(SystemProperty.PROP_BASEURL)+"/twitter/"+twitterusername+"/js/celebtweets/\"></script>")%>" size="25">
+                        <input type="text" name="embedB" value="<%=Str.cleanForHtml("<script src=\"http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/js/celebtweets/\"></script>")%>" size="25">
                         <br/><font class="smallfont">Copy and paste this code into your blog or website to display the box.</font>
                     </div>
                 </td>
@@ -81,7 +82,7 @@ StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
                     <%=JsDifferentCelebs.get(twit, twitterusername)%>
                     <a href="javascript:toggleB();"><font class="tinyfont">embed in your blog/website</font></a>
                     <div id="toggleTextB" style="display: none">
-                        <input type="text" name="embedB" value="<%=Str.cleanForHtml("<script src=\"http://"+SystemProperty.getProp(SystemProperty.PROP_BASEURL)+"/twitter/"+twitterusername+"/js/differentcelebs/\"></script>")%>" size="25">
+                        <input type="text" name="embedB" value="<%=Str.cleanForHtml("<script src=\"http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/js/differentcelebs/\"></script>")%>" size="25">
                         <br/><font class="smallfont">Copy and paste this code into your blog or website to display the box.</font>
                     </div>
                 </td>
@@ -122,14 +123,14 @@ StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
                     <tr>
                         <td valign="top" width="50%">
                             <%if (twit!=null && twit.getIsceleb()){%>
-                                <font class="mediumfont">Non-celebs Tweeted by @<%=twit.getRealname()%></font>
+                                <font class="mediumfont">non-<%=Pagez.getUserSession().getPl().getCelebiscalled()%>s tweeted by @<%=twit.getRealname()%></font>
                             <%} else {%>
-                                <font class="mediumfont">Non-celebs Tweeted by @<%=twitterusername%></font>
+                                <font class="mediumfont">non-<%=Pagez.getUserSession().getPl().getCelebiscalled()%>s tweeted by @<%=twitterusername%></font>
                             <%}%>
                             <br/><br/>
                             <%
                             if (true){
-                                ArrayList<TwitMention> twitMentions = GetTwitsByMentioned.get(sted.getStartDate(), sted.getEndDate(), twit.getTwitid(), false, 15);
+                                ArrayList<TwitMention> twitMentions = GetTwitsByMentioned.get(sted.getStartDate(), sted.getEndDate(), twit.getTwitid(), false, 15, Pagez.getUserSession().getPl().getPlid());
                                 for (Iterator<TwitMention> iterator=twitMentions.iterator(); iterator.hasNext();) {
                                     TwitMention twitMention = iterator.next();
                                     %><font class="normalfont" style="font-weight:bold;"><a href="/twitter/<%=twitMention.getTwit().getTwitterusername()%>/">@<%=twitMention.getTwit().getTwitterusername()%></a></font><font class="tinyfont"> <%=twitMention.getMentions()%> tweets</font><br/><%
@@ -139,15 +140,15 @@ StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
                         </td>
                         <td valign="top">
                             <%if (twit!=null && twit.getIsceleb()){%>
-                                <font class="mediumfont">Celebs Tweeted by @<%=twit.getRealname()%></font>
+                                <font class="mediumfont"><%=Pagez.getUserSession().getPl().getCelebiscalled()%>s tweeted by @<%=twit.getRealname()%></font>
                             <%} else {%>
-                                <font class="mediumfont">Celebs Tweeted by @<%=twitterusername%></font>
+                                <font class="mediumfont"><%=Pagez.getUserSession().getPl().getCelebiscalled()%>s tweeted by @<%=twitterusername%></font>
                             <%}%>
-                            <br/><font class="tinyfont">click to see celeb-to-celeb chatter</font>
+                            <br/><font class="tinyfont">click to see <%=Pagez.getUserSession().getPl().getCelebiscalled()%>-to-<%=Pagez.getUserSession().getPl().getCelebiscalled()%> chatter</font>
                             <br/><br/>
                             <%
                             if (true){
-                                ArrayList<TwitMention> twitMentions = GetTwitsByMentioned.get(sted.getStartDate(), sted.getEndDate(), twit.getTwitid(), true, 15);
+                                ArrayList<TwitMention> twitMentions = GetTwitsByMentioned.get(sted.getStartDate(), sted.getEndDate(), twit.getTwitid(), true, 15, Pagez.getUserSession().getPl().getPlid());
                                 for (Iterator<TwitMention> iterator=twitMentions.iterator(); iterator.hasNext();) {
                                     TwitMention twitMention = iterator.next();
                                     %><font class="normalfont" style="font-weight:bold;"><a href="/chatter/<%=twit.getTwitterusername()%>/<%=twitMention.getTwit().getTwitterusername()%>/">@<%=twitMention.getTwit().getRealname()%></a></font><font class="tinyfont"> <%=twitMention.getMentions()%> tweets</font><br/><%
@@ -173,15 +174,15 @@ StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
                     </td>
                     <td valign="top">
                         <%if (twit!=null && twit.getIsceleb()){%>
-                            <font class="mediumfont">Celebs Who've Tweeted @<%=twit.getRealname()%></font>
+                            <font class="mediumfont"><%=Pagez.getUserSession().getPl().getCelebiscalled()%>s who've tweeted @<%=twit.getRealname()%></font>
                         <%} else {%>
-                            <font class="mediumfont">Celebs Who've Tweeted @<%=twitterusername%></font>
+                            <font class="mediumfont"><%=Pagez.getUserSession().getPl().getCelebiscalled()%>s who've tweeted @<%=twitterusername%></font>
                         <%}%>
-                        <br/><font class="tinyfont">click to see celeb-to-celeb chatter</font>
+                        <br/><font class="tinyfont">click to see <%=Pagez.getUserSession().getPl().getCelebiscalled()%>-to-<%=Pagez.getUserSession().getPl().getCelebiscalled()%> chatter</font>
                         <br/><br/>
                         <%
                         if (true){
-                            ArrayList<TwitCelebWhoMentioned> twitUniques = GetCelebsWhoMentioned.get(sted.getStartDate(), sted.getEndDate(), twit.getTwitid(), 15);
+                            ArrayList<TwitCelebWhoMentioned> twitUniques = GetCelebsWhoMentioned.get(sted.getStartDate(), sted.getEndDate(), twit.getTwitid(), 15, Pagez.getUserSession().getPl().getPlid());
                             for (Iterator<TwitCelebWhoMentioned> iterator=twitUniques.iterator(); iterator.hasNext();) {
                                 TwitCelebWhoMentioned twitCelebWhoMentioned = iterator.next();
                                 %><font class="normalfont" style="font-weight:bold;"><a href="/chatter/<%=twit.getTwitterusername()%>/<%=twitCelebWhoMentioned.getTwit().getTwitterusername()%>/">@<%=twitCelebWhoMentioned.getTwit().getRealname()%></a></font><font class="tinyfont"> <%=twitCelebWhoMentioned.getMentions()%> tweets</font><br/><%

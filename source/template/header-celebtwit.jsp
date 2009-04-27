@@ -28,6 +28,19 @@
 
 </head>
 <body LEFTMARGIN="0" TOPMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0"><center>
+
+<%
+if (Pagez.getUserSession().getMessage()!=null && !Pagez.getUserSession().getMessage().equals("")){
+    %>
+    <br/>
+    <center><div class="rounded" style="background: #F2FFBF; text-align: left; padding: 20px;"><font class="formfieldnamefont"><%=Pagez.getUserSession().getMessage()%></font></div></center>
+    <br/><br/>
+    <%
+    //Clear the message since it's been displayed
+    Pagez.getUserSession().setMessage("");
+    %>
+<%}%>
+
 <%--<table width="786" cellspacing="0" border="0" cellpadding="0">--%>
 <%--<tr>--%>
     <%--<td rowspan="2"><font class="largefont"><a href="/">CelebTwit</a></font><br/><br/><br/><br/></td>--%>
@@ -54,14 +67,18 @@
             <%--<%if (1==2 && !Pagez.getUserSession().getIsloggedin()){%><a href="/login.jsp"><font class="subnavfont" style="color: #000000;">Log In</font></a><%}%>--%>
         <%--<%}%>--%>
 
-        <%--<%if (navtab.equals("youraccount")){%>--%>
-            <%--<%if (Pagez.getUserSession().getIsloggedin()){%>--%>
-                <%--<img src="/images/clear.gif" alt="" width="10" height="1"/>--%>
-                <%--<a href="/account/accountsettings.jsp"><font class="subnavfont" style="color: #000000;">Account Settings</font></a>--%>
-                <%--<img src="/images/clear.gif" alt="" width="10" height="1"/>--%>
-                <%--<a href="/account/changepassword.jsp"><font class="subnavfont" style="color: #000000;">Change Password</font></a>--%>
-            <%--<%}%>--%>
-        <%--<%}%>--%>
+        <%if (navtab.equals("account")){%>
+            <%if (Pagez.getUserSession().getIsloggedin()){%>
+                <img src="/images/clear.gif" alt="" width="10" height="1"/>
+                <a href="/account/accountsettings.jsp"><font class="subnavfont" style="color: #000000;">Account Settings</font></a>
+                <img src="/images/clear.gif" alt="" width="10" height="1"/>
+                <a href="/account/changepassword.jsp"><font class="subnavfont" style="color: #000000;">Change Password</font></a>
+                <%if (Pagez.getUserSession().getIsloggedin() && Pagez.getUserSession().getIsSysadmin()){%>
+                    <img src="/images/clear.gif" alt="" width="10" height="1"/>
+                    <a href="/sysadmin/index.jsp"><font class="subnavfont" style="color: #000000;">Sysadmin</font></a>
+                <%}%>
+            <%}%>
+        <%}%>
 
         <%--<%if (navtab.equals("celebtwit")){%>--%>
             <%--<%if (Pagez.getUserSession().getIsloggedin()){%>--%>

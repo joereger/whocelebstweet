@@ -4,7 +4,7 @@
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "Account Settings";
-String navtab = "youraccount";
+String navtab = "account";
 String acl = "account";
 %>
 <%@ include file="/template/auth.jsp" %>

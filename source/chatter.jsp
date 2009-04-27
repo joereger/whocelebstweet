@@ -53,7 +53,7 @@ if (twit2!=null){
 }
 %>
 <%
-pagetitle = pagetitleName1 + " and "+pagetitleName2+"'s Twitter Chatter Back-and-Forth on whoCelebsTweet.com!";
+pagetitle = pagetitleName1 + " and "+pagetitleName2+"'s Twitter Chatter Back-and-Forth on "+Pagez.getUserSession().getPl().getName()+"!";
 %>
 <%@ include file="/template/header.jsp" %>
 
@@ -105,7 +105,7 @@ pagetitle = pagetitleName1 + " and "+pagetitleName2+"'s Twitter Chatter Back-and
                             %><%=TwitpostAsHtml.get(twitpost, 400)%><%
                         }
                     } else {
-                        %><font class="normalfont">No chatter between them!</font><%
+                        %><br/><font class="normalfont">No chatter between them!</font><%
                     }
                 %>
             </div>

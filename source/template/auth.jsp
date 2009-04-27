@@ -1,3 +1,4 @@
+<%@ page import="com.celebtwit.htmlui.Authorization" %>
 <%
     boolean isauthorised=Authorization.check(acl);
     if (!isauthorised){

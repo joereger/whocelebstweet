@@ -27,12 +27,30 @@
                     List<Twit> celebs = HibernateUtil.getSession().createCriteria(Twit.class)
                                                    .add(Restrictions.eq("isceleb", true))
                                                    .addOrder(Order.asc("realname"))
+                                                   .createCriteria("twitpls")
+                                                   .add(Restrictions.eq("plid", Pagez.getUserSession().getPl().getPlid()))
                                                    .setMaxResults(1000)
                                                    .setCacheable(true)
                                                    .list();
                     for (Iterator<Twit> iterator=celebs.iterator(); iterator.hasNext();) {
                         Twit twitFooter=iterator.next();
                         %><a href="/twitter/<%=twitFooter.getTwitterusername()%>/"><font class="normalfont" style="font-weight:bold; color:#000000;">@<%=twitFooter.getRealname()%></font></a><br/><%
+                    }
+                }
+                %>
+                <br/><br/>
+                <font class="mediumfont">you may also enjoy</font><br/><br/>
+                <%
+                if (true){
+                    List<Pl> plsFooter = HibernateUtil.getSession().createCriteria(Pl.class)
+                                                   .add(Restrictions.ne("plid", Pagez.getUserSession().getPl().getPlid()))
+                                                   .addOrder(Order.asc("name"))
+                                                   .setMaxResults(1000)
+                                                   .setCacheable(true)
+                                                   .list();
+                    for (Iterator<Pl> iterator=plsFooter.iterator(); iterator.hasNext();) {
+                        Pl plFt=iterator.next();
+                        %><a href="http://<%=plFt.getCustomdomain1()%>/"><font class="normalfont" style="font-weight:bold; color:#000000;"><%=plFt.getName()%></font></a><br/><%
                     }
                 }
                 %>

@@ -18,6 +18,7 @@ public class Twitpost extends BasePersistentClass implements java.io.Serializabl
      private String post;
      private Date created_at;
 
+     private Twit twit;
 
 
 
@@ -96,5 +97,11 @@ public class Twitpost extends BasePersistentClass implements java.io.Serializabl
         this.created_at=created_at;
     }
 
+    public Twit getTwit() {
+        return twit;
+    }
 
+    public void setTwit(Twit twit) {
+        this.twit=twit;
+    }
 }

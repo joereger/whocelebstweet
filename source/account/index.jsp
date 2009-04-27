@@ -12,7 +12,7 @@
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "";
-String navtab = "celebtwit";
+String navtab = "account";
 String acl = "account";
 %>
 <%

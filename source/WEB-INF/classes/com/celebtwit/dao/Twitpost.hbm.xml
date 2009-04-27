@@ -9,6 +9,9 @@
             <column name="twitpostid" />
             <generator class="native" />
         </id>
+
+        <many-to-one name="twit" column="twitid" not-null="false" insert="false" update="false"/>
+
         <property name="twitid" type="int">
             <column name="twitid" not-null="true" />
         </property>

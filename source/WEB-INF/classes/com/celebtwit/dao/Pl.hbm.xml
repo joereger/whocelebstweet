@@ -12,12 +12,6 @@
         <property name="name" type="string">
             <column name="name" not-null="true" />
         </property>
-        <property name="cssfilename" type="string">
-            <column name="cssfilename" not-null="true" />
-        </property>
-        <property name="logoimage" type="string">
-            <column name="logoimage" not-null="true" />
-        </property>
         <property name="celebiscalled" type="string">
             <column name="celebiscalled" not-null="true" />
         </property>
