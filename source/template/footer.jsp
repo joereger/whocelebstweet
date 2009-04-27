@@ -2,19 +2,19 @@
 <%@ page import="com.celebtwit.systemprops.InstanceProperties" %>
 
 <% if (Pagez.getUserSession()!=null && Pagez.getUserSession().getPl()!=null) { %>
-    <% if (Pagez.getUserSession().getPl().getCustomdomain1().equalsIgnoreCase("www.whocelebstweet.com")) { %>
+    <% if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whocelebstweet.com")) { %>
         <%@ include file="footer-celebtwit.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getCustomdomain1().equalsIgnoreCase("www.whoathletestweet.com")) { %>
+    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whoathletestweet.com")) { %>
         <%@ include file="footer-athletes.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getCustomdomain1().equalsIgnoreCase("www.whopoliticianstweet.com")) { %>
+    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whopoliticianstweet.com")) { %>
         <%@ include file="footer-politicians.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getCustomdomain1().equalsIgnoreCase("www.whotechpunditsstweet.com")) { %>
+    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whotechpunditstweet.com")) { %>
         <%@ include file="footer-techpundits.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getCustomdomain1().equalsIgnoreCase("www.whotriathletestweet.com")) { %>
+    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whotriathletestweet.com")) { %>
         <%@ include file="footer-triathletes.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getCustomdomain1().equalsIgnoreCase("www.whocycliststweet.com")) { %>
+    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whocycliststweet.com")) { %>
         <%@ include file="footer-cyclists.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getCustomdomain1().equalsIgnoreCase("www.whoceostweet.com")) { %>
+    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whoceostweet.com")) { %>
         <%@ include file="footer-ceos.jsp" %>
     <% } else { %>
         <%@ include file="footer-celebtwit.jsp" %>
