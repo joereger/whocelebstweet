@@ -294,18 +294,38 @@ public class GetTwitterPosts implements Job {
                 for (Iterator<Twitpl> twitplIt=twitCeleb.getTwitpls().iterator(); twitplIt.hasNext();) {
                     Twitpl twitpl=twitplIt.next();
                     //Save a mention record for each pl that this celeb is part of
-                    Mention mention = new Mention();
-                    mention.setTwitidceleb(twitpost.getTwitid());
-                    mention.setTwitidmentioned(twitToUpdate.getTwitid());
-                    mention.setIsmentionedaceleb(twitToUpdate.getIsceleb());
-                    mention.setTwitpostid(twitpost.getTwitpostid());
-                    mention.setCreated_at(twitpost.getCreated_at());
-                    mention.setPlid(twitpl.getPlid()); // <-- Setting plid of mention to the one of the plids of the celeb
-                    mention.save();
+                    saveMention(twitToUpdate, twitpost, twitpl);
                 }
                 //Increment mentions counters
                 twitToUpdate.setLastprocessed(new Date());
                 twitToUpdate.save();
+            }
+        } catch (Exception ex) {
+            logger.error("", ex);
+        }
+    }
+
+    public static void saveMention(Twit twitToUpdate, Twitpost twitpost, Twitpl twitpl){
+        Logger logger = Logger.getLogger(GetTwitterPosts.class);
+        try{
+            //See if any exact mentions exist (other thread processing... something like that)
+            List<Mention> mentions = HibernateUtil.getSession().createCriteria(Mention.class)
+                    .add(Restrictions.eq("twitpostid", twitpost.getTwitpostid()))
+                    .add(Restrictions.eq("twitidceleb", twitpost.getTwitid()))
+                    .add(Restrictions.eq("twitidmentioned", twitToUpdate.getTwitid()))
+                    .add(Restrictions.eq("plid", twitpl.getPlid()))
+                    .setCacheable(true)
+                    .list();
+            //Only insert if there are no exactly similar mentions
+            if (mentions==null || mentions.size()==0){
+                Mention mention = new Mention();
+                mention.setTwitpostid(twitpost.getTwitpostid());
+                mention.setTwitidceleb(twitpost.getTwitid());
+                mention.setTwitidmentioned(twitToUpdate.getTwitid());
+                mention.setIsmentionedaceleb(twitToUpdate.getIsceleb());
+                mention.setCreated_at(twitpost.getCreated_at());
+                mention.setPlid(twitpl.getPlid()); // <-- Setting plid of mention to the one of the plids of the celeb
+                mention.save();
             }
         } catch (Exception ex) {
             logger.error("", ex);
