@@ -1,5 +1,3 @@
-<%@ page import="com.celebtwit.htmlui.Authorization" %>
-<%@ page import="com.celebtwit.htmlui.Pagez" %>
 <%
     boolean isauthorised=Authorization.check(acl);
     if (!isauthorised){

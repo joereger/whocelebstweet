@@ -16,13 +16,13 @@
                         <font class="normalfont" style="font-weight:bold;">enter your twitter username</font>
                         <br/><input type="text" name="twitterusername" value="">
                         <input type="submit" value="go">
-                        <br/><font class="tinyfont" style="font-weight:bold;">example "joereger34"</font>
+                        <br/><font class="tinyfont" style="font-weight:bold;">example "joereger45"</font>
                     </form>
                 <!--</center>-->
             </div>
 
             <div class="roundedBoxXXX" style="width:220px; padding: 28px;">
-                <font class="mediumfont">the celebs</font><br/><br/>
+                <font class="mediumfont">the <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font><br/><br/>
                 <%
                 if (true){
                     List<Twit> celebs = HibernateUtil.getSession().createCriteria(Twit.class)

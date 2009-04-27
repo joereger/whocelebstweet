@@ -22,7 +22,7 @@ StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
 
 
 
-<div class="roundedBoxYellow" style="width:630px;">
+<div class="roundedBox" style="width:630px;">
     <div style="float:right">
         <%String qs = "";%>
         <font class="tinyfont">

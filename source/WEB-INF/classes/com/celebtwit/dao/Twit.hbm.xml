@@ -9,6 +9,13 @@
             <column name="twitid" />
             <generator class="native" />
         </id>
+
+        <set name="twitpls" inverse="true" cascade="all-delete-orphan">
+            <cache usage="transactional"/>
+            <key column="twitid"></key>
+            <one-to-many class="com.celebtwit.dao.Twitpl" not-found="ignore"></one-to-many>
+        </set>
+
         <property name="twitterusername" type="string">
             <column name="twitterusername" not-null="true" />
         </property>

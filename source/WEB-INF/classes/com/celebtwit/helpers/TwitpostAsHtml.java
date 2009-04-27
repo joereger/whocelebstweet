@@ -16,7 +16,7 @@ public class TwitpostAsHtml {
         Logger logger = Logger.getLogger(TwitpostAsHtml.class);
         StringBuffer out = new StringBuffer();
         Twit twit = Twit.get(twitpost.getTwitid());
-        out.append("<div class=\"notRoundedBoxYellow\" style=\"width:"+widthinpixels+"px; padding:3px;\">");
+        out.append("<div class=\"notRoundedBox\" style=\"width:"+widthinpixels+"px; padding:3px;\">");
         out.append("<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">");
         out.append("    <tr>");
         out.append("        <td rowspan=\"3\" width=\"55\">");

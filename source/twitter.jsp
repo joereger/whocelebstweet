@@ -40,7 +40,7 @@ pagetitle = pagetitleName + "'s Twitter Tweets on whoCelebsTweet.com! "+pagetitl
 StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
 %>
 
-<div class="roundedBoxYellow" style="width:630px;">
+<div class="roundedBox" style="width:630px;">
     <%if (twit!=null && twit.getIsceleb()){%>
         <img src="<%=twitimageurl%>" width="48" height="48" border="0" align="left">
         <font class="largefont"> <%=twit.getRealname()%></font>
@@ -93,7 +93,7 @@ StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
 
 
 <%if (twit!=null && twit.getTwitid()>0){%>
-    <div class="roundedBoxYellow" style="width:630px;">
+    <div class="roundedBox" style="width:630px;">
         <div style="float:right">
             <font class="tinyfont">
                 <%String qs = "";%>

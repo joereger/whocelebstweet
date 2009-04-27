@@ -14,10 +14,12 @@ import com.celebtwit.cache.providers.CacheFactory;
 import com.celebtwit.session.UrlSplitter;
 import com.celebtwit.session.PersistentLogin;
 import com.celebtwit.dao.User;
+import com.celebtwit.dao.Pl;
 import com.celebtwit.util.Time;
 import com.celebtwit.systemprops.SystemProperty;
 import com.celebtwit.systemprops.BaseUrl;
 import com.celebtwit.xmpp.SendXMPPMessage;
+import com.celebtwit.privatelabel.PlFinder;
 
 /**
  * User: Joe Reger Jr
@@ -82,6 +84,10 @@ public class FilterMain implements Filter {
 //                    }
 //                }
 
+                //Set Private Label (Pl)
+                Pl pl = PlFinder.find(httpServletRequest);
+                Pagez.getUserSession().setPl(pl);
+
                 //Redirect login page to https
                 if (SystemProperty.getProp(SystemProperty.PROP_ISSSLON).equals("1") && urlSplitter.getScheme().equals("http") && urlSplitter.getServletPath().equals("login.jsp")){
                     try{
@@ -92,10 +98,6 @@ public class FilterMain implements Filter {
                         return;
                     }
                 }
-
-
-
-
 
                 //Persistent login start
                 boolean wasAutoLoggedIn = false;

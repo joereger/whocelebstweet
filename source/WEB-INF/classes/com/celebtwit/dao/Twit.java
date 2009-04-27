@@ -5,6 +5,8 @@ import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.session.AuthControlled;
 
 import java.util.Date;
+import java.util.Set;
+import java.util.HashSet;
 
 import org.apache.log4j.Logger;
 
@@ -19,6 +21,7 @@ public class Twit extends BasePersistentClass implements java.io.Serializable, A
      private String since_id;
      private Date lastprocessed;
      private String profile_image_url;
+     private Set<Twitpl> twitpls = new HashSet<Twitpl>();
      
 
 
@@ -112,5 +115,13 @@ public class Twit extends BasePersistentClass implements java.io.Serializable, A
 
     public void setProfile_image_url(String profile_image_url) {
         this.profile_image_url=profile_image_url;
+    }
+
+    public Set<Twitpl> getTwitpls() {
+        return twitpls;
+    }
+
+    public void setTwitpls(Set<Twitpl> twitpls) {
+        this.twitpls=twitpls;
     }
 }

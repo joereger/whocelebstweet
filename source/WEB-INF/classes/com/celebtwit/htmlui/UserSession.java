@@ -2,6 +2,7 @@ package com.celebtwit.htmlui;
 
 import com.celebtwit.dao.User;
 import com.celebtwit.dao.Userrole;
+import com.celebtwit.dao.Pl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class UserSession implements Serializable {
     private boolean isLoggedInToBeta = false;
     private String message = "";
     private Calendar createdate = Calendar.getInstance();
+    private int plid = 1;
 
     public UserSession(){
         Logger logger = Logger.getLogger(this.getClass().getName());
@@ -128,7 +130,14 @@ public class UserSession implements Serializable {
         }
     }
 
+    
+    public Pl getPl() {
+        return Pl.get(plid);
+    }
 
+    public void setPl(Pl pl) {
+        this.plid=pl.getPlid();
+    }
 
 
 

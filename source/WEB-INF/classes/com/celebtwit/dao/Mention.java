@@ -18,6 +18,7 @@ public class Mention extends BasePersistentClass implements java.io.Serializable
      private boolean ismentionedaceleb;
      private int twitpostid;
      private Date created_at;
+     private int plid;
 
 
 
@@ -103,5 +104,13 @@ public class Mention extends BasePersistentClass implements java.io.Serializable
 
     public void setIsmentionedaceleb(boolean ismentionedaceleb) {
         this.ismentionedaceleb=ismentionedaceleb;
+    }
+
+    public int getPlid() {
+        return plid;
+    }
+
+    public void setPlid(int plid) {
+        this.plid=plid;
     }
 }

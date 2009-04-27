@@ -61,7 +61,7 @@ pagetitle = pagetitleName1 + " and "+pagetitleName2+"'s Twitter Chatter Back-and
 
 
 
-<div class="roundedBoxYellow" style="width:630px;">
+<div class="roundedBox" style="width:630px;">
     <center><font class="largefont">twitter chatter between</font><br/></center>
     <table cellpadding="10" cellspacing="5" border="0" width="100%">
         <tr>

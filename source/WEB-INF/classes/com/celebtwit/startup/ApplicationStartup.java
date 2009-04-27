@@ -8,6 +8,7 @@ import com.celebtwit.dao.hibernate.HibernateSessionQuartzCloser;
 import com.celebtwit.dao.hibernate.NumFromUniqueResult;
 import com.celebtwit.dao.User;
 import com.celebtwit.dao.Userrole;
+import com.celebtwit.dao.Pl;
 import com.celebtwit.xmpp.SendXMPPMessage;
 import com.celebtwit.scheduledjobs.SystemStats;
 import com.celebtwit.pageperformance.PagePerformanceUtil;
@@ -23,10 +24,7 @@ import org.quartz.Scheduler;
 import org.quartz.impl.StdSchedulerFactory;
 
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Date;
+import java.util.*;
 
 /**
  * User: Joe Reger Jr
@@ -72,6 +70,8 @@ public class ApplicationStartup implements ServletContextListener {
         } else {
             logger.info("InstanceProperties.haveValidConfig()=false");
         }
+        //Set up pl
+        guaranteeAtLeastOnePlExists();
         //Load SystemProps
         SystemProperty.refreshAllProps();
         //Refresh SystemStats
@@ -204,6 +204,23 @@ public class ApplicationStartup implements ServletContextListener {
             }
         } catch (Exception ex){
             logger.error("",ex);
+        }
+    }
+
+    private static void guaranteeAtLeastOnePlExists(){
+        Logger logger = Logger.getLogger(ApplicationStartup.class);
+        String emptyStr = "";
+        List pls = HibernateUtil.getSession().createQuery("from Pl"+emptyStr).list();
+        if (pls==null || pls.size()<=0){
+            Pl pl = new Pl();
+            pl.setName("whoCelebsTweet.com");
+            pl.setCelebiscalled("celeb");
+            pl.setCustomdomain1("www.whocelebstweet.com");
+            pl.setCustomdomain2("whocelebstweet.com");
+            pl.setCustomdomain3("www.whocelebstwitter.com");
+            pl.setTwitterusername("whocelebstweet");
+            pl.setTwitterpassword("whocelebstweetrules");
+            try{pl.save();}catch(Exception ex){logger.error(ex);}
         }
     }
 
