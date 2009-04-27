@@ -14,13 +14,13 @@ import java.util.*;
  */
 public class GetCelebsWhoMentioned {
 
-    public static ArrayList<TwitCelebWhoMentioned> get(Date startDate, Date endDate, int twitidmentioned,  int numbertoget){
+    public static ArrayList<TwitCelebWhoMentioned> get(Date startDate, Date endDate, int twitidmentioned,  int numbertoget, int plid){
         ArrayList<TwitCelebWhoMentioned> out = new ArrayList<TwitCelebWhoMentioned>();
         String emptyStr = "";
         String startDateStr = Time.dateformatfordb(Time.getCalFromDate(startDate));
         String endDateStr = Time.dateformatfordb(Time.getCalFromDate(endDate));
         //Query
-        List results = HibernateUtil.getSession().createQuery("select sum(1) as numOfMentions, mention.twitidceleb from Mention mention where mention.created_at>'"+startDateStr+"' and mention.created_at<'"+endDateStr+"' and mention.twitidmentioned='"+twitidmentioned+"' group by mention.twitidceleb order by sum(1) desc"+emptyStr).setMaxResults(numbertoget).list();
+        List results = HibernateUtil.getSession().createQuery("select sum(1) as numOfMentions, mention.twitidceleb from Mention mention where mention.plid='"+plid+"' and mention.created_at>'"+startDateStr+"' and mention.created_at<'"+endDateStr+"' and mention.twitidmentioned='"+twitidmentioned+"' group by mention.twitidceleb order by sum(1) desc"+emptyStr).setMaxResults(numbertoget).list();
         for (Iterator iterator=results.iterator(); iterator.hasNext();) {
             Object[] row = (Object[])iterator.next();
             Long numOfMentions = (Long)row[0];

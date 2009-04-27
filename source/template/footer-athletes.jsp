@@ -1,28 +1,27 @@
 <%@ page import="org.hibernate.criterion.Restrictions" %>
-<%@ page import="java.util.List" %>
 <%@ page import="com.celebtwit.dao.hibernate.HibernateUtil" %>
 <%@ page import="com.celebtwit.dao.Twit" %>
 <%@ page import="org.hibernate.criterion.Order" %>
-<%@ page import="java.util.Iterator" %>
 </td>
-        <td valign="top" width="220">
-            
+<td valign="top" width="220">
 
-            <div class="roundedBox" style="width:220px;">
-                <!--<center>-->
-                    <font class="mediumfont">have <b>they</b> tweeted <b>you</b>?</font>
-                    <br/><br/>
-                    <form action="/twitterusernameredirect.jsp" method="get">
-                        <font class="normalfont" style="font-weight:bold;">enter your twitter username</font>
-                        <br/><input type="text" name="twitterusername" value="">
-                        <input type="submit" value="go">
-                        <br/><font class="tinyfont" style="font-weight:bold;">example "joereger45"</font>
-                    </form>
-                <!--</center>-->
-            </div>
 
-            <div class="roundedBoxXXX" style="width:220px; padding: 28px;">
-                <font class="mediumfont">the <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font><br/><br/>
+    <div class="roundedBox" style="width:220px;">
+        <!--<center>-->
+        <font class="mediumfont">have <b>they</b> tweeted <b>you</b>?</font>
+        <br/><br/>
+
+        <form action="/twitterusernameredirect.jsp" method="get">
+            <font class="normalfont" style="font-weight:bold;">enter your twitter username</font>
+            <br/><input type="text" name="twitterusername" value="">
+            <input type="submit" value="go">
+            <br/><font class="tinyfont" style="font-weight:bold;">example "joereger45"</font>
+        </form>
+        <!--</center>-->
+    </div>
+
+    <div class="roundedBoxXXX" style="width:220px; padding: 28px;">
+        <font class="mediumfont">the <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font><br/><br/>
                 <%
                 if (true){
                     List<Twit> celebs = HibernateUtil.getSession().createCriteria(Twit.class)

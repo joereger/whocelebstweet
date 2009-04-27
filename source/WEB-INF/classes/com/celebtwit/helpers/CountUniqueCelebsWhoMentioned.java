@@ -22,13 +22,13 @@ import java.util.Calendar;
  */
 public class CountUniqueCelebsWhoMentioned {
 
-    public static int getAllTime(Twit twit){
+    public static int getAllTime(Twit twit, int plid){
         Date startDate = Time.xYearsAgoStart(Calendar.getInstance(), 25).getTime();
         Date endDate = new Date();
-        return get(twit, startDate, endDate);
+        return get(twit, startDate, endDate, plid);
     }
 
-    public static int get(Twit twit, Date startDate, Date endDate){
+    public static int get(Twit twit, Date startDate, Date endDate, int plid){
         Logger logger = Logger.getLogger(GetTwitterPosts.class);
         if (twit==null || twit.getTwitid()==0){
             return 0;
@@ -36,7 +36,7 @@ public class CountUniqueCelebsWhoMentioned {
         String startDateStr = Time.dateformatfordb(Time.getCalFromDate(startDate));
         String endDateStr = Time.dateformatfordb(Time.getCalFromDate(endDate));
 
-        int out = NumFromUniqueResult.getInt("select count(distinct twitidceleb) as numOfUnique from Mention mention where mention.twitidmentioned="+twit.getTwitid()+" and mention.created_at>'"+startDateStr+"' and mention.created_at<'"+endDateStr+"' ");
+        int out = NumFromUniqueResult.getInt("select count(distinct twitidceleb) as numOfUnique from Mention mention where mention.plid='"+plid+"' and mention.twitidmentioned="+twit.getTwitid()+" and mention.created_at>'"+startDateStr+"' and mention.created_at<'"+endDateStr+"' ");
 
         return out;
     }

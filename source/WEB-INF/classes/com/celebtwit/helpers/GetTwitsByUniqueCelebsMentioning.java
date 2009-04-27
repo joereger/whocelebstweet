@@ -15,7 +15,7 @@ public class GetTwitsByUniqueCelebsMentioning {
 
 
 
-    public static ArrayList<TwitUniqueCelebsMentioning> get(Date startDate, Date endDate, boolean ismentionedaceleb, int numbertoget){
+    public static ArrayList<TwitUniqueCelebsMentioning> get(Date startDate, Date endDate, boolean ismentionedaceleb, int numbertoget, int plid){
         ArrayList<TwitUniqueCelebsMentioning> out = new ArrayList<TwitUniqueCelebsMentioning>();
         String emptyStr = "";
         String startDateStr = Time.dateformatfordb(Time.getCalFromDate(startDate));
@@ -26,7 +26,7 @@ public class GetTwitsByUniqueCelebsMentioning {
             ismentionedacelebStr = " and mention.ismentionedaceleb=true ";
         }
         //Query
-        List results = HibernateUtil.getSession().createQuery("select count(distinct twitidceleb) as numOfUnique, mention.twitidmentioned from Mention mention where mention.created_at>'"+startDateStr+"' and mention.created_at<'"+endDateStr+"' "+ismentionedacelebStr+" group by mention.twitidmentioned order by count(distinct twitidceleb) desc"+emptyStr).setMaxResults(numbertoget).list();
+        List results = HibernateUtil.getSession().createQuery("select count(distinct twitidceleb) as numOfUnique, mention.twitidmentioned from Mention mention where mention.plid='"+plid+"' and mention.created_at>'"+startDateStr+"' and mention.created_at<'"+endDateStr+"' "+ismentionedacelebStr+" group by mention.twitidmentioned order by count(distinct twitidceleb) desc"+emptyStr).setMaxResults(numbertoget).list();
         for (Iterator iterator=results.iterator(); iterator.hasNext();) {
             Object[] row = (Object[])iterator.next();
             Long numOfUnique = (Long)row[0];

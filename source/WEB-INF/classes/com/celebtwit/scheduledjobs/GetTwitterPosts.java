@@ -151,47 +151,6 @@ public class GetTwitterPosts implements Job {
     }
 
 
-//    public static void collectPosts(Twit twit){
-//        Logger logger = Logger.getLogger(GetTwitterPosts.class);
-//        logger.debug("collectPosts("+twit.getTwitterusername()+")");
-//        try{
-//            long since_id = 1;
-//            if (Num.islong(twit.getSince_id())){ since_id = Long.parseLong(twit.getSince_id());   }
-//
-//            //Twitter twitter = new Twitter(twitterusername, twitterpassword);
-//            Api api = Api.builder().username(twitterusername).password(twitterpassword).build();
-//
-//            for(int page=1; page<20; page++){
-//                logger.debug("page="+page);
-//
-//                List<TwitterProtos.Status> statuses = api.userTimeline()
-//                        .id(String.valueOf(twit.getTwitid()))
-//                        .sinceId(since_id)
-//                        .page(page)
-//                        .count(200)
-//                        .build()
-//                        .get();
-//                if (statuses==null || statuses.size()<=0){
-//                    logger.debug("statuses==null || statuses.size()<=0 so breaking out of page 1->100 loop");
-//                    break; //Save api calls
-//                }
-//                for (Iterator<TwitterProtos.Status> statusIterator=statuses.iterator(); statusIterator.hasNext();) {
-//                    TwitterProtos.Status status=statusIterator.next();
-//                    processStatus(twit, status);
-//                    since_id = status.getId();
-//                }
-//            }
-//            //Save twit update
-//            twit.setSince_id(String.valueOf(since_id));
-//            twit.setLastprocessed(new Date());
-//            //Report on RateLimitStatus
-//            //RateLimitStatus rls = twitter.rateLimitStatus();
-//            //logger.debug("Twitter RateLimitStatus: hourlylimit="+rls.getHourlyLimit()+" remaininghits="+rls.getRemainingHits()+" resettimeinseconds="+rls.getResetTimeInSeconds()+" datetime="+Time.dateformatcompactwithtime(Time.getCalFromDate(rls.getDateTime())));
-//        } catch (Exception ex) {
-//            logger.error("", ex);
-//        }
-//    }
-
 
 
 
@@ -279,43 +238,6 @@ public class GetTwitterPosts implements Job {
 
 
 
-
-
-
-
-
-//    public static void collectPosts(Twit twit){
-//        Logger logger = Logger.getLogger(GetTwitterPosts.class);
-//        logger.debug("collectPosts("+twit.getTwitterusername()+")");
-//        try{
-//            Twitter twitter = new Twitter(twitterusername, twitterpassword);
-//            twitter.
-//            long since_id = 1;
-//            if (Num.islong(twit.getSince_id())){ since_id = Long.parseLong(twit.getSince_id());   }
-//            for(int attempts=1; attempts<10; attempts++){
-//                logger.debug("i="+attempts);
-//                List<Status> statuses = twitter.getUserTimeline(twit.getTwitterusername(), 200, since_id);
-//                if (statuses==null || statuses.size()<=0){
-//                    logger.debug("statuses==null || statuses.size()<=0 so breaking out of i 1->100 loop");
-//                    break; //Save api calls
-//                }
-//                for (Iterator<Status> statusIterator=statuses.iterator(); statusIterator.hasNext();) {
-//                    Status status=statusIterator.next();
-//                    processStatus(twit, status);
-//                    since_id = status.getId();
-//                }
-//            }
-//            //Save twit update
-//            twit.setSince_id(String.valueOf(since_id));
-//            twit.setLastprocessed(new Date());
-//            //Report on RateLimitStatus
-//            RateLimitStatus rls = twitter.rateLimitStatus();
-//            logger.debug("Twitter RateLimitStatus: hourlylimit="+rls.getHourlyLimit()+" remaininghits="+rls.getRemainingHits()+" resettimeinseconds="+rls.getResetTimeInSeconds()+" datetime="+Time.dateformatcompactwithtime(Time.getCalFromDate(rls.getDateTime())));
-//        } catch (Exception ex) {
-//            logger.error("", ex);
-//        }
-//    }
-
     public static void processStatus(Twit twit, TwitterStatus status){
         Logger logger = Logger.getLogger(GetTwitterPosts.class);
         logger.debug("---");
@@ -336,42 +258,6 @@ public class GetTwitterPosts implements Job {
             logger.error("", ex);
         }
     }
-
-//    public static void processStatus(Twit twit, TwitterProtos.Status status){
-//        Logger logger = Logger.getLogger(GetTwitterPosts.class);
-//        logger.debug("---");
-//        logger.debug("processStatus("+twit.getTwitterusername()+", "+status.getText()+")");
-//        try{
-//            Twitpost twitpost = new Twitpost();
-//            twitpost.setTwitid(twit.getTwitid());
-//            twitpost.setCreated_at(Time.dbstringtocalendar(status.getCreatedAt()).getTime());
-//            twitpost.setTwitterguid(String.valueOf(status.getId()));
-//            twitpost.setPost(status.getText());
-//            twitpost.save();
-//            //Process it
-//            processTwitpost(twitpost);
-//        } catch (Exception ex) {
-//            logger.error("", ex);
-//        }
-//    }
-
-//    public static void processStatus(Twit twit, Status status){
-//        Logger logger = Logger.getLogger(GetTwitterPosts.class);
-//        logger.debug("---");
-//        logger.debug("processStatus("+twit.getTwitterusername()+", "+status.getText()+")");
-//        try{
-//            Twitpost twitpost = new Twitpost();
-//            twitpost.setTwitid(twit.getTwitid());
-//            twitpost.setCreated_at(status.getCreatedAt());
-//            twitpost.setTwitterguid(String.valueOf(status.getId()));
-//            twitpost.setPost(status.getText());
-//            twitpost.save();
-//            //Process it
-//            processTwitpost(twitpost);
-//        } catch (Exception ex) {
-//            logger.error("", ex);
-//        }
-//    }
 
     public static void processTwitpost(Twitpost twitpost){
         Logger logger = Logger.getLogger(GetTwitterPosts.class);
@@ -404,13 +290,19 @@ public class GetTwitterPosts implements Job {
                     twitToUpdate = newTwit;
                 }
                 //Create a record of the mention
-                Mention mention = new Mention();
-                mention.setTwitidceleb(twitpost.getTwitid());
-                mention.setTwitidmentioned(twitToUpdate.getTwitid());
-                mention.setIsmentionedaceleb(twitToUpdate.getIsceleb());
-                mention.setTwitpostid(twitpost.getTwitpostid());
-                mention.setCreated_at(twitpost.getCreated_at());
-                mention.save();
+                Twit twitCeleb = Twit.get(twitpost.getTwitid());
+                for (Iterator<Twitpl> twitplIt=twitCeleb.getTwitpls().iterator(); twitplIt.hasNext();) {
+                    Twitpl twitpl=twitplIt.next();
+                    //Save a mention record for each pl that this celeb is part of
+                    Mention mention = new Mention();
+                    mention.setTwitidceleb(twitpost.getTwitid());
+                    mention.setTwitidmentioned(twitToUpdate.getTwitid());
+                    mention.setIsmentionedaceleb(twitToUpdate.getIsceleb());
+                    mention.setTwitpostid(twitpost.getTwitpostid());
+                    mention.setCreated_at(twitpost.getCreated_at());
+                    mention.setPlid(twitpl.getPlid()); // <-- Setting plid of mention to the one of the plids of the celeb
+                    mention.save();
+                }
                 //Increment mentions counters
                 twitToUpdate.setLastprocessed(new Date());
                 twitToUpdate.save();

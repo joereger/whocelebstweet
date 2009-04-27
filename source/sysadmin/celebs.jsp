@@ -2,11 +2,12 @@
 <%@ page import="com.celebtwit.htmluibeans.SysadminUserList" %>
 <%@ page import="com.celebtwit.dbgrid.GridCol" %>
 <%@ page import="com.celebtwit.dbgrid.Grid" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="com.celebtwit.htmlui.*" %>
 <%@ page import="com.celebtwit.util.Time" %>
-<%@ page import="java.util.Calendar" %>
 <%@ page import="com.celebtwit.util.Num" %>
+<%@ page import="com.celebtwit.dao.Twitpl" %>
+<%@ page import="java.util.*" %>
+<%@ page import="com.celebtwit.dao.Pl" %>
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "Celebs";
@@ -47,7 +48,24 @@ String acl = "sysadmin";
             twit.setRealname(realname);
             twit.setIsceleb(true);
             twit.save();
+            //Make sure any already-mentions are marked as being about a celeb, now that this twit is one
             HibernateUtil.getSession().createQuery("update Mention m set ismentionedaceleb=true where m.twitidmentioned='"+twit.getTwitid()+"'").executeUpdate();
+            //Delete any existing pl relationships
+            HibernateUtil.getSession().createQuery("delete Twitpl t where t.twitid='"+twit.getTwitid()+"'").executeUpdate();
+            //Create Twitpls for those pls selected
+            ArrayList<String> plidsSelected = Checkboxes.getValueFromRequest("plids", "Private Label", false);
+            for (Iterator<String> plIt=plidsSelected.iterator(); plIt.hasNext();) {
+                String plidStr=plIt.next();
+                if (Num.isinteger(plidStr)){
+                    Twitpl twitpl = new Twitpl();
+                    twitpl.setTwitid(twit.getTwitid());
+                    twitpl.setTwitplid(Integer.parseInt(plidStr));
+                    twitpl.save();
+                }
+            }
+            //Refresh the twit to pick up the Twitpl changes
+            twit.refresh();
+            //Msg and then redir
             Pagez.getUserSession().setMessage("Celeb Saved!");
             Pagez.sendRedirect("/sysadmin/celebs.jsp");
             return;
@@ -59,7 +77,9 @@ String acl = "sysadmin";
 <%
     if (request.getParameter("action") != null && request.getParameter("action").equals("delete")) {
         try {
-            HibernateUtil.getSession().createQuery("delete Mention m where m.twitidmentioned='"+twit.getTwitid()+"'").executeUpdate();
+            //Make sure any already-mentions are *not* marked as being about a celeb, now that this twit is no longer one
+            HibernateUtil.getSession().createQuery("update Mention m set ismentionedaceleb=false where m.twitidmentioned='"+twit.getTwitid()+"'").executeUpdate();
+            //Delete mentions where this twit was acting as celeb... they don't count any more
             HibernateUtil.getSession().createQuery("delete Mention m where m.twitidceleb='"+twit.getTwitid()+"'").executeUpdate();
             HibernateUtil.getSession().createQuery("delete Twitpost t where t.twitid='"+twit.getTwitid()+"'").executeUpdate();
             twit.delete();
@@ -100,6 +120,32 @@ String acl = "sysadmin";
                 </td>
                 <td valign="top">
                     <%=Textbox.getHtml("twitterusername", twit.getTwitterusername(), 255, 25, "", "")%>
+                </td>
+                <td valign="top">
+                    <input type="submit" class="formsubmitbutton" value="Save Celeb">
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" colspan="2">
+                    <%
+                        ArrayList<String> values = new ArrayList<String>();
+                        for (Iterator<Twitpl> plIt=twit.getTwitpls().iterator(); plIt.hasNext();) {
+                            Twitpl twitpl=plIt.next();
+                            values.add(String.valueOf(twitpl.getPlid()));
+                        }
+                    %>
+                    <%
+                        TreeMap<String, String> options = new TreeMap<String, String>();
+                        List<Pl> pls = HibernateUtil.getSession().createCriteria(Pl.class)
+                                .addOrder(Order.asc("name"))
+                                .setCacheable(true)
+                                .list();
+                        for (Iterator<Pl> plIterator=pls.iterator(); plIterator.hasNext();) {
+                            Pl pl=plIterator.next();
+                            options.put(String.valueOf(pl.getPlid()), pl.getName());
+                        }
+                    %>
+                    <%=Checkboxes.getHtml("plids", values, options, "", "")%>    
                 </td>
                 <td valign="top">
                     <input type="submit" class="formsubmitbutton" value="Save Celeb">
