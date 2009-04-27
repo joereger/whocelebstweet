@@ -5,16 +5,16 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;CHARSET=iso-8859-1"/>
     <%
-        String finalTitle = "whoAthletesTweet.com - See Who Athletes Tweet on Twitter! Have they tweeted you?";
+        String finalTitle = "whoCeosTweet.com - See Who CEOs Tweet on Twitter! Have they tweeted you?";
         if (pagetitle!=null && !pagetitle.equals("")){
             finalTitle = pagetitle;
         }
     %>
     <title><%=finalTitle%></title>
     <link rel="stylesheet" type="text/css" href="/css/basic.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/Athletes.css"/>
-    <meta name="description" content="<%=finalTitle%> Athletes on Twitter!  See who the athletes are twittering!"/>
-    <meta name="keywords" content="celebrities celebrity twitter twit tweet celeb lance armstrong oprah"/>
+    <link rel="stylesheet" type="text/css" href="/css/Ceos.css"/>
+    <meta name="description" content="<%=finalTitle%> CEOs on Twitter!  See who the CEOs are twittering!"/>
+    <meta name="keywords" content="CEO  twitter twit tweet celeb"/>
     <script type="text/JavaScript" src="/js/curvycorners/curvycorners.js"></script>
 
 </head>
@@ -28,8 +28,8 @@
     <td>
     <div style="text-align: left;">
     <a href="/">
-    <img src="/images/logoAthletes.gif" alt="whoAthletesTweet.com" width="478" height="132" border="0">
-    </a>
+    <img src="/images/logoCeos.gif" alt="whoCeosTweet.com" width="478" height="132" border="0">
+    </a>   
 
     <br/><br/><br/>
 

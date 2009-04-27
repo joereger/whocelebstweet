@@ -5,16 +5,16 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;CHARSET=iso-8859-1"/>
     <%
-        String finalTitle = "whoAthletesTweet.com - See Who Athletes Tweet on Twitter! Have they tweeted you?";
+        String finalTitle = "whoCyclistsTweet.com - See Who Cyclists Tweet on Twitter! Have they tweeted you?";
         if (pagetitle!=null && !pagetitle.equals("")){
             finalTitle = pagetitle;
         }
     %>
     <title><%=finalTitle%></title>
     <link rel="stylesheet" type="text/css" href="/css/basic.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/Athletes.css"/>
-    <meta name="description" content="<%=finalTitle%> Athletes on Twitter!  See who the athletes are twittering!"/>
-    <meta name="keywords" content="celebrities celebrity twitter twit tweet celeb lance armstrong oprah"/>
+    <link rel="stylesheet" type="text/css" href="/css/Cyclists.css"/>
+    <meta name="description" content="<%=finalTitle%> Cyclists on Twitter!  See who the cyclists are twittering!"/>
+    <meta name="keywords" content="cyclist cycling bike tour de france giro italia twitter twit tweet celeb lance armstrong"/>
     <script type="text/JavaScript" src="/js/curvycorners/curvycorners.js"></script>
 
 </head>
@@ -28,8 +28,8 @@
     <td>
     <div style="text-align: left;">
     <a href="/">
-    <img src="/images/logoAthletes.gif" alt="whoAthletesTweet.com" width="478" height="132" border="0">
-    </a>
+    <img src="/images/logoCyclists.gif" alt="whoCyclistsTweet.com" width="478" height="132" border="0">
+    </a>   
 
     <br/><br/><br/>
 
