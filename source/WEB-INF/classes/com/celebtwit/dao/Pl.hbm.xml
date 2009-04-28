@@ -12,6 +12,9 @@
         <property name="name" type="string">
             <column name="name" not-null="true" />
         </property>
+        <property name="sistername" type="string">
+            <column name="sistername" not-null="true" />
+        </property>
         <property name="celebiscalled" type="string">
             <column name="celebiscalled" not-null="true" />
         </property>
@@ -23,6 +26,15 @@
         </property>
         <property name="customdomain3" type="string">
             <column name="customdomain3" not-null="true" />
+        </property>
+        <property name="sisterdomain1" type="string">
+            <column name="sisterdomain1" not-null="true" />
+        </property>
+        <property name="sisterdomain2" type="string">
+            <column name="sisterdomain2" not-null="true" />
+        </property>
+        <property name="sisterdomain3" type="string">
+            <column name="sisterdomain3" not-null="true" />
         </property>
         <property name="twitterusername" type="text">
             <column name="twitterusername" not-null="true" />

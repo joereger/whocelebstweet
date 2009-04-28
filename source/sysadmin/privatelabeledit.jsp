@@ -18,12 +18,16 @@ String acl = "sysadmin";
 <%
     Pl pl = new Pl();
     pl.setName("whoCelebsTweet.com");
+    pl.setSistername("");
     pl.setCelebiscalled("celeb");
     pl.setCustomdomain1("www.whocelebstweet.com");
     pl.setCustomdomain2("whocelebstweet.com");
     pl.setCustomdomain3("");
-    pl.setTwitterusername("xxx");
-    pl.setTwitterpassword("xxx");
+    pl.setSisterdomain1("");
+    pl.setSisterdomain2("");
+    pl.setSisterdomain3("");
+    pl.setTwitterusername("");
+    pl.setTwitterpassword("");
     if (request.getParameter("plid")!=null && Num.isinteger(request.getParameter("plid"))){
         pl = Pl.get(Integer.parseInt(request.getParameter("plid")));
     }
@@ -34,10 +38,14 @@ String acl = "sysadmin";
             if (request.getParameter("action").equals("save")){
 
                 pl.setName(Textbox.getValueFromRequest("name", "Name", true, DatatypeString.DATATYPEID));
+                pl.setSistername(Textbox.getValueFromRequest("sistername", "Sister Name", false, DatatypeString.DATATYPEID));
                 pl.setCelebiscalled(Textbox.getValueFromRequest("celebiscalled", "Celeb is Called", true, DatatypeString.DATATYPEID));
                 pl.setCustomdomain1(Textbox.getValueFromRequest("customdomain1", "Customdomain1", true, DatatypeString.DATATYPEID).toLowerCase());
                 pl.setCustomdomain2(Textbox.getValueFromRequest("customdomain2", "Customdomain2", false, DatatypeString.DATATYPEID).toLowerCase());
                 pl.setCustomdomain3(Textbox.getValueFromRequest("customdomain3", "Customdomain3", false, DatatypeString.DATATYPEID).toLowerCase());
+                pl.setSisterdomain1(Textbox.getValueFromRequest("sisterdomain1", "Sisterdomain1", false, DatatypeString.DATATYPEID).toLowerCase());
+                pl.setSisterdomain2(Textbox.getValueFromRequest("sisterdomain2", "Sisterdomain2", false, DatatypeString.DATATYPEID).toLowerCase());
+                pl.setSisterdomain3(Textbox.getValueFromRequest("sisterdomain3", "Sisterdomain3", false, DatatypeString.DATATYPEID).toLowerCase());
                 pl.setTwitterusername(Textbox.getValueFromRequest("twitterusername", "Twitter Username", false, DatatypeString.DATATYPEID));
                 pl.setTwitterpassword(Textbox.getValueFromRequest("twitterpassword", "Twitter Password", false, DatatypeString.DATATYPEID));
                 //Validate data
@@ -68,7 +76,7 @@ String acl = "sysadmin";
 
             <table cellpadding="3" cellspacing="0" border="0">
                 <tr>
-                    <td valign="top">
+                    <td valign="top" style="text-align:right;">
                         <font class="formfieldnamefont">Name</font>
                     </td>
                     <td valign="top">
@@ -76,7 +84,7 @@ String acl = "sysadmin";
                     </td>
                 </tr>
                 <tr>
-                    <td valign="top">
+                    <td valign="top" style="text-align:right;">
                         <font class="formfieldnamefont">Celeb is called</font>
                         <br/><font class="tinyfont">Ex("celeb" or "athlete" or "politician")... should be singular and lower case</font>
                     </td>
@@ -86,7 +94,7 @@ String acl = "sysadmin";
                 </tr>
 
                 <tr>
-                    <td valign="top">
+                    <td valign="top" style="text-align:right;">
                         <font class="formfieldnamefont">Customdomain1</font>
                         <br/><font class="tinyfont">Ex("www.mypldomain.com")</font>
                     </td>
@@ -95,7 +103,7 @@ String acl = "sysadmin";
                     </td>
                 </tr>
                 <tr>
-                    <td valign="top">
+                    <td valign="top" style="text-align:right;">
                         <font class="formfieldnamefont">Customdomain2</font>
                     </td>
                     <td valign="top">
@@ -103,7 +111,7 @@ String acl = "sysadmin";
                     </td>
                 </tr>
                 <tr>
-                    <td valign="top">
+                    <td valign="top" style="text-align:right;">
                         <font class="formfieldnamefont">Customdomain3</font>
                     </td>
                     <td valign="top">
@@ -111,7 +119,39 @@ String acl = "sysadmin";
                     </td>
                 </tr>
                 <tr>
+                    <td valign="top" style="text-align:right;">
+                        <font class="formfieldnamefont">Sister Name</font>
+                    </td>
                     <td valign="top">
+                        <%=Textbox.getHtml("sistername", pl.getSistername(), 255, 35, "", "")%>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" style="text-align:right;">
+                        <font class="formfieldnamefont">Sisterdomain1</font>
+                    </td>
+                    <td valign="top">
+                        <%=Textbox.getHtml("sisterdomain1", pl.getSisterdomain1(), 255, 35, "", "")%>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" style="text-align:right;">
+                        <font class="formfieldnamefont">Sisterdomain2</font>
+                    </td>
+                    <td valign="top">
+                        <%=Textbox.getHtml("sisterdomain2", pl.getSisterdomain2(), 255, 35, "", "")%>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" style="text-align:right;">
+                        <font class="formfieldnamefont">Sisterdomain3</font>
+                    </td>
+                    <td valign="top">
+                        <%=Textbox.getHtml("sisterdomain3", pl.getSisterdomain3(), 255, 35, "", "")%>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" style="text-align:right;">
                         <font class="formfieldnamefont">Twitter Username</font>
                     </td>
                     <td valign="top">
@@ -119,7 +159,7 @@ String acl = "sysadmin";
                     </td>
                 </tr>
                 <tr>
-                    <td valign="top">
+                    <td valign="top" style="text-align:right;">
                         <font class="formfieldnamefont">Twitter Password</font>
                     </td>
                     <td valign="top">

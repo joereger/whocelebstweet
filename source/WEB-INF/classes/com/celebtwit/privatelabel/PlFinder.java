@@ -77,4 +77,16 @@ public class PlFinder {
         return Pl.get(1);
     }
 
+    public static boolean isSisterPl(HttpServletRequest request, Pl pl){
+        Logger logger = Logger.getLogger(PlFinder.class);
+        String domainName = request.getServerName().toLowerCase();
+        if (pl.getCustomdomain1().equalsIgnoreCase(domainName)){ return false; }
+        if (pl.getCustomdomain2().equalsIgnoreCase(domainName)){ return false; }
+        if (pl.getCustomdomain3().equalsIgnoreCase(domainName)){ return false; }
+        if (pl.getSisterdomain1().equalsIgnoreCase(domainName)){ return true; }
+        if (pl.getSisterdomain2().equalsIgnoreCase(domainName)){ return true; }
+        if (pl.getSisterdomain3().equalsIgnoreCase(domainName)){ return true; }
+        return false;
+    }
+
 }

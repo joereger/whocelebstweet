@@ -65,4 +65,12 @@ public class SysadminManuallyRunScheduledTask implements Serializable {
         return "sysadminmanuallyrunscheduledtask";
     }
 
+    public String runGetTwitterPosts(){
+        Logger logger = Logger.getLogger(this.getClass().getName());
+        try{
+            GetTwitterPosts task = new GetTwitterPosts();
+            task.execute(null);} catch (Exception ex){logger.error("",ex);}
+        return "sysadminmanuallyrunscheduledtask";
+    }
+
 }

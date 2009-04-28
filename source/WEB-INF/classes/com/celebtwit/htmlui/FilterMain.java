@@ -88,6 +88,9 @@ public class FilterMain implements Filter {
                 Pl pl = PlFinder.find(httpServletRequest);
                 Pagez.getUserSession().setPl(pl);
 
+                //Set userSession.isSisterPl()
+                Pagez.getUserSession().setIsSisterPl(PlFinder.isSisterPl(httpServletRequest, pl));
+
                 //Redirect login page to https
                 if (SystemProperty.getProp(SystemProperty.PROP_ISSSLON).equals("1") && urlSplitter.getScheme().equals("http") && urlSplitter.getServletPath().equals("login.jsp")){
                     try{

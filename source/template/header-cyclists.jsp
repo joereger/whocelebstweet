@@ -5,7 +5,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;CHARSET=iso-8859-1"/>
     <%
-        String finalTitle = "whoCyclistsTweet.com - See Who Cyclists Tweet on Twitter! Have they tweeted you?";
+        String finalTitle = Pagez.getUserSession().getPl().getName()+" - See Who Cyclists Tweet on Twitter! Have they tweeted you?";
+        if (Pagez.getUserSession().isSisterPl()){
+            finalTitle = Pagez.getUserSession().getPl().getSistername()+" - Cyclists on Twitter! What are they saying?";  
+        }
         if (pagetitle!=null && !pagetitle.equals("")){
             finalTitle = pagetitle;
         }
@@ -28,7 +31,11 @@
     <td>
     <div style="text-align: left;">
     <a href="/">
-    <img src="/images/logoCyclists.gif" alt="whoCyclistsTweet.com" width="478" height="132" border="0">
+    <%if (!Pagez.getUserSession().isSisterPl()){%>
+        <img src="/images/logoCyclists.gif" alt="<%=Pagez.getUserSession().getPl().getName()%>" width="478" height="132" border="0">
+    <%} else {%>
+        <img src="/images/logoCyclistsSister.gif" alt="<%=Pagez.getUserSession().getPl().getSistername()%>" width="478" height="132" border="0">
+    <%}%>
     </a>   
 
     <br/><br/><br/>

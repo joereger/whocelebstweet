@@ -30,6 +30,7 @@ public class UserSession implements Serializable {
     private String message = "";
     private Calendar createdate = Calendar.getInstance();
     private int plid = 1;
+    private boolean isSisterPl = false;
 
     public UserSession(){
         Logger logger = Logger.getLogger(this.getClass().getName());
@@ -152,5 +153,13 @@ public class UserSession implements Serializable {
 
     public void setLoggedInToBeta(boolean loggedInToBeta) {
         isLoggedInToBeta = loggedInToBeta;
+    }
+
+    public boolean isSisterPl() {
+        return isSisterPl;
+    }
+
+    public void setIsSisterPl(boolean sisterPl) {
+        isSisterPl=sisterPl;
     }
 }

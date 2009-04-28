@@ -39,6 +39,18 @@ public class PlVerification {
             Pagez.getUserSession().setMessage("Customdomain3 not unique.");
             return false;
         }
+        if (!isSpecificCustomdomainUnique(pl, pl.getSisterdomain1())){
+            Pagez.getUserSession().setMessage("Sisterdomain1 not unique.");
+            return false;
+        }
+        if (!isSpecificCustomdomainUnique(pl, pl.getSisterdomain2())){
+            Pagez.getUserSession().setMessage("Sisterdomain2 not unique.");
+            return false;
+        }
+        if (!isSpecificCustomdomainUnique(pl, pl.getSisterdomain3())){
+            Pagez.getUserSession().setMessage("Sisterdomain3 not unique.");
+            return false;
+        }
         return true;
     }
 
@@ -70,6 +82,36 @@ public class PlVerification {
             List<Pl> pls = HibernateUtil.getSession().createCriteria(Pl.class)
                                                .add(Restrictions.ne("plid", pl.getPlid()))
                                                .add(Restrictions.eq("customdomain3", customdomain.toLowerCase()))
+                                               .setCacheable(true)
+                                               .list();
+            if (pls!=null && pls.size()>0){
+                return false;
+            }
+        }
+        if (1==1){
+            List<Pl> pls = HibernateUtil.getSession().createCriteria(Pl.class)
+                                               .add(Restrictions.ne("plid", pl.getPlid()))
+                                               .add(Restrictions.eq("sisterdomain1", customdomain.toLowerCase()))
+                                               .setCacheable(true)
+                                               .list();
+            if (pls!=null && pls.size()>0){
+                return false;
+            }
+        }
+        if (1==1){
+            List<Pl> pls = HibernateUtil.getSession().createCriteria(Pl.class)
+                                               .add(Restrictions.ne("plid", pl.getPlid()))
+                                               .add(Restrictions.eq("sisterdomain2", customdomain.toLowerCase()))
+                                               .setCacheable(true)
+                                               .list();
+            if (pls!=null && pls.size()>0){
+                return false;
+            }
+        }
+        if (1==1){
+            List<Pl> pls = HibernateUtil.getSession().createCriteria(Pl.class)
+                                               .add(Restrictions.ne("plid", pl.getPlid()))
+                                               .add(Restrictions.eq("sisterdomain3", customdomain.toLowerCase()))
                                                .setCacheable(true)
                                                .list();
             if (pls!=null && pls.size()>0){

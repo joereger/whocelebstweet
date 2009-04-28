@@ -53,6 +53,7 @@ public class GetTwitterPosts implements Job {
 
     //Make sure multiple threads don't process the same twit
     private static HashMap<Integer, Boolean> processingStatus = new HashMap<Integer, Boolean>();
+    private static HashMap<Integer, Boolean> editedDuringProcessing = new HashMap<Integer, Boolean>();
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         Logger logger = Logger.getLogger(this.getClass().getName());
@@ -66,9 +67,18 @@ public class GetTwitterPosts implements Job {
             for (Iterator<Twit> twitIterator=twits.iterator(); twitIterator.hasNext();) {
                 Twit twit=twitIterator.next();
                 if (!isProcessing(twit.getTwitid())){
+                    //Mark as processing, process and then unmark
                     startProcessing(twit.getTwitid());
                     collectPosts(twit);
                     endProcessing(twit.getTwitid());
+                    //If was edited during processing, set since_id to 1 so it'll be refreshed
+                    if (isInEditedDuringProcessing(twit.getTwitid())){
+                        try{
+                            twit.setSince_id("1");
+                            twit.save();
+                        } catch (Exception ex) { logger.error("", ex); }
+                        removeFromEditedDuringProcessing(twit.getTwitid());
+                    }
                 }
             }
         } else {
@@ -133,21 +143,31 @@ public class GetTwitterPosts implements Job {
     }
 
 
+    //Processing Status
     private static void startProcessing(int twitid){
         processingStatus.put(twitid, true);
     }
-
     private static void endProcessing(int twitid){
-        if (processingStatus.containsKey(twitid)){
-            processingStatus.remove(twitid);
-        }
+        if (processingStatus.containsKey(twitid)){ processingStatus.remove(twitid); }
+    }
+    public static boolean isProcessing(int twitid){
+        if (processingStatus.containsKey(twitid)){ return true; }
+        return false;
     }
 
-    private static boolean isProcessing(int twitid){
-        if (processingStatus.containsKey(twitid)){
-            return true;
-        }
+    //EditedDuringProcessing
+    public static void addToEditedDuringProcessing(int twitid){
+        editedDuringProcessing.put(twitid, true);
+    }
+    private static void removeFromEditedDuringProcessing(int twitid){
+        if (editedDuringProcessing.containsKey(twitid)){ editedDuringProcessing.remove(twitid); }
+    }
+    public static boolean isInEditedDuringProcessing(int twitid){
+        if (editedDuringProcessing.containsKey(twitid)){ return true; }
         return false;
+    }
+    private static void clearEditedDuringProcessing(){
+        editedDuringProcessing = new HashMap<Integer, Boolean>();
     }
 
 
@@ -252,14 +272,14 @@ public class GetTwitterPosts implements Job {
                 twitpost.setPost(status.getText());
                 twitpost.save();
                 //Process it
-                processTwitpost(twitpost);
+                processTwitpost(twitpost, twit);
             }
         } catch (Exception ex) {
             logger.error("", ex);
         }
     }
 
-    public static void processTwitpost(Twitpost twitpost){
+    public static void processTwitpost(Twitpost twitpost, Twit twitCeleb){
         Logger logger = Logger.getLogger(GetTwitterPosts.class);
         logger.debug("processTwitpost(id="+twitpost.getTwitterguid()+")");
         try{
@@ -290,15 +310,14 @@ public class GetTwitterPosts implements Job {
                     twitToUpdate = newTwit;
                 }
                 //Create a record of the mention
-                Twit twitCeleb = Twit.get(twitpost.getTwitid());
                 for (Iterator<Twitpl> twitplIt=twitCeleb.getTwitpls().iterator(); twitplIt.hasNext();) {
                     Twitpl twitpl=twitplIt.next();
                     //Save a mention record for each pl that this celeb is part of
                     saveMention(twitToUpdate, twitpost, twitpl);
                 }
                 //Increment mentions counters
-                twitToUpdate.setLastprocessed(new Date());
-                twitToUpdate.save();
+                //twitToUpdate.setLastprocessed(new Date());
+                //twitToUpdate.save();
             }
         } catch (Exception ex) {
             logger.error("", ex);
@@ -309,15 +328,9 @@ public class GetTwitterPosts implements Job {
         Logger logger = Logger.getLogger(GetTwitterPosts.class);
         try{
             //See if any exact mentions exist (other thread processing... something like that)
-            List<Mention> mentions = HibernateUtil.getSession().createCriteria(Mention.class)
-                    .add(Restrictions.eq("twitpostid", twitpost.getTwitpostid()))
-                    .add(Restrictions.eq("twitidceleb", twitpost.getTwitid()))
-                    .add(Restrictions.eq("twitidmentioned", twitToUpdate.getTwitid()))
-                    .add(Restrictions.eq("plid", twitpl.getPlid()))
-                    .setCacheable(true)
-                    .list();
-            //Only insert if there are no exactly similar mentions
-            if (mentions==null || mentions.size()==0){
+            int numberOfSameMentions =NumFromUniqueResult.getInt("select count(*) from Mention where twitpostid='"+twitpost.getTwitpostid()+"' and twitidceleb='"+twitpost.getTwitid()+"' and twitidmentioned='"+twitToUpdate.getTwitid()+"' and plid='"+twitpl.getPlid()+"'");
+            if (numberOfSameMentions==0){
+                //Only insert if there are no exactly similar mentions
                 Mention mention = new Mention();
                 mention.setTwitpostid(twitpost.getTwitpostid());
                 mention.setTwitidceleb(twitpost.getTwitid());
@@ -327,6 +340,25 @@ public class GetTwitterPosts implements Job {
                 mention.setPlid(twitpl.getPlid()); // <-- Setting plid of mention to the one of the plids of the celeb
                 mention.save();
             }
+//            //See if any exact mentions exist (other thread processing... something like that)
+//            List<Mention> mentions = HibernateUtil.getSession().createCriteria(Mention.class)
+//                    .add(Restrictions.eq("twitpostid", twitpost.getTwitpostid()))
+//                    .add(Restrictions.eq("twitidceleb", twitpost.getTwitid()))
+//                    .add(Restrictions.eq("twitidmentioned", twitToUpdate.getTwitid()))
+//                    .add(Restrictions.eq("plid", twitpl.getPlid()))
+//                    .setCacheable(true)
+//                    .list();
+//            //Only insert if there are no exactly similar mentions
+//            if (mentions==null || mentions.size()==0){
+//                Mention mention = new Mention();
+//                mention.setTwitpostid(twitpost.getTwitpostid());
+//                mention.setTwitidceleb(twitpost.getTwitid());
+//                mention.setTwitidmentioned(twitToUpdate.getTwitid());
+//                mention.setIsmentionedaceleb(twitToUpdate.getIsceleb());
+//                mention.setCreated_at(twitpost.getCreated_at());
+//                mention.setPlid(twitpl.getPlid()); // <-- Setting plid of mention to the one of the plids of the celeb
+//                mention.save();
+//            }
         } catch (Exception ex) {
             logger.error("", ex);
         }

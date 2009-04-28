@@ -14,6 +14,8 @@
         <%@ include file="footer-triathletes.jsp" %>
     <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whocycliststweet.com")) { %>
         <%@ include file="footer-cyclists.jsp" %>
+    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whomodelstweet.com")) { %>
+        <%@ include file="footer-models.jsp" %>
     <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whoceostweet.com")) { %>
         <%@ include file="footer-ceos.jsp" %>
     <% } else { %>

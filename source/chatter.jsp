@@ -85,7 +85,7 @@ pagetitle = pagetitleName1 + " and "+pagetitleName2+"'s Twitter Chatter Back-and
         <td valign="top">
 
             <div class="roundedBoxXXX" style="width:420px;">
-                <font class="largefont">what they're saying to each other</font>
+                <font class="mediumfont">what they're saying to each other</font>
                 <br/><br/>
                 <%
                     List<Mention> mentions = HibernateUtil.getSession().createQuery("from Mention where (twitidceleb='"+twitid1+"' and twitidmentioned='"+twitid2+"') or (twitidceleb='"+twitid2+"' and twitidmentioned='"+twitid1+"')").setMaxResults(200).list();

@@ -8,6 +8,7 @@
 <%@ page import="com.celebtwit.dao.Twitpl" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.celebtwit.dao.Pl" %>
+<%@ page import="com.celebtwit.scheduledjobs.GetTwitterPosts" %>
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "Celebs";
@@ -70,6 +71,10 @@ String acl = "sysadmin";
             if (twit.getTwitid()>0){
                 HibernateUtil.getSession().createQuery("delete Mention m where m.twitidceleb='"+twit.getTwitid()+"'").executeUpdate();
                 HibernateUtil.getSession().createQuery("delete Twitpost t where t.twitid='"+twit.getTwitid()+"'").executeUpdate();
+            }
+            //If it's being processed by GetTwitterPosts we need to note that it's been edited
+            if (GetTwitterPosts.isProcessing(twit.getTwitid())){
+                GetTwitterPosts.addToEditedDuringProcessing(twit.getTwitid());
             }
             //Set since_id to 1 so twitter api refreshes
             twit.setSince_id("1");

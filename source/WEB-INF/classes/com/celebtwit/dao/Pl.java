@@ -17,10 +17,14 @@ public class Pl extends BasePersistentClass implements java.io.Serializable, Aut
     // Fields
     private int plid;
     private String name;
+    private String sistername;
     private String celebiscalled;
     private String customdomain1;
     private String customdomain2;
     private String customdomain3;
+    private String sisterdomain1;
+    private String sisterdomain2;
+    private String sisterdomain3;
     private String twitterusername;
     private String twitterpassword;
 
@@ -148,5 +152,37 @@ public class Pl extends BasePersistentClass implements java.io.Serializable, Aut
 
     public void setTwitterpassword(String twitterpassword) {
         this.twitterpassword=twitterpassword;
+    }
+
+    public String getSisterdomain1() {
+        return sisterdomain1;
+    }
+
+    public void setSisterdomain1(String sisterdomain1) {
+        this.sisterdomain1=sisterdomain1;
+    }
+
+    public String getSisterdomain2() {
+        return sisterdomain2;
+    }
+
+    public void setSisterdomain2(String sisterdomain2) {
+        this.sisterdomain2=sisterdomain2;
+    }
+
+    public String getSisterdomain3() {
+        return sisterdomain3;
+    }
+
+    public void setSisterdomain3(String sisterdomain3) {
+        this.sisterdomain3=sisterdomain3;
+    }
+
+    public String getSistername() {
+        return sistername;
+    }
+
+    public void setSistername(String sistername) {
+        this.sistername=sistername;
     }
 }

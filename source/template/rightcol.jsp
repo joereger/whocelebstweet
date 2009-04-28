@@ -42,11 +42,19 @@
                 <%
                 if (true){
                     List<Pl> plsFooter = HibernateUtil.getSession().createCriteria(Pl.class)
-                                                   .add(Restrictions.ne("plid", Pagez.getUserSession().getPl().getPlid()))
                                                    .addOrder(Order.asc("name"))
                                                    .setMaxResults(1000)
                                                    .setCacheable(true)
                                                    .list();
+                    //Iterate first time for sister domains
+                    for (Iterator<Pl> iterator=plsFooter.iterator(); iterator.hasNext();) {
+                        Pl plFt=iterator.next();
+                        if (plFt.getSisterdomain1().length()>0 && plFt.getSistername().length()>0){
+                            %><a href="http://<%=plFt.getSisterdomain1()%>/"><font class="normalfont" style="font-weight:bold; color:#000000;"><%=plFt.getSistername()%></font></a><br/><%
+                        }
+                    }
+                    %><br/><%
+                    //Iterate second time for who domains
                     for (Iterator<Pl> iterator=plsFooter.iterator(); iterator.hasNext();) {
                         Pl plFt=iterator.next();
                         %><a href="http://<%=plFt.getCustomdomain1()%>/"><font class="normalfont" style="font-weight:bold; color:#000000;"><%=plFt.getName()%></font></a><br/><%
