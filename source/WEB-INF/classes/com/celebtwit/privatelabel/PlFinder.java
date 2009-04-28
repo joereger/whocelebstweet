@@ -73,6 +73,36 @@ public class PlFinder {
             logger.debug("Found pl via customdomain3="+pl.getCustomdomain3()+": plid="+pl.getPlid()+" name="+pl.getName());
             return pl;
         }
+        //Search via sisterdomain1
+        List<Pl> plsSisterdomain1 = HibernateUtil.getSession().createCriteria(Pl.class)
+                       .add(Restrictions.eq("sisterdomain1", request.getServerName().toLowerCase()))
+                       .setCacheable(true)
+                       .list();
+        for (Iterator<Pl> plIterator=plsSisterdomain1.iterator(); plIterator.hasNext();) {
+            Pl pl=plIterator.next();
+            logger.debug("Found pl via sisterdomain1="+pl.getSisterdomain1()+": plid="+pl.getPlid()+" name="+pl.getName());
+            return pl;
+        }
+        //Search via sisterdomain2
+        List<Pl> plsSisterdomain2 = HibernateUtil.getSession().createCriteria(Pl.class)
+                       .add(Restrictions.eq("sisterdomain2", request.getServerName().toLowerCase()))
+                       .setCacheable(true)
+                       .list();
+        for (Iterator<Pl> plIterator=plsSisterdomain2.iterator(); plIterator.hasNext();) {
+            Pl pl=plIterator.next();
+            logger.debug("Found pl via sisterdomain2="+pl.getSisterdomain2()+": plid="+pl.getPlid()+" name="+pl.getName());
+            return pl;
+        }
+        //Search via sisterdomain3
+        List<Pl> plsSisterdomain3 = HibernateUtil.getSession().createCriteria(Pl.class)
+                       .add(Restrictions.eq("sisterdomain3", request.getServerName().toLowerCase()))
+                       .setCacheable(true)
+                       .list();
+        for (Iterator<Pl> plIterator=plsSisterdomain3.iterator(); plIterator.hasNext();) {
+            Pl pl=plIterator.next();
+            logger.debug("Found pl via sisterdomain3="+pl.getSisterdomain3()+": plid="+pl.getPlid()+" name="+pl.getName());
+            return pl;
+        }
         //None found, return the basic
         return Pl.get(1);
     }
