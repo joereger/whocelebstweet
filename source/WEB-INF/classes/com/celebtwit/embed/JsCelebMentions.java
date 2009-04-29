@@ -1,10 +1,14 @@
 package com.celebtwit.embed;
 
 import com.celebtwit.dao.Twit;
+import com.celebtwit.dao.Pl;
 import com.celebtwit.systemprops.SystemProperty;
 import com.celebtwit.helpers.CountUniqueCelebsWhoMentioned;
 import com.celebtwit.helpers.CountMentionsByCelebs;
 import com.celebtwit.htmlui.Pagez;
+import com.celebtwit.htmluibeans.PublicTwitterWhoPanel;
+import com.celebtwit.cache.html.DbcacheexpirableCache;
+import org.apache.log4j.Logger;
 
 /**
  * User: Joe Reger Jr
@@ -14,6 +18,24 @@ import com.celebtwit.htmlui.Pagez;
 public class JsCelebMentions {
 
     public static String get(Twit twit, String twitterusername){
+        Logger logger = Logger.getLogger(PublicTwitterWhoPanel.class);
+        String out = "";
+        int twitid = 0;
+        if (twit!=null){twitid=twit.getTwitid();}
+        String key = "JsCelebMentions.java-twitid-"+twitid+"-twitterusername-"+twitterusername;
+        String group = "JsCelebMentions.java";
+        Object fromCache = DbcacheexpirableCache.get(key, group);
+        if (fromCache!=null){
+            try{out = (String)fromCache;}catch(Exception ex){logger.error("", ex);}
+        } else {
+            out = generate(twit, twitterusername);
+            DbcacheexpirableCache.put(key, group, out, DbcacheexpirableCache.expireIn6Hrs());
+        }
+        return out;
+    }
+
+
+    private static String generate(Twit twit, String twitterusername){
         int mentionsByCelebs = 0;
         if (twit!=null){
             twitterusername = twit.getTwitterusername();

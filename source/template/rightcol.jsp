@@ -6,6 +6,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.celebtwit.dao.Pl" %>
+<%@ page import="com.celebtwit.htmluibeans.PublicRightcolListCelebs" %>
 <div class="roundedBox" style="width:220px;">
                 <!--<center>-->
                     <font class="mediumfont">have <b>they</b> tweeted <b>you</b>?</font>
@@ -23,22 +24,7 @@
             <div class="roundedBoxXXX" style="width:220px; padding: 28px;">
                 <font class="mediumfont">the <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font><br/>
                 <a href="/suggest.jsp"><font class="tinyfont">who're we missing? suggest somebody!</font></a><br/><br/>
-                <%
-                if (true){
-                    List<Twit> celebs = HibernateUtil.getSession().createCriteria(Twit.class)
-                                                   .add(Restrictions.eq("isceleb", true))
-                                                   .addOrder(Order.asc("realname"))
-                                                   .createCriteria("twitpls")
-                                                   .add(Restrictions.eq("plid", Pagez.getUserSession().getPl().getPlid()))
-                                                   .setMaxResults(1000)
-                                                   .setCacheable(true)
-                                                   .list();
-                    for (Iterator<Twit> iterator=celebs.iterator(); iterator.hasNext();) {
-                        Twit twitFooter=iterator.next();
-                        %><a href="/twitter/<%=twitFooter.getTwitterusername()%>/"><font class="normalfont" style="font-weight:bold; color:#000000;">@<%=twitFooter.getRealname()%></font></a><br/><%
-                    }
-                }
-                %>
+                <%=PublicRightcolListCelebs.getHtml(Pagez.getUserSession().getPl())%>
                 <br/><br/>
                 <font class="mediumfont">have you checked out</font><br/><br/>
                 <%

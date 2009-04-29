@@ -26,6 +26,7 @@ import com.celebtwit.util.Num;
 import com.celebtwit.util.Str;
 import com.celebtwit.session.PersistentLogin;
 import com.celebtwit.systemprops.InstanceProperties;
+import com.celebtwit.cache.html.DbcacheexpirableCache;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -144,6 +145,8 @@ public class GetTwitterPosts implements Job {
                 twit.setFollowers_count(followers_count);
                 twit.setStatuses_count(statuses_count);
                 twit.save();
+                //Flush the cache for this user
+                DbcacheexpirableCache.flush("PublicTwitterTweetlist.java-twitid-"+twit.getTwitid());
             }
             //Report on RateLimitStatus
             //RateLimitStatus rls = twitter.rateLimitStatus();

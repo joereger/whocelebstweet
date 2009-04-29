@@ -9,6 +9,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.celebtwit.dao.Pl" %>
 <%@ page import="com.celebtwit.scheduledjobs.GetTwitterPosts" %>
+<%@ page import="com.celebtwit.cache.html.DbcacheexpirableCache" %>
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "Celebs";
@@ -84,6 +85,8 @@ String acl = "sysadmin";
             twit.setSince_id("1");
             //Refresh the twit to pick up the Twitpl changes
             twit.save();
+            //Flush the right col list cache
+            DbcacheexpirableCache.flush("PublicRightcolListCelebs.java");
             //Msg and then redir
             Pagez.getUserSession().setMessage("Celeb "+twit.getRealname()+" Saved!");
             Pagez.sendRedirect("/sysadmin/celebs.jsp");

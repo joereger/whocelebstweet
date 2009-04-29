@@ -10,6 +10,13 @@ import java.util.*;
 import org.apache.log4j.Logger;
 
 /**
+ * GENERALLY DEPRECATED... USES LOCAL IN-MEMORY MANUAL TRACKING... UGLY.
+ *
+ * USE HtmlCacheFromDbcache instead.
+ *
+ */
+
+/**
  * A very simple html cache.  Should only be applied to html sections that do not
  * require any logon.
  *
@@ -27,6 +34,17 @@ import org.apache.log4j.Logger;
  *     HtmlCache.updateCache(cachekey, request, refreshintervalinseconds, html);
  * }
  */
+
+
+
+/**
+ * GENERALLY DEPRECATED... USES LOCAL IN-MEMORY MANUAL TRACKING... UGLY.
+ *
+ * USE HtmlCacheFromDbcache instead.
+ *
+ */
+
+
 public class HtmlCache {
 
     Logger logger = Logger.getLogger(this.getClass().getName());
@@ -39,7 +57,7 @@ public class HtmlCache {
 
 
     public static boolean isStale(String keyGeneratedFromRequest, int refreshintervalinseconds){
-        Logger logger = Logger.getLogger("com.celebtwit.cache.html.HtmlCache");
+        Logger logger = Logger.getLogger("com.dneero.cache.html.HtmlCache");
         totalcacherequests = totalcacherequests + 1;
         if (htmlCache==null){
             return true;
@@ -143,7 +161,7 @@ public class HtmlCache {
                 refreshInterval.remove(key);
             }
         } catch (Exception e){
-            Logger logger = Logger.getLogger("com.celebtwit.cache.html.HtmlCache");
+            Logger logger = Logger.getLogger("com.dneero.cache.html.HtmlCache");
             logger.error("Error flushing HtmlCache", e);
         }
     }

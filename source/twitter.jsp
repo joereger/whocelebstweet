@@ -8,6 +8,9 @@
 <%@ page import="com.celebtwit.util.Time" %>
 <%@ page import="com.celebtwit.embed.JsCelebMentions" %>
 <%@ page import="com.celebtwit.embed.JsDifferentCelebs" %>
+<%@ page import="com.celebtwit.htmluibeans.PublicTwitterWhoPanel" %>
+<%@ page import="com.celebtwit.htmluibeans.PublicTwitterTweetlist" %>
+<%@ page import="com.celebtwit.util.Num" %>
 
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
@@ -39,9 +42,7 @@ if (Pagez.getUserSession().isSisterPl()){
 
 <%@ include file="/template/header.jsp" %>
 
-<%
-StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
-%>
+
 
 <div class="roundedBox" style="width:630px;">
     <%if (twit!=null && twit.getIsceleb()){%>
@@ -139,80 +140,7 @@ StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
                     <a href="/twitter/<%=twitterusername%>/when/today/<%=qs%>" style="<%=addToStyle%>">today</a>
                 </font>
             </div><br/>
-                <table cellpadding="10" cellspacing="0" border="0">
-                    <%if (twit.getIsceleb()){%>
-                        <tr>
-                            <td valign="top" width="50%">
-                                <%if (twit!=null && twit.getIsceleb()){%>
-                                    <font class="mediumfont">non-<%=Pagez.getUserSession().getPl().getCelebiscalled()%>s tweeted by @<%=twit.getRealname()%></font>
-                                <%} else {%>
-                                    <font class="mediumfont">non-<%=Pagez.getUserSession().getPl().getCelebiscalled()%>s tweeted by @<%=twitterusername%></font>
-                                <%}%>
-                                <br/><br/>
-                                <%
-                                if (true){
-                                    ArrayList<TwitMention> twitMentions = GetTwitsByMentioned.get(sted.getStartDate(), sted.getEndDate(), twit.getTwitid(), false, 15, Pagez.getUserSession().getPl().getPlid());
-                                    for (Iterator<TwitMention> iterator=twitMentions.iterator(); iterator.hasNext();) {
-                                        TwitMention twitMention = iterator.next();
-                                        %><font class="normalfont" style="font-weight:bold;"><a href="/twitter/<%=twitMention.getTwit().getTwitterusername()%>/">@<%=twitMention.getTwit().getTwitterusername()%></a></font><font class="tinyfont"> <%=twitMention.getMentions()%> tweets</font><br/><%
-                                    }
-                                }
-                                %>
-                            </td>
-                            <td valign="top">
-                                <%if (twit!=null && twit.getIsceleb()){%>
-                                    <font class="mediumfont"><%=Pagez.getUserSession().getPl().getCelebiscalled()%>s tweeted by @<%=twit.getRealname()%></font>
-                                <%} else {%>
-                                    <font class="mediumfont"><%=Pagez.getUserSession().getPl().getCelebiscalled()%>s tweeted by @<%=twitterusername%></font>
-                                <%}%>
-                                <br/><font class="tinyfont">click to see <%=Pagez.getUserSession().getPl().getCelebiscalled()%>-to-<%=Pagez.getUserSession().getPl().getCelebiscalled()%> chatter</font>
-                                <br/><br/>
-                                <%
-                                if (true){
-                                    ArrayList<TwitMention> twitMentions = GetTwitsByMentioned.get(sted.getStartDate(), sted.getEndDate(), twit.getTwitid(), true, 15, Pagez.getUserSession().getPl().getPlid());
-                                    for (Iterator<TwitMention> iterator=twitMentions.iterator(); iterator.hasNext();) {
-                                        TwitMention twitMention = iterator.next();
-                                        %><font class="normalfont" style="font-weight:bold;"><a href="/chatter/<%=twit.getTwitterusername()%>/<%=twitMention.getTwit().getTwitterusername()%>/">@<%=twitMention.getTwit().getRealname()%></a></font><font class="tinyfont"> <%=twitMention.getMentions()%> tweets</font><br/><%
-                                    }
-                                }
-                                %>
-                            </td>
-                        </tr>
-                    <%}%>
-                    <tr>
-                        <td valign="top" width="50%">
-                            <script type="text/javascript">
-                            google_ad_client = "pub-9883617370563969";
-                            /* 250x250 WhoCelebsTwitter */
-                            google_ad_slot = "3938353254";
-                            google_ad_width = 250;
-                            google_ad_height = 250;
-                            //
-                            </script>
-                            <script type="text/javascript"
-                            src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-                            </script>
-                        </td>
-                        <td valign="top">
-                            <%if (twit!=null && twit.getIsceleb()){%>
-                                <font class="mediumfont"><%=Pagez.getUserSession().getPl().getCelebiscalled()%>s who've tweeted @<%=twit.getRealname()%></font>
-                            <%} else {%>
-                                <font class="mediumfont"><%=Pagez.getUserSession().getPl().getCelebiscalled()%>s who've tweeted @<%=twitterusername%></font>
-                            <%}%>
-                            <br/><font class="tinyfont">click to see <%=Pagez.getUserSession().getPl().getCelebiscalled()%>-to-<%=Pagez.getUserSession().getPl().getCelebiscalled()%> chatter</font>
-                            <br/><br/>
-                            <%
-                            if (true){
-                                ArrayList<TwitCelebWhoMentioned> twitUniques = GetCelebsWhoMentioned.get(sted.getStartDate(), sted.getEndDate(), twit.getTwitid(), 15, Pagez.getUserSession().getPl().getPlid());
-                                for (Iterator<TwitCelebWhoMentioned> iterator=twitUniques.iterator(); iterator.hasNext();) {
-                                    TwitCelebWhoMentioned twitCelebWhoMentioned = iterator.next();
-                                    %><font class="normalfont" style="font-weight:bold;"><a href="/chatter/<%=twit.getTwitterusername()%>/<%=twitCelebWhoMentioned.getTwit().getTwitterusername()%>/">@<%=twitCelebWhoMentioned.getTwit().getRealname()%></a></font><font class="tinyfont"> <%=twitCelebWhoMentioned.getMentions()%> tweets</font><br/><%
-                                }
-                            }
-                            %>
-                        </td>
-                    </tr>
-                </table>
+            <%=PublicTwitterWhoPanel.getHtml(twit, twitterusername, Pagez.getUserSession().getPl(), request.getParameter("time"))%>
         </div>
     <%}%>
 <%}%>
@@ -224,20 +152,15 @@ StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
                 <td valign="top">
 
                     <div class="roundedBoxNoRound" style="width:420px; overflow:hidden;">
-                            <font class="largefont">@<%=twit.getRealname()%>'s recent tweets</font>
+                            <font class="mediumfont"><%=twit.getRealname()%>'s recent tweets</font>
                             <br/><br/>
                             <%
-                            List<Twitpost> twitposts = HibernateUtil.getSession().createCriteria(Twitpost.class)
-                                                               .add(Restrictions.eq("twitid", twit.getTwitid()))
-                                                               .addOrder(Order.desc("created_at"))
-                                                               .setMaxResults(100)
-                                                               .setCacheable(true)
-                                                               .list();
-                                for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
-                                    Twitpost twitpost=tpIt.next();
-                                    %><%=TwitpostAsHtml.get(twitpost, 400)%><%
-                                }
+                                int tweetsPage = 1;
+                                if (Num.isinteger(request.getParameter("tweetsPage"))){ tweetsPage = Integer.parseInt(request.getParameter("tweetsPage")); }
                             %>
+                            <%=PublicTwitterTweetlist.getHtml(twit, tweetsPage)%>
+                            <br/><br/>
+                            <a href="/twitter/<%=twitterusername%>/?tweetsPage=<%=tweetsPage+1%>"><font class="normalfont">older tweets >></font></a>
                     </div>
                 </td>
                 <td valign="top" width="160">

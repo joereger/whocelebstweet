@@ -3,6 +3,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.celebtwit.helpers.*" %>
 <%@ page import="com.celebtwit.dao.Twitpost" %>
+<%@ page import="com.celebtwit.htmluibeans.PublicIndexWhoPanel" %>
+<%@ page import="com.celebtwit.htmluibeans.PublicIndexTweetlist" %>
+<%@ page import="com.celebtwit.util.Num" %>
 
 
 <%
@@ -14,9 +17,7 @@ String acl = "public";
 <%@ include file="/template/auth.jsp" %>
 <%@ include file="/template/header.jsp" %>
 
-<%
-StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
-%>
+
 
 <%if (!Pagez.getUserSession().isSisterPl()){%>
     <div class="roundedBox" style="width:630px;">
@@ -43,81 +44,9 @@ StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
                 <a href="/index.jsp?time=today<%=qs%>" style="<%=addToStyle%>">today</a>
             </font>
         </div><br/>
-        <table cellpadding="0" cellspacing="10" border="0">
-            <tr>
-                <td valign="top" width="50%">
-                    <img src="/images/infoicon-celebtonon.png" alt="" width="110" height="64" align="left">
-                    <font class="mediumfont" style="color:#666666;">non-<%=Pagez.getUserSession().getPl().getCelebiscalled()%>s tweeted the most by <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font>
-                </td>
-                <td valign="top">
-                    <img src="/images/infoicon-celebtoceleb.png" alt="" width="110" height="64" align="left">
-                    <font class="mediumfont" style="color:#666666;"><%=Pagez.getUserSession().getPl().getCelebiscalled()%>s tweeted the most by other <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top" width="50%">
-                    <%
-                    if (true){
-                        ArrayList<TwitMention> twitMentions = GetTwitsByMentioned.get(sted.getStartDate(), sted.getEndDate(), 0, false, 15, Pagez.getUserSession().getPl().getPlid());
-                        for (Iterator<TwitMention> iterator=twitMentions.iterator(); iterator.hasNext();) {
-                            TwitMention twitMention = iterator.next();
-                            %><font class="normalfont" style="font-weight:bold;"><a href="/twitter/<%=twitMention.getTwit().getTwitterusername()%>/">@<%=twitMention.getTwit().getTwitterusername()%></a></font><font class="tinyfont"> in <%=twitMention.getMentions()%> <%=Pagez.getUserSession().getPl().getCelebiscalled()%> tweets<br/></font><%
-                        }
-                    }
-                    %>
-                </td>
-                <td valign="top">
-                    <%
-                    if (true){
-                        ArrayList<TwitMention> twitMentions = GetTwitsByMentioned.get(sted.getStartDate(), sted.getEndDate(), 0, true, 15, Pagez.getUserSession().getPl().getPlid());
-                        for (Iterator<TwitMention> iterator=twitMentions.iterator(); iterator.hasNext();) {
-                            TwitMention twitMention = iterator.next();
-                            %><font class="normalfont" style="font-weight:bold;"><a href="/twitter/<%=twitMention.getTwit().getTwitterusername()%>/">@<%=twitMention.getTwit().getRealname()%></a></font><font class="tinyfont"> in <%=twitMention.getMentions()%> <%=Pagez.getUserSession().getPl().getCelebiscalled()%> tweets</font><br/><%
-                        }
-                    }
-                    %>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <img src="/images/clear.gif" alt="" width="1" height="10" align="left">
-                </td>
-            </tr>
-            <tr>
-                <td valign="top" width="50%">
-                    <img src="/images/infoicon-manycelebstonon.png" alt="" width="110" height="64" align="left">
-                    <font class="mediumfont" style="color:#666666;">non-<%=Pagez.getUserSession().getPl().getCelebiscalled()%>s tweeted by the most different <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font>
-                </td>
-                <td valign="top">
-                    <img src="/images/infoicon-manycelebstoceleb.png" alt="" width="110" height="64" align="left">
-                    <font class="mediumfont" style="color:#666666;"><%=Pagez.getUserSession().getPl().getCelebiscalled()%>s tweeted by the most different <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top" width="50%">
-                    <%
-                    if (true){
-                        ArrayList<TwitUniqueCelebsMentioning> twitUniques = GetTwitsByUniqueCelebsMentioning.get(sted.getStartDate(), sted.getEndDate(), false, 15, Pagez.getUserSession().getPl().getPlid());
-                        for (Iterator<TwitUniqueCelebsMentioning> iterator=twitUniques.iterator(); iterator.hasNext();) {
-                            TwitUniqueCelebsMentioning twitUnique = iterator.next();
-                            %><font class="normalfont" style="font-weight:bold;"><a href="/twitter/<%=twitUnique.getTwit().getTwitterusername()%>/">@<%=twitUnique.getTwit().getTwitterusername()%></a></font><font class="tinyfont"> tweeted by <%=twitUnique.getUniquecelebsmentioning()%> <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font><br/><%
-                        }
-                    }
-                    %>
-                </td>
-                <td valign="top">
-                    <%
-                    if (true){
-                        ArrayList<TwitUniqueCelebsMentioning> twitUniques = GetTwitsByUniqueCelebsMentioning.get(sted.getStartDate(), sted.getEndDate(), true, 15, Pagez.getUserSession().getPl().getPlid());
-                        for (Iterator<TwitUniqueCelebsMentioning> iterator=twitUniques.iterator(); iterator.hasNext();) {
-                            TwitUniqueCelebsMentioning twitUnique = iterator.next();
-                            %><font class="normalfont" style="font-weight:bold;"><a href="/twitter/<%=twitUnique.getTwit().getTwitterusername()%>/">@<%=twitUnique.getTwit().getRealname()%></a></font><font class="tinyfont"> tweeted by <%=twitUnique.getUniquecelebsmentioning()%> <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font><br/><%
-                        }
-                    }
-                    %>
-                </td>
-            </tr>
-        </table>
+
+        <%=PublicIndexWhoPanel.getHtml(Pagez.getUserSession().getPl(), request.getParameter("time"))%>
+
     </div>
 <%}%>
 
@@ -131,19 +60,12 @@ StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
                         <br/><br/>
                     <%}%>
                     <%
-                    List<Twitpost> twitposts = HibernateUtil.getSession().createCriteria(Twitpost.class)
-                            .addOrder(Order.desc("created_at"))
-                            .createCriteria("twit")
-                            .createCriteria("twitpls")
-                            .add(Restrictions.eq("plid", Pagez.getUserSession().getPl().getPlid()))
-                            .setMaxResults(25)
-                            .setCacheable(true)
-                            .list();
-                        for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
-                            Twitpost twitpost=tpIt.next();
-                            %><%=TwitpostAsHtml.get(twitpost, 400)%><%
-                        }
+                        int tweetsPage = 1;
+                        if (Num.isinteger(request.getParameter("tweetsPage"))){ tweetsPage = Integer.parseInt(request.getParameter("tweetsPage")); }
                     %>
+                    <%=PublicIndexTweetlist.getHtml(Pagez.getUserSession().getPl(), tweetsPage)%>
+                    <br/><br/>
+                    <a href="/index.jsp?tweetsPage=<%=tweetsPage+1%>"><font class="normalfont">older tweets >></font></a>
             </div>
 
         </td>
