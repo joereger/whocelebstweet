@@ -2,6 +2,7 @@ package com.celebtwit.htmluibeans;
 
 import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twitpost;
+import com.celebtwit.dao.Twit;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.cache.html.DbcacheexpirableCache;
 import com.celebtwit.helpers.*;
@@ -21,14 +22,25 @@ import java.util.List;
  */
 public class PublicIndexTweetlist {
 
-
     public static String getHtml(Pl pl, int page){
+        return getHtml(pl, page, false);
+    }
+
+    public static String getHtml(Pl pl, int page, String refreshRequestParam){
+        boolean forceRefresh = false;
+        if (refreshRequestParam!=null && (refreshRequestParam.equals("true") || refreshRequestParam.equals("1"))){
+            forceRefresh = true;
+        }
+        return getHtml(pl, page, forceRefresh);
+    }
+
+    public static String getHtml(Pl pl, int page, boolean forceRefresh){
         Logger logger = Logger.getLogger(PublicTwitterWhoPanel.class);
         String out = "";
         String key = "plid-"+pl.getPlid()+"-page-"+page;
         String group = "PublicIndexTweetlist.java";
         Object fromCache = DbcacheexpirableCache.get(key, group);
-        if (fromCache!=null){
+        if (fromCache!=null && !forceRefresh){
             try{out = (String)fromCache;}catch(Exception ex){logger.error("", ex);}
         } else {
             out = generateHtml(pl, page);
@@ -53,7 +65,7 @@ public class PublicIndexTweetlist {
             .list();
         for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
             Twitpost twitpost=tpIt.next();
-            out.append(TwitpostAsHtml.get(twitpost, 400));
+            out.append(TwitpostAsHtml.get(twitpost, 460));
         }
 
 

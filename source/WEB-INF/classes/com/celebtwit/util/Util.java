@@ -24,6 +24,19 @@ public class Util {
         return out;
     }
 
+    /**
+     * Clean for appendreplacement.  Java is a real pain in the arse when it comes to dollar signs and dashes.
+     * This method must be called on any appendreplacement string.
+     */
+     public static String cleanForAppendreplacement(String in){
+        String out = "";
+        if(in!=null){
+            out=in.replaceAll("\\\\","\\\\\\\\").replaceAll("\\$", "\\\\\\$");
+        }
+
+        return out;
+    }
+
 
 
     public static void logStackTrace(int levelsdeep){

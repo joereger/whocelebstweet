@@ -50,20 +50,20 @@ String acl = "public";
     </div>
 <%}%>
 
+
+<%if (!Pagez.getUserSession().isSisterPl()){%>
+    <font class="largefont">recent <%=Pagez.getUserSession().getPl().getCelebiscalled()%> tweets</font>
+    <br/><br/>
+<%}%>
 <table cellpadding="3" cellspacing="0" border="0" width="100%">
     <tr>
         <td valign="top">
-
-            <div style="width:420px; padding: 0px; overflow:hidden;">
-                    <%if (!Pagez.getUserSession().isSisterPl()){%>
-                        <font class="largefont">recent <%=Pagez.getUserSession().getPl().getCelebiscalled()%> tweets</font>
-                        <br/><br/>
-                    <%}%>
+            <div style="width:480px; padding: 0px; overflow:hidden;">
                     <%
                         int tweetsPage = 1;
                         if (Num.isinteger(request.getParameter("tweetsPage"))){ tweetsPage = Integer.parseInt(request.getParameter("tweetsPage")); }
                     %>
-                    <%=PublicIndexTweetlist.getHtml(Pagez.getUserSession().getPl(), tweetsPage)%>
+                    <%=PublicIndexTweetlist.getHtml(Pagez.getUserSession().getPl(), tweetsPage, request.getParameter("forceRefresh"))%>
                     <br/><br/>
                     <a href="/index.jsp?tweetsPage=<%=tweetsPage+1%>"><font class="normalfont">older tweets >></font></a>
             </div>
@@ -71,7 +71,7 @@ String acl = "public";
         </td>
         <td valign="top" width="160">
             <%if (!Pagez.getUserSession().isSisterPl()){%>
-                <img src="/images/clear.gif" alt="" width="1" height="70"><br/>
+                <!--<img src="/images/clear.gif" alt="" width="1" height="70"><br/>-->
             <%}%>
             <script type="text/javascript"><!--
             google_ad_client = "pub-9883617370563969";

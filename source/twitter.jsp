@@ -147,24 +147,24 @@ if (Pagez.getUserSession().isSisterPl()){
 
 <%if (twit!=null && twit.getTwitid()>0){%>
     <%if (twit.getIsceleb()){%>
+        <font class="mediumfont"><%=twit.getRealname()%>'s recent tweets</font>
+        <br/><br/>
         <table cellpadding="3" cellspacing="0" border="0" width="100%">
             <tr>
                 <td valign="top">
+                    <div class="roundedBoxNoRound" style="width:480px; overflow:hidden;">
 
-                    <div class="roundedBoxNoRound" style="width:420px; overflow:hidden;">
-                            <font class="mediumfont"><%=twit.getRealname()%>'s recent tweets</font>
-                            <br/><br/>
                             <%
                                 int tweetsPage = 1;
                                 if (Num.isinteger(request.getParameter("tweetsPage"))){ tweetsPage = Integer.parseInt(request.getParameter("tweetsPage")); }
                             %>
-                            <%=PublicTwitterTweetlist.getHtml(twit, tweetsPage)%>
+                            <%=PublicTwitterTweetlist.getHtml(twit, tweetsPage, request.getParameter("forceRefresh"))%>
                             <br/><br/>
                             <a href="/twitter/<%=twitterusername%>/?tweetsPage=<%=tweetsPage+1%>"><font class="normalfont">older tweets >></font></a>
                     </div>
                 </td>
                 <td valign="top" width="160">
-                    <img src="/images/clear.gif" alt="" width="1" height="70"><br/>
+                    <!--<img src="/images/clear.gif" alt="" width="1" height="70"><br/>-->
                     <script type="text/javascript"><!--
                     google_ad_client = "pub-9883617370563969";
                     /* 160x600, Skyscraper */

@@ -22,14 +22,25 @@ import java.util.List;
  */
 public class PublicTwitterTweetlist {
 
-
     public static String getHtml(Twit twit, int page){
+        return getHtml(twit, page, false);
+    }
+
+    public static String getHtml(Twit twit, int page, String refreshRequestParam){
+        boolean forceRefresh = false;
+        if (refreshRequestParam!=null && (refreshRequestParam.equals("true") || refreshRequestParam.equals("1"))){
+            forceRefresh = true;
+        }
+        return getHtml(twit, page, forceRefresh);
+    }
+
+    public static String getHtml(Twit twit, int page, boolean forceRefresh){
         Logger logger = Logger.getLogger(PublicTwitterWhoPanel.class);
         String out = "";
         String key = "page-"+page;
         String group = "PublicTwitterTweetlist.java-twitid-"+twit.getTwitid();
         Object fromCache = DbcacheexpirableCache.get(key, group);
-        if (fromCache!=null){
+        if (fromCache!=null && !forceRefresh){
             try{out = (String)fromCache;}catch(Exception ex){logger.error("", ex);}
         } else {
             out = generateHtml(twit, page);
@@ -52,7 +63,7 @@ public class PublicTwitterTweetlist {
                                        .list();
         for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
             Twitpost twitpost=tpIt.next();
-            out.append(TwitpostAsHtml.get(twitpost, 400));
+            out.append(TwitpostAsHtml.get(twitpost, 460));
         }
         return out.toString();
     }
