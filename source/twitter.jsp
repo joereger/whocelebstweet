@@ -140,7 +140,7 @@ if (Pagez.getUserSession().isSisterPl()){
                     <a href="/twitter/<%=twitterusername%>/when/today/<%=qs%>" style="<%=addToStyle%>">today</a>
                 </font>
             </div><br/>
-            <%=PublicTwitterWhoPanel.getHtml(twit, twitterusername, Pagez.getUserSession().getPl(), request.getParameter("time"))%>
+            <%=PublicTwitterWhoPanel.getHtml(twit, twitterusername, Pagez.getUserSession().getPl(), request.getParameter("time"), request.getParameter("forceRefresh"))%>
         </div>
     <%}%>
 <%}%>

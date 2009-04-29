@@ -20,12 +20,24 @@ import org.apache.log4j.Logger;
 public class PublicTwitterWhoPanel {
 
     public static String getHtml(Twit twit, String twitterusername, Pl pl, String requestParamTime){
+        return getHtml(twit, twitterusername, pl, requestParamTime, false);
+    }
+
+    public static String getHtml(Twit twit, String twitterusername, Pl pl, String requestParamTime, String refreshRequestParam){
+        boolean forceRefresh = false;
+        if (refreshRequestParam!=null && (refreshRequestParam.equals("true") || refreshRequestParam.equals("1"))){
+            forceRefresh = true;
+        }
+        return getHtml(twit, twitterusername, pl, requestParamTime, forceRefresh);
+    }
+
+    public static String getHtml(Twit twit, String twitterusername, Pl pl, String requestParamTime, boolean forceRefresh){
         Logger logger = Logger.getLogger(PublicTwitterWhoPanel.class);
         String out = "";
         String key = "twitter.jsp-whopanel-twitid="+twit.getTwitid()+"-twitterusername-"+twitterusername+"-time-"+requestParamTime;
         String group = "PublicTwitterWhoPanel.java-plid-"+pl.getPlid();
         Object fromCache = DbcacheexpirableCache.get(key, group);
-        if (fromCache!=null){
+        if (fromCache!=null && !forceRefresh){
             try{out = (String)fromCache;}catch(Exception ex){logger.error("", ex);}
         } else {
             out = generateHtml(twit, twitterusername, pl, requestParamTime);

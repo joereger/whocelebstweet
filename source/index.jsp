@@ -45,7 +45,7 @@ String acl = "public";
             </font>
         </div><br/>
 
-        <%=PublicIndexWhoPanel.getHtml(Pagez.getUserSession().getPl(), request.getParameter("time"))%>
+        <%=PublicIndexWhoPanel.getHtml(Pagez.getUserSession().getPl(), request.getParameter("time"), request.getParameter("forceRefresh"))%>
 
     </div>
 <%}%>

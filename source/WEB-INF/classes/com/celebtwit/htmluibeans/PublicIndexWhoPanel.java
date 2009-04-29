@@ -20,12 +20,24 @@ import org.apache.log4j.Logger;
 public class PublicIndexWhoPanel {
 
     public static String getHtml(Pl pl, String requestParamTime){
+        return getHtml(pl, requestParamTime, false);
+    }
+
+    public static String getHtml(Pl pl, String requestParamTime, String refreshRequestParam){
+        boolean forceRefresh = false;
+        if (refreshRequestParam!=null && (refreshRequestParam.equals("true") || refreshRequestParam.equals("1"))){
+            forceRefresh = true;
+        }
+        return getHtml(pl, requestParamTime, forceRefresh);
+    }
+
+    public static String getHtml(Pl pl, String requestParamTime, boolean forceRefresh){
         Logger logger = Logger.getLogger(PublicTwitterWhoPanel.class);
         String out = "";
         String key = "index.jsp-whopanel-time-"+requestParamTime;
         String group = "PublicIndexWhoPanel.java-plid-"+pl.getPlid();
         Object fromCache = DbcacheexpirableCache.get(key, group);
-        if (fromCache!=null){
+        if (fromCache!=null && !forceRefresh){
             try{out = (String)fromCache;}catch(Exception ex){logger.error("", ex);}
         } else {
             out = generateHtml(pl, requestParamTime);

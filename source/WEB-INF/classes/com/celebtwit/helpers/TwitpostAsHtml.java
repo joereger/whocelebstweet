@@ -75,7 +75,7 @@ public class TwitpostAsHtml {
             while(m.find()) {
                 String match = m.group();
                 //if (haveLink){logger.debug("match="+match);}
-                m.appendReplacement(out, Util.cleanForAppendreplacement("<a href=\""+match+"\">"+match+"</a>"));
+                m.appendReplacement(out, Util.cleanForAppendreplacement("<a href=\""+match+"\" target=\"_blank\">"+match+"</a>"));
             }
             // Add the last segment
             try{
