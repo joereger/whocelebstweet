@@ -20,7 +20,7 @@ public class JsDifferentCelebs {
         }
 
         StringBuffer o = new StringBuffer();
-        o.append("<div style=\"width:175px; background-color:#cccccc; overflow:hidden; text-align:center;  padding: 5px; border: 2px #999999 solid;\">");
+        o.append("<div style=\"width:150px; background-color:#cccccc; overflow:hidden; text-align:center;  padding: 5px; border: 2px #999999 solid;\">");
         o.append("<center>");
         o.append("<a href=\"http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/\">");
         if (twit!=null && twit.getIsceleb()){

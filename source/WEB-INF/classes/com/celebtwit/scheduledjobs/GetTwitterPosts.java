@@ -94,6 +94,10 @@ public class GetTwitterPosts implements Job {
             long since_id_orig = 1;
             if (Num.islong(twit.getSince_id())){ since_id_orig = Long.parseLong(twit.getSince_id());}
             String profile_image_url = twit.getProfile_image_url();
+            String website_url = twit.getWebsite_url();
+            String description = twit.getDescription();
+            int statuses_count = twit.getStatuses_count();
+            int followers_count = twit.getFollowers_count();
             boolean foundAPost = false;
             //Iterate pages
             for(int page=1; page<20; page++){
@@ -110,13 +114,16 @@ public class GetTwitterPosts implements Job {
                     TwitterStatus status=statusIterator.next();
                     processStatus(twit, status);
                     profile_image_url = status.getProfile_image_url();
+                    website_url = status.getWebsite_url();
+                    description = status.getDescription();
+                    if (Num.isinteger(status.getStatuses_count())){ statuses_count = Integer.parseInt(status.getStatuses_count()); }
+                    if (Num.isinteger(status.getFollowers_count())){ followers_count = Integer.parseInt(status.getFollowers_count()); }
                     //Only keep the highest status seen so far
                     if (Num.islong(status.getId())){
                         if (Long.parseLong(status.getId())>since_id_curr){
                             since_id_curr = Long.parseLong(status.getId());
                         }
                     }
-
                 }
             }
             //Only if a post was found
@@ -132,6 +139,10 @@ public class GetTwitterPosts implements Job {
                 twit.setProfile_image_url(profile_image_url);
                 twit.setSince_id(String.valueOf(since_id_curr));
                 twit.setLastprocessed(new Date());
+                twit.setWebsite_url(website_url);
+                twit.setDescription(description);
+                twit.setFollowers_count(followers_count);
+                twit.setStatuses_count(statuses_count);
                 twit.save();
             }
             //Report on RateLimitStatus
@@ -241,6 +252,10 @@ public class GetTwitterPosts implements Job {
                 for (Iterator j = el.elementIterator("user"); j.hasNext(); ) {
                     Element elUser = (Element)j.next();
                     ts.setProfile_image_url(elUser.elementText("profile_image_url"));
+                    ts.setWebsite_url(elUser.elementText("url"));
+                    ts.setDescription(elUser.elementText("description"));
+                    ts.setFollowers_count(elUser.elementText("followers_count"));
+                    ts.setStatuses_count(elUser.elementText("statuses_count"));
                 }
                 out.add(ts);
                 logger.debug("parsing xml - id="+ts.getId()+" created_at="+ts.getCreated_at()+" text="+ts.getText());
@@ -306,6 +321,10 @@ public class GetTwitterPosts implements Job {
                     newTwit.setSince_id("1");
                     newTwit.setTwitterusername(mentionedUsername);
                     newTwit.setProfile_image_url("");
+                    newTwit.setDescription("");
+                    newTwit.setWebsite_url("");
+                    newTwit.setStatuses_count(0);
+                    newTwit.setFollowers_count(0);
                     newTwit.save();
                     twitToUpdate = newTwit;
                 }

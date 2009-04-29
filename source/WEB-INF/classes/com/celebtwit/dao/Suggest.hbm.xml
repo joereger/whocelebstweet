@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 17, 2006 3:45:28 PM by Hibernate Tools 3.1.0.beta4 -->
+<hibernate-mapping>
+    <class name="com.celebtwit.dao.Suggest" table="suggest">
+        <cache usage="transactional"/>
+        <id name="suggestid" type="int">
+            <column name="suggestid" />
+            <generator class="native" />
+        </id>
+
+
+        <property name="realname" type="string">
+            <column name="realname" not-null="true" />
+        </property>
+        <property name="twitterusername" type="string">
+            <column name="twitterusername" not-null="true" />
+        </property>
+        <property name="submitteremail" type="string">
+            <column name="submitteremail" not-null="true" />
+        </property>
+        <property name="reason" type="text">
+            <column name="reason" not-null="true" />
+        </property>
+        <property name="plid" type="int">
+            <column name="plid" not-null="true" />
+        </property>
+
+    </class>
+</hibernate-mapping>

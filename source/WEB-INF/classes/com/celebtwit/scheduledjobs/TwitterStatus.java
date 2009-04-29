@@ -14,6 +14,11 @@ public class TwitterStatus {
     private String text;
     private String id;
     private String profile_image_url;
+    private String website_url;
+    private String description;
+    private String followers_count;
+    private String statuses_count;
+
 
     public Date getCreated_at() {
         return created_at;
@@ -53,5 +58,37 @@ public class TwitterStatus {
 
     public void setProfile_image_url(String profile_image_url) {
         this.profile_image_url=profile_image_url;
+    }
+
+    public String getWebsite_url() {
+        return website_url;
+    }
+
+    public void setWebsite_url(String website_url) {
+        this.website_url=website_url;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description=description;
+    }
+
+    public String getFollowers_count() {
+        return followers_count;
+    }
+
+    public void setFollowers_count(String followers_count) {
+        this.followers_count=followers_count;
+    }
+
+    public String getStatuses_count() {
+        return statuses_count;
+    }
+
+    public void setStatuses_count(String statuses_count) {
+        this.statuses_count=statuses_count;
     }
 }

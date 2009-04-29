@@ -73,7 +73,25 @@ StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
     <center>
         <table cellpadding="10" cellspacing="5" border="0">
             <tr>
-                <td valign="top" width="200">
+                <td valign="top">
+                    <%if (twit!=null && twit.getDescription().length()>0){%>
+                        <font class="normalfont"><%=twit.getDescription()%></font>
+                        <br/><br/>
+                    <%}%>
+                    <%if (twit!=null && twit.getWebsite_url().length()>0){%>
+                        <font class="smallfont"><a href="<%=twit.getWebsite_url()%>" target="_blank">Website</a></font>
+                        <br/>
+                    <%}%>
+                    <%if (twit!=null && twit.getFollowers_count()>0){%>
+                        <font class="smallfont"><%=twit.getFollowers_count()%> followers</font>
+                        <br/>
+                    <%}%>
+                    <%if (twit!=null && twit.getStatuses_count()>0){%>
+                        <font class="smallfont"><%=twit.getStatuses_count()%> updates</font>
+                        <br/>
+                    <%}%>
+                </td>
+                <td valign="top" width="175">
                     <%=JsCelebMentions.get(twit, twitterusername)%>
                     <a href="javascript:toggleA();"><font class="tinyfont">embed in your blog/website</font></a>
                     <div id="toggleTextA" style="display: none">
@@ -81,7 +99,7 @@ StartDateEndDate sted = new StartDateEndDate(request.getParameter("time"));
                         <br/><font class="smallfont">Copy and paste this code into your blog or website to display the box.</font>
                     </div>
                 </td>
-                <td valign="top" width="200">
+                <td valign="top" width="175">
                     <%=JsDifferentCelebs.get(twit, twitterusername)%>
                     <a href="javascript:toggleB();"><font class="tinyfont">embed in your blog/website</font></a>
                     <div id="toggleTextB" style="display: none">

@@ -10,6 +10,7 @@
         <mapping resource="com/celebtwit/dao/Systemprop.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Mention.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Pl.hbm.xml" />
+        <mapping resource="com/celebtwit/dao/Suggest.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Twit.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Twitpl.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Twitpost.hbm.xml" />

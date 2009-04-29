@@ -34,5 +34,17 @@
         <property name="profile_image_url" type="string">
             <column name="profile_image_url" not-null="true" />
         </property>
+        <property name="website_url" type="string">
+            <column name="website_url" not-null="true" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" not-null="true" />
+        </property>
+        <property name="followers_count" type="int">
+            <column name="followers_count" not-null="true" />
+        </property>
+        <property name="statuses_count" type="int">
+            <column name="statuses_count" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>

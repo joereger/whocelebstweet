@@ -19,8 +19,10 @@
                 <!--</center>-->
             </div>
 
+
             <div class="roundedBoxXXX" style="width:220px; padding: 28px;">
-                <font class="mediumfont">the <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font><br/><br/>
+                <font class="mediumfont">the <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font><br/>
+                <a href="/suggest.jsp"><font class="tinyfont">who're we missing? suggest somebody!</font></a><br/><br/>
                 <%
                 if (true){
                     List<Twit> celebs = HibernateUtil.getSession().createCriteria(Twit.class)

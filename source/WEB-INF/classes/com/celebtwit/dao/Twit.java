@@ -21,6 +21,10 @@ public class Twit extends BasePersistentClass implements java.io.Serializable, A
      private String since_id;
      private Date lastprocessed;
      private String profile_image_url;
+     private String website_url;
+     private String description;
+     private int followers_count;
+     private int statuses_count;
      private Set<Twitpl> twitpls = new HashSet<Twitpl>();
      
 
@@ -123,5 +127,37 @@ public class Twit extends BasePersistentClass implements java.io.Serializable, A
 
     public void setTwitpls(Set<Twitpl> twitpls) {
         this.twitpls=twitpls;
+    }
+
+    public String getWebsite_url() {
+        return website_url;
+    }
+
+    public void setWebsite_url(String website_url) {
+        this.website_url=website_url;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description=description;
+    }
+
+    public int getFollowers_count() {
+        return followers_count;
+    }
+
+    public void setFollowers_count(int followers_count) {
+        this.followers_count=followers_count;
+    }
+
+    public int getStatuses_count() {
+        return statuses_count;
+    }
+
+    public void setStatuses_count(int statuses_count) {
+        this.statuses_count=statuses_count;
     }
 }

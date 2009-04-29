@@ -24,6 +24,10 @@ String acl = "sysadmin";
     twit.setProfile_image_url("");
     twit.setSince_id("1");
     twit.setTwitterusername("");
+    twit.setDescription("");
+    twit.setWebsite_url("");
+    twit.setStatuses_count(0);
+    twit.setFollowers_count(0);
     if (request.getParameter("twitid")!=null && Num.isinteger(request.getParameter("twitid"))){
         twit = Twit.get(Integer.parseInt(request.getParameter("twitid")));
     }
