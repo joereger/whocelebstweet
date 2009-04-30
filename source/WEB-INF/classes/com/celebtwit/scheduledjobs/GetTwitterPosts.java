@@ -20,10 +20,7 @@ import org.dom4j.Element;
 import com.celebtwit.dao.*;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.dao.hibernate.NumFromUniqueResult;
-import com.celebtwit.util.GeneralException;
-import com.celebtwit.util.Time;
-import com.celebtwit.util.Num;
-import com.celebtwit.util.Str;
+import com.celebtwit.util.*;
 import com.celebtwit.session.PersistentLogin;
 import com.celebtwit.systemprops.InstanceProperties;
 import com.celebtwit.cache.html.DbcacheexpirableCache;
@@ -55,11 +52,20 @@ public class GetTwitterPosts implements Job {
     //Make sure multiple threads don't process the same twit
     private static HashMap<Integer, Boolean> processingStatus = new HashMap<Integer, Boolean>();
     private static HashMap<Integer, Boolean> editedDuringProcessing = new HashMap<Integer, Boolean>();
+    private static boolean processRunning = false;
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         Logger logger = Logger.getLogger(this.getClass().getName());
         if (InstanceProperties.getRunScheduledTasksOnThisInstance()){
             logger.debug("execute() GetTwitterPosts called");
+            //If another trigger is running, don't run
+            if (processRunning){
+                logger.error("Not running because processRunning=true "+Time.dateformatcompactwithtime(Time.nowInUserTimezone("EST")));
+                return;    
+            } else {
+                processRunning = true;
+            }
+            //Get on with it
             List<Twit> twits = HibernateUtil.getSession().createCriteria(Twit.class)
                                                .add(Restrictions.eq("isceleb", true))
                                                .addOrder(Order.asc("lastprocessed"))
@@ -85,6 +91,8 @@ public class GetTwitterPosts implements Job {
         } else {
             logger.debug("InstanceProperties.getRunScheduledTasksOnThisInstance() is FALSE for this instance so this task is not being executed.");
         }
+        //Reset the processRunning thing so that others can run too
+        processRunning = false;
     }
 
     public static void collectPosts(Twit twit){
