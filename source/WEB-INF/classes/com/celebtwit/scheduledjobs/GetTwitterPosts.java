@@ -3,6 +3,7 @@ package com.celebtwit.scheduledjobs;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.StatefulJob;
 import org.apache.log4j.Logger;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -43,7 +44,7 @@ import twitter4j.Twitter;
  * Date: Jul 19, 2006
  * Time: 2:22:28 PM
  */
-public class GetTwitterPosts implements Job {
+public class GetTwitterPosts implements StatefulJob {
 
     //regged w/joereger@charter.net
     private static String twitterusername = "whocelebstweet";
@@ -52,19 +53,19 @@ public class GetTwitterPosts implements Job {
     //Make sure multiple threads don't process the same twit
     private static HashMap<Integer, Boolean> processingStatus = new HashMap<Integer, Boolean>();
     private static HashMap<Integer, Boolean> editedDuringProcessing = new HashMap<Integer, Boolean>();
-    private static boolean processRunning = false;
+    //private static boolean processRunning = false;
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         Logger logger = Logger.getLogger(this.getClass().getName());
         if (InstanceProperties.getRunScheduledTasksOnThisInstance()){
             logger.debug("execute() GetTwitterPosts called");
             //If another trigger is running, don't run
-            if (processRunning){
-                logger.error("Not running because processRunning=true "+Time.dateformatcompactwithtime(Time.nowInUserTimezone("EST")));
-                return;    
-            } else {
-                processRunning = true;
-            }
+//            if (processRunning){
+//                logger.error("Not running because processRunning=true "+Time.dateformatcompactwithtime(Time.nowInUserTimezone("EST")));
+//                return;
+//            } else {
+//                processRunning = true;
+//            }
             //Get on with it
             List<Twit> twits = HibernateUtil.getSession().createCriteria(Twit.class)
                                                .add(Restrictions.eq("isceleb", true))
@@ -92,7 +93,7 @@ public class GetTwitterPosts implements Job {
             logger.debug("InstanceProperties.getRunScheduledTasksOnThisInstance() is FALSE for this instance so this task is not being executed.");
         }
         //Reset the processRunning thing so that others can run too
-        processRunning = false;
+        //processRunning = false;
     }
 
     public static void collectPosts(Twit twit){
@@ -267,6 +268,7 @@ public class GetTwitterPosts implements Job {
                     ts.setDescription(elUser.elementText("description"));
                     ts.setFollowers_count(elUser.elementText("followers_count"));
                     ts.setStatuses_count(elUser.elementText("statuses_count"));
+                    ts.setFollowing(elUser.elementText("following"));
                 }
                 out.add(ts);
                 logger.debug("parsing xml - id="+ts.getId()+" created_at="+ts.getCreated_at()+" text="+ts.getText());
@@ -328,6 +330,7 @@ public class GetTwitterPosts implements Job {
                     Twit newTwit = new Twit();
                     newTwit.setIsceleb(false);
                     newTwit.setLastprocessed(new Date());
+                    newTwit.setLaststatstweet(new Date());
                     newTwit.setRealname("");
                     newTwit.setSince_id("1");
                     newTwit.setTwitterusername(mentionedUsername);

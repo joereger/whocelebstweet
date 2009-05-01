@@ -44,7 +44,7 @@ public class PublicIndexTweetlist {
             try{out = (String)fromCache;}catch(Exception ex){logger.error("", ex);}
         } else {
             out = generateHtml(pl, page);
-            DbcacheexpirableCache.put(key, group, out, DbcacheexpirableCache.expireIn5Min());
+            DbcacheexpirableCache.put(key, group, out, DbcacheexpirableCache.expireIn15Min());
         }
         return out;
     }

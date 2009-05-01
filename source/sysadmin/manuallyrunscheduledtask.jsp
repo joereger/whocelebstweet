@@ -23,6 +23,10 @@ SysadminManuallyRunScheduledTask sysadminManuallyRunScheduledTask = (SysadminMan
                     sysadminManuallyRunScheduledTask.runPagePerformanceRecordAndFlush();
                 } else if (request.getParameter("task").equals("GetTwitterPosts")){
                     sysadminManuallyRunScheduledTask.runGetTwitterPosts();
+                } else if (request.getParameter("task").equals("MakeFriends")){
+                    sysadminManuallyRunScheduledTask.runMakeFriends();
+                } else if (request.getParameter("task").equals("StatsTweet")){
+                    sysadminManuallyRunScheduledTask.runStatsTweet();
                 } else {
                     throw new ValidationException("task not found.");    
                 }
@@ -42,6 +46,8 @@ SysadminManuallyRunScheduledTask sysadminManuallyRunScheduledTask = (SysadminMan
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=DeleteOldPersistentlogins"><font class="mediumfont">DeleteOldPersistentlogins</font></a>
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=SystemStats"><font class="mediumfont">SystemStats</font></a>
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=PagePerformanceRecordAndFlush"><font class="mediumfont">PagePerformanceRecordAndFlush</font></a>
+<br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=MakeFriends"><font class="mediumfont">MakeFriends</font></a>
+<br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=StatsTweet"><font class="mediumfont">StatsTweet</font></a>
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=GetTwitterPosts"><font class="mediumfont">GetTwitterPosts</font></a>
 
 

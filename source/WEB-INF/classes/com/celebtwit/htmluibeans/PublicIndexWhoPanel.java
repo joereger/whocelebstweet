@@ -41,7 +41,7 @@ public class PublicIndexWhoPanel {
             try{out = (String)fromCache;}catch(Exception ex){logger.error("", ex);}
         } else {
             out = generateHtml(pl, requestParamTime);
-            DbcacheexpirableCache.put(key, group, out, DbcacheexpirableCache.expireIn1Hr());
+            DbcacheexpirableCache.put(key, group, out, DbcacheexpirableCache.expireIn3Hrs());
         }
         return out;
     }

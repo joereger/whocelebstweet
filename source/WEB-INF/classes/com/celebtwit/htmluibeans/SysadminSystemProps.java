@@ -21,6 +21,7 @@ public class SysadminSystemProps implements Serializable {
     public String sendxmpp;
     public String smtpoutboundserver;
     public String issslon;
+    public String dostattweets;
 
     public SysadminSystemProps(){
 
@@ -33,7 +34,7 @@ public class SysadminSystemProps implements Serializable {
         sendxmpp = SystemProperty.getProp(SystemProperty.PROP_SENDXMPP);
         smtpoutboundserver = SystemProperty.getProp(SystemProperty.PROP_SMTPOUTBOUNDSERVER);
         issslon = SystemProperty.getProp(SystemProperty.PROP_ISSSLON);
-
+        dostattweets = SystemProperty.getProp(SystemProperty.PROP_DOSTATTWEETS);
     }
 
     public void saveProps() throws ValidationException {
@@ -43,6 +44,7 @@ public class SysadminSystemProps implements Serializable {
             SystemProperty.setProp(SystemProperty.PROP_SENDXMPP, sendxmpp);
             SystemProperty.setProp(SystemProperty.PROP_SMTPOUTBOUNDSERVER, smtpoutboundserver);
             SystemProperty.setProp(SystemProperty.PROP_ISSSLON, issslon);
+            SystemProperty.setProp(SystemProperty.PROP_DOSTATTWEETS, dostattweets);
             BaseUrl.refresh();
         } catch (Exception ex){
             logger.error("",ex);
@@ -79,5 +81,13 @@ public class SysadminSystemProps implements Serializable {
 
     public void setIssslon(String issslon) {
         this.issslon=issslon;
+    }
+
+    public String getDostattweets() {
+        return dostattweets;
+    }
+
+    public void setDostattweets(String dostattweets) {
+        this.dostattweets=dostattweets;
     }
 }

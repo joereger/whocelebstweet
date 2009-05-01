@@ -10,6 +10,7 @@
 <%@ page import="com.celebtwit.dao.Pl" %>
 <%@ page import="com.celebtwit.scheduledjobs.GetTwitterPosts" %>
 <%@ page import="com.celebtwit.cache.html.DbcacheexpirableCache" %>
+<%@ page import="java.util.Date" %>
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "Celebs";
@@ -22,6 +23,7 @@ String acl = "sysadmin";
     Twit twit = new Twit();
     twit.setIsceleb(true);
     twit.setLastprocessed(Time.xYearsAgoStart(Calendar.getInstance(), 25).getTime());
+    twit.setLaststatstweet(Time.xYearsAgoStart(Calendar.getInstance(), 25).getTime());
     twit.setProfile_image_url("");
     twit.setSince_id("1");
     twit.setTwitterusername("");

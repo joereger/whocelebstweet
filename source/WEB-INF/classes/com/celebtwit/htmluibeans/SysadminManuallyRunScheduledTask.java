@@ -21,25 +21,12 @@ public class SysadminManuallyRunScheduledTask implements Serializable {
 
 
 
-
-   
-
-
-
-
-
-
-
-
     public String runDeleteOldPersistentlogins(){
         Logger logger = Logger.getLogger(this.getClass().getName());
         try{DeleteOldPersistentlogins task = new DeleteOldPersistentlogins();
             task.execute(null);} catch (Exception ex){logger.error("",ex);}
         return "sysadminmanuallyrunscheduledtask";
     }
-
-
-
 
     
     public String runSystemStats(){
@@ -50,17 +37,25 @@ public class SysadminManuallyRunScheduledTask implements Serializable {
     }
 
 
-
-
-
-
-
-
-
-
     public String runPagePerformanceRecordAndFlush(){
         Logger logger = Logger.getLogger(this.getClass().getName());
         try{PagePerformanceRecordAndFlush task = new com.celebtwit.scheduledjobs.PagePerformanceRecordAndFlush();
+            task.execute(null);} catch (Exception ex){logger.error("",ex);}
+        return "sysadminmanuallyrunscheduledtask";
+    }
+
+    public String runMakeFriends(){
+        Logger logger = Logger.getLogger(this.getClass().getName());
+        try{
+            MakeFriends task = new MakeFriends();
+            task.execute(null);} catch (Exception ex){logger.error("",ex);}
+        return "sysadminmanuallyrunscheduledtask";
+    }
+
+    public String runStatsTweet(){
+        Logger logger = Logger.getLogger(this.getClass().getName());
+        try{
+            StatsTweet task = new StatsTweet();
             task.execute(null);} catch (Exception ex){logger.error("",ex);}
         return "sysadminmanuallyrunscheduledtask";
     }

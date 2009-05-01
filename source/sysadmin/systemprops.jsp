@@ -16,6 +16,7 @@ String acl = "sysadmin";
         try {
             sysadminSystemProps.setBaseurl(Textbox.getValueFromRequest("baseurl", "baseurl", true, DatatypeString.DATATYPEID));
             sysadminSystemProps.setIssslon(Textbox.getValueFromRequest("issslon", "issslon", true, DatatypeString.DATATYPEID));
+            sysadminSystemProps.setDostattweets(Textbox.getValueFromRequest("dostattweets", "dostattweets", true, DatatypeString.DATATYPEID));
             sysadminSystemProps.setSendxmpp(Textbox.getValueFromRequest("sendxmpp", "sendxmpp", true, DatatypeString.DATATYPEID));
             sysadminSystemProps.setSmtpoutboundserver(Textbox.getValueFromRequest("smtpoutboundserver", "smtpoutboundserver", true, DatatypeString.DATATYPEID));
             sysadminSystemProps.saveProps();
@@ -80,6 +81,18 @@ String acl = "sysadmin";
                 </td>
                 <td valign="top">
                     <%=Textbox.getHtml("issslon", sysadminSystemProps.getIssslon(), 255, 35, "", "")%>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td valign="top">
+                    <font class="formfieldnamefont">DoStatTweets</font>
+                    <br/>
+                    <font class="tinyfont">0 or 1.  Whether to send stat tweets to celebs from this server (careful, should usually be 0.)</font>
+                </td>
+                <td valign="top">
+                    <%=Textbox.getHtml("dostattweets", sysadminSystemProps.getDostattweets(), 255, 35, "", "")%>
                 </td>
             </tr>
 

@@ -139,6 +139,51 @@
 
     <job>
         <job-detail>
+          <name>makeFriends</name>
+          <group>surveyJobs</group>
+          <job-class>com.celebtwit.scheduledjobs.MakeFriends</job-class>
+          <volatility>false</volatility>
+          <durability>false</durability>
+          <recover>false</recover>
+        </job-detail>
+        <trigger>
+          <!-- Sample cron triggers: http://www.opensymphony.com/quartz/wikidocs/TutorialLesson6.html -->
+          <cron>
+            <name>makeFriendsTrigger</name>
+            <group>surveyTriggers</group>
+            <job-name>makeFriends</job-name>
+            <job-group>surveyJobs</job-group>
+            <!-- every 24 hours -->
+            <cron-expression>0 0 0/2 * * ?</cron-expression>
+          </cron>
+        </trigger>
+    </job>
+
+    <job>
+        <job-detail>
+          <name>statsTweet</name>
+          <group>surveyJobs</group>
+          <job-class>com.celebtwit.scheduledjobs.StatsTweet</job-class>
+          <volatility>false</volatility>
+          <durability>false</durability>
+          <recover>false</recover>
+        </job-detail>
+        <trigger>
+          <!-- Sample cron triggers: http://www.opensymphony.com/quartz/wikidocs/TutorialLesson6.html -->
+          <cron>
+            <name>statsTweetTrigger</name>
+            <group>surveyTriggers</group>
+            <job-name>statsTweet</job-name>
+            <job-group>surveyJobs</job-group>
+            <!-- on 30th minute at specified hours -->
+            <cron-expression>0 30 11,12,13,14,15,16,17,18,19,20 * * ?</cron-expression>
+          </cron>
+        </trigger>
+    </job>
+
+
+    <job>
+        <job-detail>
           <name>getTwitterPosts</name>
           <group>surveyJobs</group>
           <job-class>com.celebtwit.scheduledjobs.GetTwitterPosts</job-class>

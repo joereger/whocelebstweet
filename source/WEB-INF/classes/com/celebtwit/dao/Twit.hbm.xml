@@ -31,6 +31,9 @@
         <property name="lastprocessed" type="timestamp">
             <column name="lastprocessed" not-null="true" />
         </property>
+        <property name="laststatstweet" type="timestamp">
+            <column name="laststatstweet" not-null="true" />
+        </property>
         <property name="profile_image_url" type="string">
             <column name="profile_image_url" not-null="true" />
         </property>

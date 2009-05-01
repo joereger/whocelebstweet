@@ -27,7 +27,7 @@ public class SystemProperty {
     public static String PROP_SENDXMPP = "PROP_SENDXMPP";
     public static String PROP_SMTPOUTBOUNDSERVER = "PROP_SMTPOUTBOUNDSERVER";
     public static String PROP_ISSSLON = "PROP_ISSSLON";
-
+    public static String PROP_DOSTATTWEETS = "PROP_DOSTATTWEETS";
 
 
     private static void loadAllPropsAndDefaultValues(){
@@ -38,6 +38,7 @@ public class SystemProperty {
         props.put(PROP_SENDXMPP, "0");
         props.put(PROP_SMTPOUTBOUNDSERVER, "localhost");
         props.put(PROP_ISSSLON, "0");
+        props.put(PROP_DOSTATTWEETS, "0");
     }
 
 

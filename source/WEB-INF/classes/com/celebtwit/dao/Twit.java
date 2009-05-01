@@ -25,6 +25,7 @@ public class Twit extends BasePersistentClass implements java.io.Serializable, A
      private String description;
      private int followers_count;
      private int statuses_count;
+     private Date laststatstweet;
      private Set<Twitpl> twitpls = new HashSet<Twitpl>();
      
 
@@ -159,5 +160,13 @@ public class Twit extends BasePersistentClass implements java.io.Serializable, A
 
     public void setStatuses_count(int statuses_count) {
         this.statuses_count=statuses_count;
+    }
+
+    public Date getLaststatstweet() {
+        return laststatstweet;
+    }
+
+    public void setLaststatstweet(Date laststatstweet) {
+        this.laststatstweet=laststatstweet;
     }
 }
