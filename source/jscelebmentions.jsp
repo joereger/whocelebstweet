@@ -4,11 +4,12 @@
 <%@ page import="com.celebtwit.helpers.CountMentionsByCelebs" %>
 <%@ page import="com.celebtwit.systemprops.SystemProperty" %>
 <%@ page import="com.celebtwit.embed.JsCelebMentions" %>
+<%@ page import="com.celebtwit.htmlui.Pagez" %>
 <%
     Twit twit = FindTwitFromTwitterusername.find(request.getParameter("twitterusername"));
     String twitterusername =FindTwitFromTwitterusername.cleanTwitterusername(request.getParameter("twitterusername"));
 
-    String o = JsCelebMentions.get(twit, twitterusername);
+    String o = JsCelebMentions.get(twit, twitterusername, Pagez.getUserSession().getPl());
 
     String output = "";
     output = Str.cleanForjavascriptAndReplaceDoubleQuoteWithSingle(o);

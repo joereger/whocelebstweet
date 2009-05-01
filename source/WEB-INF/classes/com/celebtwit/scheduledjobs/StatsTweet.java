@@ -78,7 +78,7 @@ public class StatsTweet implements StatefulJob {
         status.append(" was tweeted ");
         status.append(mentions+ " times ");
         status.append("by "+uniqueCelebs+" different "+pl.getCelebiscalled()+"s ");
-        status.append("(last 7 days) ");
+        status.append("in last 7 days ");
         status.append("http://"+pl.getName()+"/twitter/"+twit.getTwitterusername());
         logger.debug("status="+status.toString());
         logger.debug("status.length()="+status.length());

@@ -93,7 +93,7 @@ if (Pagez.getUserSession().isSisterPl()){
                     <%}%>
                 </td>
                 <td valign="top" width="175">
-                    <%=JsCelebMentions.get(twit, twitterusername)%>
+                    <%=JsCelebMentions.get(twit, twitterusername, Pagez.getUserSession().getPl())%>
                     <a href="javascript:toggleA();"><font class="tinyfont">embed in your blog/website</font></a>
                     <div id="toggleTextA" style="display: none">
                         <input type="text" name="embedB" value="<%=Str.cleanForHtml("<script src=\"http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/js/celebtweets/\"></script>")%>" size="25">
@@ -101,7 +101,7 @@ if (Pagez.getUserSession().isSisterPl()){
                     </div>
                 </td>
                 <td valign="top" width="175">
-                    <%=JsDifferentCelebs.get(twit, twitterusername)%>
+                    <%=JsDifferentCelebs.get(twit, twitterusername, Pagez.getUserSession().getPl())%>
                     <a href="javascript:toggleB();"><font class="tinyfont">embed in your blog/website</font></a>
                     <div id="toggleTextB" style="display: none">
                         <input type="text" name="embedB" value="<%=Str.cleanForHtml("<script src=\"http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/js/differentcelebs/\"></script>")%>" size="25">
