@@ -37,7 +37,6 @@ public class StatsTweet implements StatefulJob {
         Logger logger = Logger.getLogger(this.getClass().getName());
         if (InstanceProperties.getRunScheduledTasksOnThisInstance()){
             logger.debug("execute() StatsTweet called");
-
                 //Set week ago
                 Date weekAgo = Time.xDaysAgoEnd(Calendar.getInstance(), 7).getTime();
                 //List celebs who haven't been updated in the last week
@@ -45,7 +44,7 @@ public class StatsTweet implements StatefulJob {
                                        .add(Restrictions.eq("isceleb", true))
                                        .add(Restrictions.le("laststatstweet", weekAgo))
                                        .addOrder(Order.asc("laststatstweet"))
-                                       .setMaxResults(5000)
+                                       .setMaxResults(10)
                                        .setCacheable(true)
                                        .list();
                 for (Iterator<Twit> iterator=celebs.iterator(); iterator.hasNext();) {
@@ -89,17 +88,13 @@ public class StatsTweet implements StatefulJob {
                 if (SystemProperty.getProp(SystemProperty.PROP_DOSTATTWEETS).equals("1")){
                     Twitter twitter = new Twitter(pl.getTwitterusername(), pl.getTwitterpassword());
                     twitter.update(status.toString());
+                    //Update the laststatstweet date
+                    twit.setLaststatstweet(new Date());
+                    twit.save();
                 } else {
                     logger.debug("Not running because SystemProperty.PROP_DOSTATTWEETS != 1.");
                 }
             }
-        } catch (Exception ex){
-            logger.error("", ex);
-        }
-        //Save twit
-        try{
-            twit.setLaststatstweet(new Date());
-            twit.save();
         } catch (Exception ex){
             logger.error("", ex);
         }

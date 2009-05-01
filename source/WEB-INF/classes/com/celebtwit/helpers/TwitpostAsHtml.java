@@ -104,8 +104,18 @@ public class TwitpostAsHtml {
             // Loop through
             while(m.find()) {
                 String match = m.group();
+                String matchTwitterusername = match.substring(1,match.length());
+                if (matchTwitterusername.substring(0,1).equals(" ")){
+                    matchTwitterusername = matchTwitterusername.substring(1,matchTwitterusername.length());
+                }
+                if (matchTwitterusername.substring(0,1).equals("@")){
+                    matchTwitterusername = matchTwitterusername.substring(1,matchTwitterusername.length());
+                }
+                if (matchTwitterusername.substring(0,1).equals("@")){
+                    matchTwitterusername = matchTwitterusername.substring(1,matchTwitterusername.length());
+                }
                 //if (haveLink){logger.debug("match="+match);}
-                m.appendReplacement(out, Util.cleanForAppendreplacement("<a href=\"/chatter/"+twit.getTwitterusername()+"/"+match.substring(1,match.length())+"/\">"+match+"</a>"));
+                m.appendReplacement(out, Util.cleanForAppendreplacement("<a href=\"/chatter/"+twit.getTwitterusername()+"/"+matchTwitterusername+"/\">"+match+"</a>"));
             }
             // Add the last segment
             try{
@@ -117,6 +127,8 @@ public class TwitpostAsHtml {
         } catch (Exception ex) {
             logger.error("", ex);
         }
+        //Remove any @ signs still in there
+
         //if (haveLink){logger.debug("out="+out.toString());}
         return out.toString();
     }

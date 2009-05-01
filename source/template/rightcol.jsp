@@ -20,13 +20,14 @@
                 <!--</center>-->
             </div>
 
-
             <div class="roundedBoxXXX" style="width:220px; padding: 28px;">
-                <font class="mediumfont">the <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font><br/>
-                <a href="/suggest.jsp"><font class="tinyfont">who're we missing? suggest somebody!</font></a><br/><br/>
+                <a href="/suggest.jsp"><font class="normalfont" style="font-weight:bold;">who're we missing?<br/>suggest somebody!</font></a><br/>
+                <br/>
+                <font class="mediumfont">the <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font><br/><br/>
+
                 <%=PublicRightcolListCelebs.getHtml(Pagez.getUserSession().getPl())%>
                 <br/><br/>
-                <font class="mediumfont">have you checked out</font><br/><br/>
+                <font class="mediumfont">check these out too</font><br/><br/>
                 <%
                 if (true){
                     List<Pl> plsFooter = HibernateUtil.getSession().createCriteria(Pl.class)
@@ -50,5 +51,9 @@
                 }
                 %>
                 <br/><br/>
-                <a href="http://www.twitter.com/"><img src="/images/powered-by-twitter-badge.gif" alt="Powered by Twitter" width="145" height="15" border="0"></a>
+                <%if (Pagez.getUserSession().getPl().getTwitterusername().length()>0){%>
+                    <a href="http://www.twitter.com/<%=Pagez.getUserSession().getPl().getTwitterusername()%>/" target="_blank"><font class="normalfont" style="font-weight:bold;">us on twitter!</font></a><br/>
+                <%}%>
+                <br/><br/>
+                <a href="http://www.twitter.com/" target="_blank"><img src="/images/powered-by-twitter-badge.gif" alt="Powered by Twitter" width="145" height="15" border="0"></a>
             </div>

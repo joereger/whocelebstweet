@@ -54,8 +54,17 @@ public class MakeFriends implements StatefulJob {
         }
         List<User> twitterUsersFollowing = new ArrayList<User>();
         try{
+            logger.debug("pl.getTwitterusername()="+pl.getTwitterusername()+" pl.getTwitterpassword()="+pl.getTwitterpassword());
             Twitter twitter = new Twitter(pl.getTwitterusername(), pl.getTwitterpassword());
-            twitterUsersFollowing = twitter.getFriends();
+            for(int page=1; page<20; page++){
+                logger.debug("page="+page);
+                List<User> tuf = twitter.getFriends(page);
+                if (tuf!=null && tuf.size()>0){
+                    twitterUsersFollowing.addAll(tuf);
+                } else {
+                    break;
+                }
+            }
             logger.error("processPl("+pl.getName()+") twitterUsersFollowing.size()="+twitterUsersFollowing.size());
         } catch (Exception ex){
             logger.error("", ex);
@@ -66,7 +75,7 @@ public class MakeFriends implements StatefulJob {
                                        .addOrder(Order.desc("lastprocessed"))
                                        .createCriteria("twitpls")
                                        .add(Restrictions.eq("plid", pl.getPlid()))
-                                       .setMaxResults(5000)
+                                       .setMaxResults(10)
                                        .setCacheable(true)
                                        .list();
         for (Iterator<Twit> iterator=celebs.iterator(); iterator.hasNext();) {
@@ -75,7 +84,7 @@ public class MakeFriends implements StatefulJob {
             boolean followingThisUser = false;
             for (Iterator<User> userIterator=twitterUsersFollowing.iterator(); userIterator.hasNext();) {
                 User user=userIterator.next();
-                if (user.getScreenName().equals(twit.getTwitterusername())){
+                if (user.getScreenName().trim().equalsIgnoreCase(twit.getTwitterusername().trim())){
                     followingThisUser = true;
                 }
             }
@@ -90,6 +99,7 @@ public class MakeFriends implements StatefulJob {
         Logger logger = Logger.getLogger(this.getClass().getName());
         try{
             if (SystemProperty.getProp(SystemProperty.PROP_DOSTATTWEETS).equals("1")){
+                logger.debug("pl.getTwitterusername()="+pl.getTwitterusername()+" pl.getTwitterpassword()="+pl.getTwitterpassword());
                 Twitter twitter = new Twitter(pl.getTwitterusername(), pl.getTwitterpassword());
                 twitter.create(twit.getTwitterusername());
             } else {
