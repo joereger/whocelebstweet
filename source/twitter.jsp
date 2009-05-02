@@ -51,7 +51,7 @@ if (Pagez.getUserSession().isSisterPl()){
     <%} else {%>
         <font class="largefont"> @<%=twitterusername%> </font>
     <%}%>
-    <a href="http://www.twitter.com/<%=twitterusername%>/"><img src="/images/twitter-16x16.png" width=16 height=16 border=0></a>
+    <a href="http://www.twitter.com/<%=twitterusername%>/" target="_blank"><img src="/images/twitter-16x16.png" width=16 height=16 border=0></a>
     <br/>
     <script language="javascript">
     function toggleA() {

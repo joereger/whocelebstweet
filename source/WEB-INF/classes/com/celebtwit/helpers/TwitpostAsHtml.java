@@ -41,7 +41,7 @@ public class TwitpostAsHtml {
         } else {
             out.append("            <font class=\"mediumfont\" style=\"font-weight:bold; font-color:#333333;\"><a href=\"/twitter/"+twit.getTwitterusername()+"/\">@"+twit.getTwitterusername()+"</a></font>");
         }
-        out.append("<a href=\"http://www.twitter.com/"+twit.getTwitterusername()+"/\"><img src=\"/images/twitter-16x16.png\" width=16 height=16 border=0></a>");
+        out.append("<a href=\"http://www.twitter.com/"+twit.getTwitterusername()+"/\" target=\"_blank\"><img src=\"/images/twitter-16x16.png\" width=16 height=16 border=0></a>");
         out.append("        </td>");
         out.append("    </tr>");
         out.append("    <tr>");
