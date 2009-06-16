@@ -70,7 +70,7 @@
         <!-- Name of cluster. Needs to be the same for all clusters, in order
              to find each other
         -->
-        <attribute name="ClusterName">CelebTwit-TreeCache-Cluster-Nondao</attribute>
+        <attribute name="ClusterName">KeywordEngine-TreeCache-Cluster-Nondao</attribute>
 
         <!-- JGroups protocol stack properties. Can also be a URL,
              e.g. file:/home/bela/default.xml
@@ -85,7 +85,7 @@
                  being broken with multicast (even after disabling media sense)
                  set the loopback attribute to true -->
                  <!-- Default mcast_port was 48866 -->
-                <UDP mcast_addr="228.1.2.3" mcast_port="42339"
+                <UDP mcast_addr="228.1.2.3" mcast_port="42341"
                     ip_ttl="64" ip_mcast="true"
                     mcast_send_buf_size="150000" mcast_recv_buf_size="80000"
                     ucast_send_buf_size="150000" ucast_recv_buf_size="80000"

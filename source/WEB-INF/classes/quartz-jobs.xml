@@ -199,9 +199,9 @@
             <job-name>getTwitterPosts</job-name>
             <job-group>surveyJobs</job-group>
             <!-- every X mins -->
-            <cron-expression>0 0/15 * * * ?</cron-expression>
+            <cron-expression>0 0/30 * * * ?</cron-expression>
             <!-- every 6 hours -->
-            <!--<cron-expression>0 0 0/9 * * ?</cron-expression>-->
+            <!--<cron-expression>0 0 0/12 * * ?</cron-expression>-->
           </cron>
         </trigger>
     </job>
