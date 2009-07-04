@@ -121,6 +121,10 @@ public class DbcacheexpirableCache {
         return Time.xMinutesAgoEnd(Calendar.getInstance(), -5).getTime();
     }
 
+    public static Date expireIn10Min(){
+        return Time.xMinutesAgoEnd(Calendar.getInstance(), -10).getTime();
+    }
+
     public static Date expireIn15Min(){
         return Time.xMinutesAgoEnd(Calendar.getInstance(), -15).getTime();
     }

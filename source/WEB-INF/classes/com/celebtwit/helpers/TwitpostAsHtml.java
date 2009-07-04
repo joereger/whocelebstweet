@@ -4,6 +4,7 @@ import com.celebtwit.dao.Twitpost;
 import com.celebtwit.dao.Twit;
 import com.celebtwit.util.Time;
 import com.celebtwit.util.Util;
+import com.celebtwit.util.Str;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -52,6 +53,8 @@ public class TwitpostAsHtml {
         out.append("    <tr>");
         out.append("        <td valign=\"top\">");
         out.append("            <font class=\"tinyfont\">"+Time.agoText(Time.getCalFromDate(twitpost.getCreated_at()))+"</font>");
+        out.append("            <font class=\"tinyfont\"> | </font>");
+        out.append("            <font class=\"tinyfont\"><a href=\"http://twitter.com/home?status="+ Str.cleanForHtml(post)+"\">retweet</a></font>");
         out.append("        </td>");
         out.append("    </tr>");
         out.append("</table>");
