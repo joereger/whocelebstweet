@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.net.URLEncoder;
 
 /**
  * User: Joe Reger Jr
@@ -53,13 +54,18 @@ public class TwitpostAsHtml {
         out.append("    <tr>");
         out.append("        <td valign=\"top\">");
         out.append("            <font class=\"tinyfont\">"+Time.agoText(Time.getCalFromDate(twitpost.getCreated_at()))+"</font>");
-        out.append("            <font class=\"tinyfont\"> | </font>");
-        out.append("            <font class=\"tinyfont\"><a href=\"http://twitter.com/home?status="+ Str.cleanForHtml(post)+"\">retweet</a></font>");
+        try{
+            out.append("            <font class=\"tinyfont\"> | </font>");
+            out.append("            <font class=\"tinyfont\"><a href=\"http://twitter.com/home?status="+URLEncoder.encode(post, "UTF-8")+"\" target=\"_new\">retweet</a></font>");
+            } catch (Exception ex){
+            logger.error(ex);
+        }
         out.append("        </td>");
         out.append("    </tr>");
         out.append("</table>");
         out.append("</div>");
         out.append("<img src=\"/images/clear.gif\" width=\"1\" height=\"3\"><br/>");
+
         return out.toString();
     }
 
