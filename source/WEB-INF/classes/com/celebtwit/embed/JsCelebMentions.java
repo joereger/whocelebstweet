@@ -46,17 +46,17 @@ public class JsCelebMentions {
         o.append("<center>");
         o.append("<a href=\"http://"+pl.getCustomdomain1()+"/twitter/"+twitterusername+"/\">");
         if (twit!=null && twit.getIsceleb()){
-            o.append("<font style=\"font-size:13px; font-weight:bold;\">@"+twit.getRealname()+"</font>");
+            o.append("<font style=\"font-size:11px; font-weight:bold;\">@"+twit.getRealname()+"</font>");
         } else {
-            o.append("<font style=\"font-size:13px; font-weight:bold;\">@"+twitterusername+"</font>");
+            o.append("<font style=\"font-size:11px; font-weight:bold;\">@"+twitterusername+"</font>");
         }
         o.append("</a>");
         o.append("<br>");
-        o.append("<font style=\"font-size:13px;\">has been tweeted</font>");
+        o.append("<font style=\"font-size:10px;\">has been tweeted</font>");
         o.append("<br>");
-        o.append("<font style=\"font-size:35px;\">"+mentionsByCelebs+"</font>");
+        o.append("<font style=\"font-size:30px;\">"+mentionsByCelebs+"</font>");
         o.append("<br>");
-        o.append("<a href=\"http://"+pl.getCustomdomain1()+"/twitter/"+twitterusername+"/\"><font style=\"font-size:13px;\">times by "+pl.getCelebiscalled()+"s!</font></a>");
+        o.append("<a href=\"http://"+pl.getCustomdomain1()+"/twitter/"+twitterusername+"/\"><font style=\"font-size:10px;\">times by "+pl.getCelebiscalled()+"s!</font></a>");
         o.append("</center>");
         o.append("</div>");
 

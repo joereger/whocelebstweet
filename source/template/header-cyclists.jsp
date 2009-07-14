@@ -16,8 +16,9 @@
     <title><%=finalTitle%></title>
     <link rel="stylesheet" type="text/css" href="/css/basic.css"/>
     <link rel="stylesheet" type="text/css" href="/css/Cyclists.css"/>
-    <meta name="description" content="<%=finalTitle%> Cyclists on Twitter!  See who the cyclists are twittering!"/>
-    <meta name="keywords" content="cyclist cycling bike tour de france giro italia twitter twit tweet celeb lance armstrong"/>
+    <meta name="description" content="<%=finalMetaDescription%>"/>
+    <meta name="keywords" content="<%=finalMetaKeywords%> twitter twit tweet cyclist cycling bike tour de france giro italia celeb lance armstrong"/>
+    <meta http-equiv="Content-Language" content="eng" />
     <script type="text/JavaScript" src="/js/curvycorners/curvycorners.js"></script>
 
 </head>

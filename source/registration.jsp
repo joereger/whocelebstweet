@@ -7,6 +7,8 @@
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "Sign Up for an Account";
+String metaKeywords = "";
+String metaDescription = "";
 String navtab = "youraccount";
 String acl = "public";
 %>

@@ -21,8 +21,23 @@
     </rule>
 
     <rule>
+        <from>/twitter/([a-zA-Z0-9\_]*)/tweet/([a-zA-Z0-9\_]*)/</from>
+        <to last="true">/tweet.jsp?twitterusername=$1&amp;twitterguid=$2</to>
+    </rule>
+
+    <rule>
         <from>/twitter/([a-zA-Z0-9\_]*)/when/([a-zA-Z0-9\_]*)/</from>
-        <to last="true">/twitter.jsp?twitterusername=$1&amp;time=$2</to>
+        <to last="true">/who.jsp?twitterusername=$1&amp;time=$2</to>
+    </rule>
+
+    <rule>
+        <from>/twitter/([a-zA-Z0-9\_]*)/who/</from>
+        <to last="true">/who.jsp?twitterusername=$1</to>
+    </rule>
+
+    <rule>
+        <from>/twitter/([a-zA-Z0-9\_]*)/who</from>
+        <to last="true">/who.jsp?twitterusername=$1</to>
     </rule>
     
 
@@ -35,6 +50,8 @@
         <from>/twitter/([a-zA-Z0-9\_]*)</from>
         <to last="true">/twitter.jsp?twitterusername=$1</to>
     </rule>
+
+
 
 
 

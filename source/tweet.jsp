@@ -34,6 +34,26 @@ if (twit!=null){
 }
 %>
 <%
+Twitpost twitpost = null;
+StringBuffer tweet = new StringBuffer();
+if (twit!=null){
+    if (request.getParameter("twitterguid")!=null){
+        List<Twitpost> twitposts = HibernateUtil.getSession().createCriteria(Twitpost.class)
+                                       .add(Restrictions.eq("twitid", twit.getTwitid()))
+                                       .add(Restrictions.eq("twitterguid", request.getParameter("twitterguid")))
+                                       .setCacheable(true)
+                                       .list();
+        for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
+            Twitpost tp=tpIt.next();
+            twitpost = tp;
+            tweet.append(TwitpostAsHtml.get(tp, 380));
+        }
+    } else {
+        //No twitpostid specified
+    }
+}
+%>
+<%
 pagetitle = pagetitleName + "'s Twitter Tweets on "+Pagez.getUserSession().getPl().getName()+"!  Always up-to-date!";
 if (Pagez.getUserSession().isSisterPl()){
     pagetitle = pagetitleName + "'s Twitter Tweets on "+Pagez.getUserSession().getPl().getSistername()+"! Always up-to-date!";
@@ -182,13 +202,10 @@ if (twit!=null && twit.getIsceleb()){
                         <td valign="top">
                             <div class="roundedBoxNoRound" style="width:410px; overflow:hidden;">
 
-                                    <%
-                                        int tweetsPage = 1;
-                                        if (Num.isinteger(request.getParameter("tweetsPage"))){ tweetsPage = Integer.parseInt(request.getParameter("tweetsPage")); }
-                                    %>
-                                    <%=PublicTwitterTweetlist.getHtml(twit, tweetsPage, request.getParameter("refresh"))%>
+                                    <%=tweet%>
+
                                     <br/><br/>
-                                    <a href="/twitter/<%=twitterusername%>/?tweetsPage=<%=tweetsPage+1%>"><font class="normalfont">older tweets >></font></a>
+                                    <a href="/twitter/<%=twitterusername%>/"><font class="mediumfont">all of <%=twitterusername%>'s tweets >></font></a>
                             </div>
                         </td>
                     </tr>

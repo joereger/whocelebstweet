@@ -4,6 +4,8 @@
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "Change Password";
+String metaKeywords = "";
+String metaDescription = "";
 String navtab = "account";
 String acl = "account";
 %>

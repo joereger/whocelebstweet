@@ -16,8 +16,9 @@
     <title><%=finalTitle%></title>
     <link rel="stylesheet" type="text/css" href="/css/basic.css"/>
     <link rel="stylesheet" type="text/css" href="/css/CelebTwit.css"/>
-    <meta name="description" content="<%=finalTitle%> Celebrities on Twitter!  See who the celebs are twittering!"/>
-    <meta name="keywords" content="celebrities celebrity twitter twit tweet celeb lance armstrong oprah"/>
+    <meta name="description" content="<%=finalMetaDescription%>"/>
+    <meta name="keywords" content="<%=finalMetaKeywords%> twitter twit tweet"/>
+    <meta http-equiv="Content-Language" content="eng" />
     <script type="text/JavaScript" src="/js/curvycorners/curvycorners.js"></script>
 
 </head>

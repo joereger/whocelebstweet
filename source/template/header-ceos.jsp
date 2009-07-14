@@ -16,8 +16,9 @@
     <title><%=finalTitle%></title>
     <link rel="stylesheet" type="text/css" href="/css/basic.css"/>
     <link rel="stylesheet" type="text/css" href="/css/Ceos.css"/>
-    <meta name="description" content="<%=finalTitle%> CEOs on Twitter!  See who the CEOs are twittering!"/>
-    <meta name="keywords" content="CEO  twitter twit tweet celeb"/>
+    <meta name="description" content="<%=finalMetaDescription%>"/>
+    <meta name="keywords" content="<%=finalMetaKeywords%> twitter twit tweet"/>
+    <meta http-equiv="Content-Language" content="eng" />
     <script type="text/JavaScript" src="/js/curvycorners/curvycorners.js"></script>
 
 </head>

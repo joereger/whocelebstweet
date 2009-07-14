@@ -12,6 +12,8 @@
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "";
+String metaKeywords = "";
+String metaDescription = "";
 String navtab = "account";
 String acl = "account";
 %>

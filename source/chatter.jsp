@@ -13,6 +13,8 @@
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "";
+String metaKeywords = "";
+String metaDescription = "";
 String navtab = "home";
 String acl = "public";
 %>
@@ -54,6 +56,12 @@ if (twit2!=null){
 %>
 <%
 pagetitle = pagetitleName1 + " and "+pagetitleName2+"'s Twitter Chatter Back-and-Forth on "+Pagez.getUserSession().getPl().getName()+"!";
+%>
+<%
+metaDescription = "Twitter chatter between "+pagetitleName1+" and "+pagetitleName2+". ";
+%>
+<%
+metaKeywords = pagetitleName1 + " " + pagetitleName2 + " " + nameOnScreen1 + " " + nameOnScreen2;
 %>
 <%@ include file="/template/header.jsp" %>
 

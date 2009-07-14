@@ -5,6 +5,8 @@
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "Cache";
+String metaKeywords = "";
+String metaDescription = "";
 String navtab = "sysadmin";
 String acl = "sysadmin";
 %>

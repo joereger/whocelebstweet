@@ -7,6 +7,8 @@
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "Private Labels";
+String metaKeywords = "";
+String metaDescription = "";
 String navtab = "sysadmin";
 String acl = "sysadmin";
 %>

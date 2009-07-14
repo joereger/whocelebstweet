@@ -5,6 +5,8 @@
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "Lost Password";
+String metaKeywords = "";
+String metaDescription = "";
 String navtab = "youraccount";
 String acl = "public";
 %>

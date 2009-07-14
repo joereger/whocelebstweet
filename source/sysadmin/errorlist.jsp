@@ -7,6 +7,8 @@
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "SysLog";
+String metaKeywords = "";
+String metaDescription = "";
 String navtab = "sysadmin";
 String acl = "sysadmin";
 %>

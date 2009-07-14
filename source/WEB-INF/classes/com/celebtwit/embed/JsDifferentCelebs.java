@@ -45,17 +45,17 @@ public class JsDifferentCelebs {
         o.append("<center>");
         o.append("<a href=\"http://"+pl.getCustomdomain1()+"/twitter/"+twitterusername+"/\">");
         if (twit!=null && twit.getIsceleb()){
-            o.append("<font style=\"font-size:13px; font-weight:bold;\">@"+twit.getRealname()+"</font>");
+            o.append("<font style=\"font-size:11px; font-weight:bold;\">@"+twit.getRealname()+"</font>");
         } else {
-            o.append("<font style=\"font-size:13px; font-weight:bold;\">@"+twitterusername+"</font>");
+            o.append("<font style=\"font-size:11px; font-weight:bold;\">@"+twitterusername+"</font>");
         }
         o.append("</a>");
         o.append("<br>");
-        o.append("<font style=\"font-size:13px;\">has been tweeted by</font>");
+        o.append("<font style=\"font-size:10px;\">has been tweeted by</font>");
         o.append("<br>");
-        o.append("<font style=\"font-size:35px;\">"+uniqueCelebsWhoMentioned+"</font>");
+        o.append("<font style=\"font-size:30px;\">"+uniqueCelebsWhoMentioned+"</font>");
         o.append("<br>");
-        o.append("<a href=\"http://"+pl.getCustomdomain1()+"/twitter/"+twitterusername+"/\"><font style=\"font-size:13px;\">different "+pl.getCelebiscalled()+"s!</font></a>");
+        o.append("<a href=\"http://"+pl.getCustomdomain1()+"/twitter/"+twitterusername+"/\"><font style=\"font-size:10px;\">different "+pl.getCelebiscalled()+"s!</font></a>");
         o.append("</center>");
         o.append("</div>");
 

@@ -4,6 +4,8 @@
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "Manually Run Scheduled Task";
+String metaKeywords = "";
+String metaDescription = "";
 String navtab = "sysadmin";
 String acl = "sysadmin";
 %>

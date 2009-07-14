@@ -3,6 +3,8 @@
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "Account Awaiting Email Activation";
+String metaKeywords = "";
+String metaDescription = "";
 String navtab = "youraccount";
 String acl = "public";
 %>

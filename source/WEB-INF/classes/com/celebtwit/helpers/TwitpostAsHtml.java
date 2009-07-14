@@ -31,10 +31,14 @@ public class TwitpostAsHtml {
         out.append("<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">");
         out.append("    <tr>");
         out.append("        <td rowspan=\"3\" width=\"55\">");
+        String imgUrl = "/images/clear.gif";
         if (!twit.getProfile_image_url().equals("")){
-            out.append("        <img src=\""+twit.getProfile_image_url()+"\" width=\"48\" height=\"48\" border=\"0\">");
+            imgUrl = twit.getProfile_image_url();
+        }
+        if (twit.getIsceleb() && !twit.getRealname().equals("")){
+            out.append("        <img src=\""+imgUrl+"\" width=\"48\" height=\"48\" border=\"0\" alt=\""+twit.getRealname()+"\">");
         } else {
-            out.append("        <img src=\"/images/clear.gif\" width=\"48\" height=\"48\" border=\"0\">");
+            out.append("        <img src=\""+imgUrl+"\" width=\"48\" height=\"48\" border=\"0\" alt=\""+twit.getTwitterusername()+"\">");
         }
         out.append("        </td>");
         out.append("        <td>");
@@ -54,9 +58,21 @@ public class TwitpostAsHtml {
         out.append("    <tr>");
         out.append("        <td valign=\"top\">");
         out.append("            <font class=\"tinyfont\">"+Time.agoText(Time.getCalFromDate(twitpost.getCreated_at()))+"</font>");
+//        try{
+//            out.append("            <font class=\"tinyfont\"> | </font>");
+//            out.append("            <font class=\"tinyfont\"><a href=\"http://twitter.com/home?status="+URLEncoder.encode(post, "UTF-8")+"\" target=\"_new\">retweet</a></font>");
+//            } catch (Exception ex){
+//            logger.error(ex);
+//        }
         try{
             out.append("            <font class=\"tinyfont\"> | </font>");
-            out.append("            <font class=\"tinyfont\"><a href=\"http://twitter.com/home?status="+URLEncoder.encode(post, "UTF-8")+"\" target=\"_new\">retweet</a></font>");
+            out.append("            <font class=\"tinyfont\"><a href=\"http://twitter.com/home?status=@"+twit.getTwitterusername()+"\" target=\"_new\">reply</a></font>");
+            } catch (Exception ex){
+            logger.error(ex);
+        }
+        try{
+            out.append("            <font class=\"tinyfont\"> | </font>");
+            out.append("            <font class=\"tinyfont\"><a href=\"/twitter/"+twit.getTwitterusername()+"/tweet/"+twitpost.getTwitterguid()+"/\">permalink</a></font>");
             } catch (Exception ex){
             logger.error(ex);
         }

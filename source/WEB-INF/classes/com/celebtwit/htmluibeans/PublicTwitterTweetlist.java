@@ -63,7 +63,7 @@ public class PublicTwitterTweetlist {
                                        .list();
         for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
             Twitpost twitpost=tpIt.next();
-            out.append(TwitpostAsHtml.get(twitpost, 460));
+            out.append(TwitpostAsHtml.get(twitpost, 380));
         }
         return out.toString();
     }

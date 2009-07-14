@@ -6,24 +6,25 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.celebtwit.dao.Pl" %>
-<%@ page import="com.celebtwit.htmluibeans.PublicRightcolListCelebs" %>
 <div class="roundedBox" style="width:220px;">
-                <!--<center>-->
-                    <font class="mediumfont">have <b>they</b> tweeted <b>you</b>?</font>
-                    <br/><br/>
-                    <form action="/twitterusernameredirect.jsp" method="get">
-                        <font class="normalfont" style="font-weight:bold;">enter your twitter username</font>
-                        <br/><input type="text" name="twitterusername" value="">
-                        <input type="submit" value="go">
-                        <br/><font class="tinyfont" style="font-weight:bold;">example "joereger34"</font>
-                    </form>
-                <!--</center>-->
-            </div>
+    <!--<center>-->
+    <font class="mediumfont">have <b>they</b> tweeted <b>you</b>?</font>
+    <br/><br/>
 
-            <div class="roundedBoxXXX" style="width:220px; padding: 28px;">
-                <a href="/suggest.jsp"><font class="normalfont" style="font-weight:bold;">who're we missing?<br/>suggest somebody!</font></a><br/>
-                <br/>
-                <font class="mediumfont">the <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font><br/><br/>
+    <form action="/twitterusernameredirect.jsp" method="get">
+        <font class="normalfont" style="font-weight:bold;">enter your twitter username</font>
+        <br/><input type="text" name="twitterusername" value="">
+        <input type="submit" value="go">
+        <br/><font class="tinyfont" style="font-weight:bold;">example "joereger34"</font>
+    </form>
+    <!--</center>-->
+</div>
+
+<div class="roundedBoxXXX" style="width:220px; padding: 28px;">
+    <a href="/suggest.jsp"><font class="normalfont" style="font-weight:bold;">who're we missing?<br/>suggest
+        somebody!</font></a><br/>
+    <br/>
+    <font class="mediumfont">the <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s</font><br/><br/>
 
                 <%=PublicRightcolListCelebs.getHtml(Pagez.getUserSession().getPl())%>
                 <br/><br/>

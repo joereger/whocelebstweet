@@ -3,7 +3,9 @@
 <%@ page import="com.celebtwit.htmluibeans.InviteLandingPage" %>
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
-String pagetitle = "Welcome to dNeero!";
+String pagetitle = "Welcome!";
+String metaKeywords = "";
+String metaDescription = "";
 String navtab = "home";
 String acl = "public";
 %>

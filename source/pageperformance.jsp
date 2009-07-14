@@ -7,6 +7,8 @@
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "Page Load Times";
+String metaKeywords = "";
+String metaDescription = "";
 String navtab = "home";
 String acl = "public";
 %>

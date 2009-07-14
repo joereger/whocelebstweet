@@ -1,3 +1,14 @@
+
+<%
+    String finalMetaKeywords = "";
+    if (metaKeywords!=null && !metaKeywords.equals("")){ finalMetaKeywords = metaKeywords; }
+%>
+
+<%
+    String finalMetaDescription = "";
+    if (metaDescription!=null && !metaDescription.equals("")){ finalMetaDescription = metaDescription; }
+%>
+
 <% if (Pagez.getUserSession()!=null && Pagez.getUserSession().getPl()!=null) { %>
     <% if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whocelebstweet.com")) { %>
         <%@ include file="header-celebtwit.jsp" %>

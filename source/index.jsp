@@ -11,6 +11,8 @@
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "";
+String metaKeywords = "";
+String metaDescription = "";
 String navtab = "home";
 String acl = "public";
 %>
@@ -45,7 +47,7 @@ String acl = "public";
             </font>
         </div><br/>
 
-        <%=PublicIndexWhoPanel.getHtml(Pagez.getUserSession().getPl(), request.getParameter("time"), request.getParameter("forceRefresh"))%>
+        <%=PublicIndexWhoPanel.getHtml(Pagez.getUserSession().getPl(), request.getParameter("time"), request.getParameter("refresh"))%>
 
     </div>
 <%}%>
@@ -63,7 +65,7 @@ String acl = "public";
                         int tweetsPage = 1;
                         if (Num.isinteger(request.getParameter("tweetsPage"))){ tweetsPage = Integer.parseInt(request.getParameter("tweetsPage")); }
                     %>
-                    <%=PublicIndexTweetlist.getHtml(Pagez.getUserSession().getPl(), tweetsPage, request.getParameter("forceRefresh"))%>
+                    <%=PublicIndexTweetlist.getHtml(Pagez.getUserSession().getPl(), tweetsPage, request.getParameter("refresh"))%>
                     <br/><br/>
                     <a href="/index.jsp?tweetsPage=<%=tweetsPage+1%>"><font class="normalfont">older tweets >></font></a>
             </div>

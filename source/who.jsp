@@ -34,10 +34,21 @@ if (twit!=null){
 }
 %>
 <%
-pagetitle = pagetitleName + "'s Twitter Tweets on "+Pagez.getUserSession().getPl().getName()+"!  Always up-to-date!";
-if (Pagez.getUserSession().isSisterPl()){
-    pagetitle = pagetitleName + "'s Twitter Tweets on "+Pagez.getUserSession().getPl().getSistername()+"! Always up-to-date!";
+String titleTime = "";
+if (1==1){
+    String time = request.getParameter("time");
+    if (time==null || time.equals("") || time.equals("null")){time="alltime";}
+    if (time.equals("alltime")){titleTime="All Time";}
+    if (time.equals("thismonth")){titleTime="This Month";}
+    if (time.equals("last31days")){titleTime="Last 31 Days";}
+    if (time.equals("thisweek")){titleTime="This Week";}
+    if (time.equals("last7days")){titleTime="Last 7 Days";}
+    if (time.equals("yesterday")){titleTime="Yesterday";}
+    if (time.equals("today")){titleTime="Today";}
 }
+%>
+<%
+pagetitle = "Who "+pagetitleName + " Tweets (Twitter Stats for "+titleTime+")";
 %>
 <%
 if (twit!=null && twit.getIsceleb()){
@@ -51,6 +62,7 @@ if (twit!=null && twit.getIsceleb()){
     metaKeywords = twit.getDescription();
 }
 %>
+
 <%@ include file="/template/header.jsp" %>
 
 
@@ -58,9 +70,8 @@ if (twit!=null && twit.getIsceleb()){
 
 <table cellpadding="3" cellspacing="0" border="0" width="100%">
     <tr>
-        <td valign="top" width="200">
-            <!-- Start Left Col -->
-            <div class="roundedBox" style="width:200px;">
+        <td valign="top">
+            <div class="roundedBox" style="width:630px;">
                 <%if (twit!=null && twit.getIsceleb()){%>
                     <img src="<%=twitimageurl%>" width="48" height="48" border="0" align="left" alt="<%=twit.getRealname()%>">
                     <font class="largefont"> <%=twit.getRealname()%> </font>
@@ -86,36 +97,35 @@ if (twit!=null && twit.getIsceleb()){
                     }
                 }
                 </script>
+                <center>
                     <table cellpadding="10" cellspacing="5" border="0">
                         <tr>
-                            <td valign="top">
-                                <%if (twit!=null && twit.getDescription().length()>0){%>
-                                    <font class="normalfont"><%=twit.getDescription()%></font>
-                                    <br/><br/>
-                                <%}%>
-                                <%if (twit!=null && twit.getWebsite_url().length()>0){%>
-                                    <font class="smallfont">
-                                    <a href="<%=twit.getWebsite_url()%>" target="_blank">Website</a>
-                                    |
-                                    <a href="http://www.twitter.com/<%=twitterusername%>/" target="_blank">Twitter</a>
-                                    </font>
-                                    <br/>
-                                <%}%>
-                                <%if (twit!=null && twit.getFollowers_count()>0){%>
-                                    <font class="smallfont"><%=twit.getFollowers_count()%> followers</font>
-                                    <br/>
-                                <%}%>
-                                <%if (twit!=null && twit.getStatuses_count()>0){%>
-                                    <font class="smallfont"><%=twit.getStatuses_count()%> updates</font>
-                                    <br/>
-                                <%}%>
-                                <%if (twit!=null && twit.getIsceleb()){%>
-                                    <font class="smallfont"><a href="/twitter/<%=twit.getTwitterusername()%>/who/">Who <%=twit.getRealname()%> Tweets</a></font>
-                                    <br/>
-                                <%}%>
+                            <td valign="top" width="260">
+                                    <%if (twit!=null && twit.getDescription().length()>0){%>
+                                        <font class="normalfont"><%=twit.getDescription()%></font>
+                                        <br/><br/>
+                                    <%}%>
+                                    <%if (twit!=null && twit.getWebsite_url().length()>0){%>
+                                        <font class="smallfont">
+                                        <a href="<%=twit.getWebsite_url()%>" target="_blank">Website</a>
+                                        |
+                                        <a href="http://www.twitter.com/<%=twitterusername%>/" target="_blank">Twitter</a>
+                                        </font>
+                                        <br/>
+                                    <%}%>
+                                    <%if (twit!=null && twit.getFollowers_count()>0){%>
+                                        <font class="smallfont"><%=twit.getFollowers_count()%> followers</font>
+                                        <br/>
+                                    <%}%>
+                                    <%if (twit!=null && twit.getStatuses_count()>0){%>
+                                        <font class="smallfont"><%=twit.getStatuses_count()%> updates</font>
+                                        <br/>
+                                    <%}%>
+                                    <%if (twit!=null && twit.getIsceleb()){%>
+                                        <font class="smallfont"><a href="/twitter/<%=twit.getTwitterusername()%>/"><%=twit.getRealname()%>'s Recent Tweets</a></font>
+                                        <br/>
+                                    <%}%>
                             </td>
-                        </tr>
-                        <tr>
                             <td valign="top" width="175">
                                 <%=JsCelebMentions.get(twit, twitterusername, Pagez.getUserSession().getPl())%>
                                 <a href="javascript:toggleA();"><font class="tinyfont">embed in your blog/website</font></a>
@@ -124,8 +134,6 @@ if (twit!=null && twit.getIsceleb()){
                                     <br/><font class="smallfont">Copy and paste this code into your blog or website to display the box.</font>
                                 </div>
                             </td>
-                        </tr>
-                        <tr>
                             <td valign="top" width="175">
                                 <%=JsDifferentCelebs.get(twit, twitterusername, Pagez.getUserSession().getPl())%>
                                 <a href="javascript:toggleB();"><font class="tinyfont">embed in your blog/website</font></a>
@@ -136,12 +144,16 @@ if (twit!=null && twit.getIsceleb()){
                             </td>
                         </tr>
                     </table>
+                </center>
             </div>
 
-
+        </td>
+        </tr>
+        <tr>
+        <td valign="top">
             <%if (1==1 || !Pagez.getUserSession().isSisterPl()){%>
                 <%if (twit!=null && twit.getTwitid()>0){%>
-                    <div class="roundedBox" style="width:200px;">
+                    <div class="roundedBox" style="width:630px;">
                         <div style="float:right">
                             <font class="tinyfont">
                                 <%String qs = "";%>
@@ -150,7 +162,7 @@ if (twit!=null && twit.getIsceleb()){
                                 <%String addToStyle = "";%>
                                 <%String boldStyle = "font-weight:bold; background:#ffffff;";%>
                                 <%if (time.equals("alltime")){addToStyle=boldStyle;}else{addToStyle="";}%>
-                                <a href="/twitter/<%=twitterusername%>/when/<%=qs%>" style="<%=addToStyle%>">all time</a> |
+                                <a href="/twitter/<%=twitterusername%>/when/alltime/<%=qs%>" style="<%=addToStyle%>">all time</a> |
                                 <%if (time.equals("thismonth")){addToStyle=boldStyle;}else{addToStyle="";}%>
                                 <a href="/twitter/<%=twitterusername%>/when/thismonth/<%=qs%>" style="<%=addToStyle%>">this month</a> |
                                 <%if (time.equals("last31days")){addToStyle=boldStyle;}else{addToStyle="";}%>
@@ -165,37 +177,33 @@ if (twit!=null && twit.getIsceleb()){
                                 <a href="/twitter/<%=twitterusername%>/when/today/<%=qs%>" style="<%=addToStyle%>">today</a>
                             </font>
                         </div><br/>
-                        <%=PublicTwitterWhoPanelVertical.getHtml(twit, twitterusername, Pagez.getUserSession().getPl(), request.getParameter("time"), request.getParameter("refresh"))%>
+                        <%=PublicTwitterWhoPanel.getHtml(twit, twitterusername, Pagez.getUserSession().getPl(), request.getParameter("time"), request.getParameter("refresh"))%>
                     </div>
                 <%}%>
             <%}%>
-            <!-- End Left Col -->
-        </td>
-        <td valign="top">
-            <!-- Start Middle Col -->
-            <%if (twit!=null && twit.getTwitid()>0){%>
-            <%if (twit.getIsceleb()){%>
-                <%--<font class="mediumfont"><%=twit.getRealname()%>'s recent tweets</font>--%>
-                <%--<br/><br/>--%>
-                <table cellpadding="3" cellspacing="0" border="0" width="100%">
-                    <tr>
-                        <td valign="top">
-                            <div class="roundedBoxNoRound" style="width:410px; overflow:hidden;">
 
-                                    <%
-                                        int tweetsPage = 1;
-                                        if (Num.isinteger(request.getParameter("tweetsPage"))){ tweetsPage = Integer.parseInt(request.getParameter("tweetsPage")); }
-                                    %>
-                                    <%=PublicTwitterTweetlist.getHtml(twit, tweetsPage, request.getParameter("refresh"))%>
-                                    <br/><br/>
-                                    <a href="/twitter/<%=twitterusername%>/?tweetsPage=<%=tweetsPage+1%>"><font class="normalfont">older tweets >></font></a>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+            <%if (twit!=null && twit.getTwitid()>0){%>
+                <%if (twit.getIsceleb()){%>
+                    <font class="mediumfont"><%=twit.getRealname()%>'s recent tweets</font>
+                    <br/><br/>
+                    <table cellpadding="3" cellspacing="0" border="0" width="100%">
+                        <tr>
+                            <td valign="top">
+                                <div class="roundedBoxNoRound" style="width:410px; overflow:hidden;">
+
+                                        <%
+                                            int tweetsPage = 1;
+                                            if (Num.isinteger(request.getParameter("tweetsPage"))){ tweetsPage = Integer.parseInt(request.getParameter("tweetsPage")); }
+                                        %>
+                                        <%=PublicTwitterTweetlist.getHtml(twit, tweetsPage, request.getParameter("refresh"))%>
+                                        <br/><br/>
+                                        <a href="/twitter/<%=twitterusername%>/?tweetsPage=<%=tweetsPage+1%>"><font class="normalfont">older tweets >></font></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                <%}%>
             <%}%>
-        <%}%>
-            <!-- End Middle Col -->
         </td>
     </tr>
 </table>
