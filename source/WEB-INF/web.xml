@@ -70,6 +70,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>SitemapServlet</servlet-name>
+        <servlet-class>com.celebtwit.helpers.Sitemap</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SitemapServlet</servlet-name>
+        <url-pattern>/sitemap.xml</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>FbCallbackServlet</servlet-name>
         <servlet-class>com.celebtwit.facebook.FbCallbackServlet</servlet-class>
     </servlet>

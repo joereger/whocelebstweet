@@ -130,9 +130,23 @@ if (twit!=null && twit.getIsceleb()){
                                     <br/>
                                 <%}%>
                                 <%if (twit!=null && twit.getIsceleb()){%>
-                                    <font class="smallfont"><a href="/twitter/<%=twit.getTwitterusername()%>/who/">Who <%=twit.getRealname()%> Tweets</a></font>
+                                    <font class="smallfont"><a href="/twitter/<%=twit.getTwitterusername()%>/who/">Who <%=twitterusername%> Tweets</a></font>
                                     <br/>
                                 <%}%>
+
+                                <br/>
+                                <script type="text/javascript"><!--
+                                google_ad_client = "pub-9883617370563969";
+                                /* 160x90, link unit whocelebstweet smallfont */
+                                google_ad_slot = "5409295921";
+                                google_ad_width = 160;
+                                google_ad_height = 90;
+                                //-->
+                                </script>
+                                <script type="text/javascript"
+                                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                                </script>
+                                
                             </td>
                         </tr>
                         <tr>
@@ -170,7 +184,7 @@ if (twit!=null && twit.getIsceleb()){
                                 <%String addToStyle = "";%>
                                 <%String boldStyle = "font-weight:bold; background:#ffffff;";%>
                                 <%if (time.equals("alltime")){addToStyle=boldStyle;}else{addToStyle="";}%>
-                                <a href="/twitter/<%=twitterusername%>/when/<%=qs%>" style="<%=addToStyle%>">all time</a> |
+                                <a href="/twitter/<%=twitterusername%>/when/alltime/<%=qs%>" style="<%=addToStyle%>">all time</a> |
                                 <%if (time.equals("thismonth")){addToStyle=boldStyle;}else{addToStyle="";}%>
                                 <a href="/twitter/<%=twitterusername%>/when/thismonth/<%=qs%>" style="<%=addToStyle%>">this month</a> |
                                 <%if (time.equals("last31days")){addToStyle=boldStyle;}else{addToStyle="";}%>
@@ -191,27 +205,27 @@ if (twit!=null && twit.getIsceleb()){
             <%}%>
             <!-- End Left Col -->
         </td>
-        <td valign="top">
+        <td valign="top" width="430">
             <!-- Start Middle Col -->
             <%if (twit!=null && twit.getTwitid()>0){%>
-            <%if (twit.getIsceleb()){%>
-                <%--<font class="mediumfont"><%=twit.getRealname()%>'s recent tweets</font>--%>
-                <%--<br/><br/>--%>
-                <table cellpadding="3" cellspacing="0" border="0" width="100%">
-                    <tr>
-                        <td valign="top">
-                            <div class="roundedBoxNoRound" style="width:410px; overflow:hidden;">
+                <%if (twit.getIsceleb()){%>
+                    <%--<font class="mediumfont"><%=twit.getRealname()%>'s recent tweets</font>--%>
+                    <%--<br/><br/>--%>
+                    <table cellpadding="3" cellspacing="0" border="0" width="100%">
+                        <tr>
+                            <td valign="top">
+                                <div class="roundedBoxNoRound" style="width:410px; overflow:hidden;">
 
-                                    <%=tweet%>
+                                        <%=tweet%>
 
-                                    <br/><br/>
-                                    <a href="/twitter/<%=twitterusername%>/"><font class="mediumfont">all of <%=twitterusername%>'s tweets >></font></a>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                                        <br/><br/>
+                                        <a href="/twitter/<%=twitterusername%>/"><font class="mediumfont">all of @<%=twitterusername%>'s tweets >></font></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                <%}%>
             <%}%>
-        <%}%>
             <!-- End Middle Col -->
         </td>
     </tr>

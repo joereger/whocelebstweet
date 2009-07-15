@@ -144,20 +144,6 @@ public class PublicTwitterWhoPanelVertical {
 
 
 
-
-        out.append("                         <script type=\"text/javascript\">\n" +
-                "                            google_ad_client = \"pub-9883617370563969\";\n" +
-                "                            /* 250x250 WhoCelebsTwitter */\n" +
-                "                            google_ad_slot = \"3938353254\";\n" +
-                "                            google_ad_width = 250;\n" +
-                "                            google_ad_height = 250;\n" +
-                "                            //\n" +
-                "                            </script>\n" +
-                "                            <script type=\"text/javascript\"\n" +
-                "                            src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">\n" +
-                "                            </script>");
-
-
         return out.toString();
     }
 

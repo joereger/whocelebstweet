@@ -54,7 +54,7 @@ public class Num {
        }
    }
 
-   public static int randomInt(int max){
+    public static int randomInt(int max){
         //return (int)(Math.random()*(max+1));
        Random generator = new Random( (new Date()).getTime() );
        int rnd = generator.nextInt(max) + 1;

@@ -6,6 +6,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.celebtwit.dao.Pl" %>
+<%@ page import="com.celebtwit.htmluibeans.PublicRightcolListCelebs" %>
 <div class="roundedBox" style="width:220px;">
     <!--<center>-->
     <font class="mediumfont">have <b>they</b> tweeted <b>you</b>?</font>

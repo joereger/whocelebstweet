@@ -110,9 +110,23 @@ if (twit!=null && twit.getIsceleb()){
                                     <br/>
                                 <%}%>
                                 <%if (twit!=null && twit.getIsceleb()){%>
-                                    <font class="smallfont"><a href="/twitter/<%=twit.getTwitterusername()%>/who/">Who <%=twit.getRealname()%> Tweets</a></font>
+                                    <font class="smallfont"><a href="/twitter/<%=twit.getTwitterusername()%>/who/">Who @<%=twitterusername%> Tweets</a></font>
                                     <br/>
                                 <%}%>
+
+                                <br/>
+                                <script type="text/javascript"><!--
+                                google_ad_client = "pub-9883617370563969";
+                                /* 160x90, link unit whocelebstweet smallfont */
+                                google_ad_slot = "5409295921";
+                                google_ad_width = 160;
+                                google_ad_height = 90;
+                                //-->
+                                </script>
+                                <script type="text/javascript"
+                                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                                </script>
+
                             </td>
                         </tr>
                         <tr>
@@ -150,7 +164,7 @@ if (twit!=null && twit.getIsceleb()){
                                 <%String addToStyle = "";%>
                                 <%String boldStyle = "font-weight:bold; background:#ffffff;";%>
                                 <%if (time.equals("alltime")){addToStyle=boldStyle;}else{addToStyle="";}%>
-                                <a href="/twitter/<%=twitterusername%>/when/<%=qs%>" style="<%=addToStyle%>">all time</a> |
+                                <a href="/twitter/<%=twitterusername%>/when/alltime/<%=qs%>" style="<%=addToStyle%>">all time</a> |
                                 <%if (time.equals("thismonth")){addToStyle=boldStyle;}else{addToStyle="";}%>
                                 <a href="/twitter/<%=twitterusername%>/when/thismonth/<%=qs%>" style="<%=addToStyle%>">this month</a> |
                                 <%if (time.equals("last31days")){addToStyle=boldStyle;}else{addToStyle="";}%>
@@ -188,7 +202,7 @@ if (twit!=null && twit.getIsceleb()){
                                     %>
                                     <%=PublicTwitterTweetlist.getHtml(twit, tweetsPage, request.getParameter("refresh"))%>
                                     <br/><br/>
-                                    <a href="/twitter/<%=twitterusername%>/?tweetsPage=<%=tweetsPage+1%>"><font class="normalfont">older tweets >></font></a>
+                                    <a href="/twitter/<%=twitterusername%>/?tweetsPage=<%=tweetsPage+1%>"><font class="mediumfont">older tweets >></font></a>
                             </div>
                         </td>
                     </tr>

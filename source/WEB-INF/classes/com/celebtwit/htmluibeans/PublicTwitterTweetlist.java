@@ -7,6 +7,7 @@ import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.cache.html.DbcacheexpirableCache;
 import com.celebtwit.helpers.*;
 import com.celebtwit.htmlui.Pagez;
+import com.celebtwit.util.Num;
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -54,6 +55,8 @@ public class PublicTwitterTweetlist {
         int perPage = 10;
         int firstResult = page * perPage;
         if (page<=1){ firstResult = 0; }
+        int insertAdCount = 0;
+        int randomAdInsertionPoint = 2 + Num.randomInt(4);
         List<Twitpost> twitposts = HibernateUtil.getSession().createCriteria(Twitpost.class)
                                        .add(Restrictions.eq("twitid", twit.getTwitid()))
                                        .addOrder(Order.desc("created_at"))
@@ -63,6 +66,13 @@ public class PublicTwitterTweetlist {
                                        .list();
         for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
             Twitpost twitpost=tpIt.next();
+            insertAdCount++;
+            if (insertAdCount>=randomAdInsertionPoint){
+                //insertAdCount = 0;
+                //randomAdInsertionPoint = Num.randomInt(10);
+                randomAdInsertionPoint = 10000;
+                out.append(TwitpostAsHtml.getAdsenseAsTwitpost(380));
+            }
             out.append(TwitpostAsHtml.get(twitpost, 380));
         }
         return out.toString();

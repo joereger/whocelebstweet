@@ -18,7 +18,6 @@
     <link rel="stylesheet" type="text/css" href="/css/Cyclists.css"/>
     <meta name="description" content="<%=finalMetaDescription%>"/>
     <meta name="keywords" content="<%=finalMetaKeywords%> twitter twit tweet cyclist cycling bike tour de france giro italia celeb lance armstrong"/>
-    <meta http-equiv="Content-Language" content="eng" />
     <script type="text/JavaScript" src="/js/curvycorners/curvycorners.js"></script>
 
 </head>

@@ -78,7 +78,7 @@ if (twit!=null && twit.getIsceleb()){
                 <%} else {%>
                     <font class="largefont"> @<%=twitterusername%> </font>
                 <%}%>
-                <br/>
+                <br clear="all"/>
                 <script language="javascript">
                 function toggleA() {
                     var ele = document.getElementById("toggleTextA");
@@ -98,9 +98,9 @@ if (twit!=null && twit.getIsceleb()){
                 }
                 </script>
                 <center>
-                    <table cellpadding="10" cellspacing="5" border="0">
+                    <table cellpadding="3" cellspacing="0" border="0">
                         <tr>
-                            <td valign="top" width="260">
+                            <td valign="top" width="*">
                                     <%if (twit!=null && twit.getDescription().length()>0){%>
                                         <font class="normalfont"><%=twit.getDescription()%></font>
                                         <br/><br/>
@@ -122,11 +122,24 @@ if (twit!=null && twit.getIsceleb()){
                                         <br/>
                                     <%}%>
                                     <%if (twit!=null && twit.getIsceleb()){%>
-                                        <font class="smallfont"><a href="/twitter/<%=twit.getTwitterusername()%>/"><%=twit.getRealname()%>'s Recent Tweets</a></font>
+                                        <font class="smallfont"><a href="/twitter/<%=twit.getTwitterusername()%>/">@<%=twitterusername%>'s Recent Tweets</a></font>
                                         <br/>
                                     <%}%>
                             </td>
-                            <td valign="top" width="175">
+                            <td valign="top" width="160">
+                                    <script type="text/javascript"><!--
+                                    google_ad_client = "pub-9883617370563969";
+                                    /* 160x90, link unit whocelebstweet smallfont */
+                                    google_ad_slot = "5409295921";
+                                    google_ad_width = 160;
+                                    google_ad_height = 90;
+                                    //-->
+                                    </script>
+                                    <script type="text/javascript"
+                                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                                    </script>
+                            </td>
+                            <td valign="top" width="150">
                                 <%=JsCelebMentions.get(twit, twitterusername, Pagez.getUserSession().getPl())%>
                                 <a href="javascript:toggleA();"><font class="tinyfont">embed in your blog/website</font></a>
                                 <div id="toggleTextA" style="display: none">
@@ -134,7 +147,7 @@ if (twit!=null && twit.getIsceleb()){
                                     <br/><font class="smallfont">Copy and paste this code into your blog or website to display the box.</font>
                                 </div>
                             </td>
-                            <td valign="top" width="175">
+                            <td valign="top" width="150">
                                 <%=JsDifferentCelebs.get(twit, twitterusername, Pagez.getUserSession().getPl())%>
                                 <a href="javascript:toggleB();"><font class="tinyfont">embed in your blog/website</font></a>
                                 <div id="toggleTextB" style="display: none">
@@ -200,6 +213,22 @@ if (twit!=null && twit.getIsceleb()){
                                         <a href="/twitter/<%=twitterusername%>/?tweetsPage=<%=tweetsPage+1%>"><font class="normalfont">older tweets >></font></a>
                                 </div>
                             </td>
+
+
+                            <td valign="top">
+                                <script type="text/javascript"><!--
+                                google_ad_client = "pub-9883617370563969";
+                                /* 160x600, Skyscraper */
+                                google_ad_slot = "2576530148";
+                                google_ad_width = 160;
+                                google_ad_height = 600;
+                                //-->
+                                </script>
+                                <script type="text/javascript"
+                                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                                </script>
+                            </td>
+
                         </tr>
                     </table>
                 <%}%>

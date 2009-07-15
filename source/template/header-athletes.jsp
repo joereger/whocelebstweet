@@ -17,7 +17,6 @@
     <link rel="stylesheet" type="text/css" href="/css/Athletes.css"/>
     <meta name="description" content="<%=finalMetaDescription%>"/>
     <meta name="keywords" content="<%=finalMetaKeywords%> twitter twit tweet"/>
-    <meta http-equiv="Content-Language" content="eng" />
     <script type="text/JavaScript" src="/js/curvycorners/curvycorners.js"></script>
 
 </head>

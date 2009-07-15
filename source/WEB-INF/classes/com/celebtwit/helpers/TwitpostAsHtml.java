@@ -47,7 +47,7 @@ public class TwitpostAsHtml {
         } else {
             out.append("            <font class=\"mediumfont\" style=\"font-weight:bold; font-color:#333333;\"><a href=\"/twitter/"+twit.getTwitterusername()+"/\">@"+twit.getTwitterusername()+"</a></font>");
         }
-        out.append("<a href=\"http://www.twitter.com/"+twit.getTwitterusername()+"/\" target=\"_blank\"><img src=\"/images/twitter-16x16.png\" width=16 height=16 border=0></a>");
+        //out.append("<a href=\"http://www.twitter.com/"+twit.getTwitterusername()+"/\" target=\"_blank\"><img src=\"/images/twitter-16x16.png\" width=16 height=16 border=0></a>");
         out.append("        </td>");
         out.append("    </tr>");
         out.append("    <tr>");
@@ -156,6 +156,40 @@ public class TwitpostAsHtml {
 
         //if (haveLink){logger.debug("out="+out.toString());}
         return out.toString();
+    }
+
+    public static String getAdsenseAsTwitpost(int widthinpixels){
+        StringBuffer out = new StringBuffer();
+        out.append("<div class=\"notRoundedBox\" style=\"width:"+widthinpixels+"px; padding:3px;\">");
+        out.append("<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">");
+        out.append("    <tr>");
+        out.append("        <td width=\"55\">");
+        String imgUrl = "/images/placeholder_icon.jpg";
+        out.append("        <img src=\""+imgUrl+"\" width=\"48\" height=\"48\" border=\"0\"\">");
+        out.append("        </td>");
+        out.append("        <td>");
+        out.append(getAdsenseHalfBanner());
+        out.append("        </td>");
+        out.append("    </tr>");
+        out.append("</table>");
+        out.append("</div>");
+        out.append("<img src=\"/images/clear.gif\" width=\"1\" height=\"3\"><br/>");
+        return out.toString();
+    }
+
+    private static String getAdsenseHalfBanner(){
+        StringBuffer out = new StringBuffer();
+        out.append("<script type=\"text/javascript\"><!--\n" +
+                "google_ad_client = \"pub-9883617370563969\";\n" +
+                "/* 234x60, WhoCelebs Half Banner */\n" +
+                "google_ad_slot = \"5458098190\";\n" +
+                "google_ad_width = 234;\n" +
+                "google_ad_height = 60;\n" +
+                "//-->\n" +
+                "</script>\n" +
+                "<script type=\"text/javascript\" src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">\n" +
+                "</script>");
+         return out.toString();
     }
 
 
