@@ -58,12 +58,15 @@ pagetitle = pagetitleName + "'s Twitter Tweets on "+Pagez.getUserSession().getPl
 if (Pagez.getUserSession().isSisterPl()){
     pagetitle = pagetitleName + "'s Twitter Tweets on "+Pagez.getUserSession().getPl().getSistername()+"! Always up-to-date!";
 }
+if (twitpost!=null && twit!=null && twit.getIsceleb()){
+    pagetitle = twit.getRealname()+" says: \"" + twitpost.getPost()+"\" on Twitter";
+}
 %>
 <%
-if (twit!=null && twit.getIsceleb()){
-    metaDescription = "Twitter updates by "+twit.getRealname()+". "+twit.getDescription();
+if (twitpost!=null && twit!=null && twit.getIsceleb()){
+    metaDescription = "This is a Twitter post.  On "+Time.dateformatcompactwithtime(twitpost.getCreated_at())+" "+pagetitle;
 } else {
-    metaDescription = "Twitter updates by " + twitterusername+".";
+    metaDescription = "Twitter post by " + twitterusername+".";
 }
 %>
 <%
