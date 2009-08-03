@@ -52,10 +52,12 @@ public class PublicTwitterTweetlist {
 
     private static String generateHtml(Twit twit, int page){
         StringBuffer out = new StringBuffer();
-        int perPage = 10;
+        int perPage = 20;
+        int maxAdsPerPage = 3;
         int firstResult = page * perPage;
         if (page<=1){ firstResult = 0; }
         int insertAdCount = 0;
+        int adsInserted = 0;
         int randomAdInsertionPoint = 2 + Num.randomInt(4);
         List<Twitpost> twitposts = HibernateUtil.getSession().createCriteria(Twitpost.class)
                                        .add(Restrictions.eq("twitid", twit.getTwitid()))
@@ -67,10 +69,11 @@ public class PublicTwitterTweetlist {
         for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
             Twitpost twitpost=tpIt.next();
             insertAdCount++;
-            if (insertAdCount>=randomAdInsertionPoint){
-                //insertAdCount = 0;
-                //randomAdInsertionPoint = Num.randomInt(10);
-                randomAdInsertionPoint = 10000;
+            if (insertAdCount>=randomAdInsertionPoint && adsInserted<maxAdsPerPage){
+                adsInserted++;
+                insertAdCount = 0;
+                randomAdInsertionPoint = 2 + Num.randomInt(4);
+                //randomAdInsertionPoint = 10000;
                 out.append(TwitpostAsHtml.getAdsenseAsTwitpost(380));
             }
             out.append(TwitpostAsHtml.get(twitpost, 380));

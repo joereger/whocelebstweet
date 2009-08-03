@@ -1,5 +1,7 @@
 package com.celebtwit.util;
 
+import org.apache.log4j.Logger;
+
 import java.util.Random;
 import java.util.Date;
 
@@ -55,8 +57,13 @@ public class Num {
    }
 
     public static int randomInt(int max){
+        Logger logger = Logger.getLogger(Num.class);
         //return (int)(Math.random()*(max+1));
-       Random generator = new Random( (new Date()).getTime() );
+       long rndSeed = (new Date()).getTime();;
+       try{
+          rndSeed = Long.parseLong(RandomString.randomNumeric(5));
+       } catch (Exception ex) { logger.error("", ex); }
+       Random generator = new Random( rndSeed );
        int rnd = generator.nextInt(max) + 1;
        return rnd;
     }

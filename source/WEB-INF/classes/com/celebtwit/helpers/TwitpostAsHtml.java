@@ -166,7 +166,7 @@ public class TwitpostAsHtml {
         out.append("        <td width=\"55\">");
         String imgUrl = "/images/placeholder_icon.jpg";
         out.append("        <img src=\""+imgUrl+"\" width=\"48\" height=\"48\" border=\"0\"\">");
-        out.append("        </td>");
+        out.append("        </td>");        
         out.append("        <td>");
         out.append(getAdsenseHalfBanner());
         out.append("        </td>");
@@ -187,7 +187,8 @@ public class TwitpostAsHtml {
                 "google_ad_height = 60;\n" +
                 "//-->\n" +
                 "</script>\n" +
-                "<script type=\"text/javascript\" src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">\n" +
+                "<script type=\"text/javascript\"\n" +
+                "src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">\n" +
                 "</script>");
          return out.toString();
     }

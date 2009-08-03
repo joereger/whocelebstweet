@@ -9,6 +9,7 @@
 <%@ page import="com.celebtwit.embed.JsDifferentCelebs" %>
 <%@ page import="com.celebtwit.util.Num" %>
 <%@ page import="com.celebtwit.htmluibeans.*" %>
+<%@ page import="java.net.URLEncoder" %>
 
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
@@ -67,8 +68,17 @@ if (twit!=null && twit.getIsceleb()){
                 <%} else {%>
                     <font class="largefont"> @<%=twitterusername%> </font>
                 <%}%>
-                <br/>
+                <br clear="all"/>
+
                 <script language="javascript">
+                function toggleLink() {
+                    var ele = document.getElementById("toggleLink");
+                    if(ele.style.display == "block") {
+                        ele.style.display = "none";
+                    } else {
+                        ele.style.display = "block";
+                    }
+                }
                 function toggleA() {
                     var ele = document.getElementById("toggleTextA");
                     if(ele.style.display == "block") {
@@ -86,6 +96,18 @@ if (twit!=null && twit.getIsceleb()){
                     }
                 }
                 </script>
+                <%
+                String tweetThisStatus = "check out " + "http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/";
+                tweetThisStatus = URLEncoder.encode(tweetThisStatus, "UTF-8");
+                %>
+                <center>
+                <font class="smallfont"><a href="javascript:toggleLink();" style="text-decoration: underline; color: #0000ff;">Link to this Page</a> | <a href="http://twitter.com/home?status=<%=tweetThisStatus%>" style="text-decoration: underline; color: #0000ff;" target="_blank">Tweet This</a></font>
+                <div id="toggleLink" style="display: none; text-align: center;">
+                    <textarea rows="3" cols="30" name="linkurl" id="linkurl" style="font-size:9px;" onclick="javascript:document.getElementById('linkurl').select();"><%=Str.cleanForHtml("http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/")%></textarea>
+                    <br/><font class="tinyfont">Copy and paste the above URL into your blog, email, im or website to link to this page.</font>
+                </div>
+                </center>
+                <br clear="all">
                     <table cellpadding="10" cellspacing="5" border="0">
                         <tr>
                             <td valign="top">
@@ -93,11 +115,19 @@ if (twit!=null && twit.getIsceleb()){
                                     <font class="normalfont"><%=twit.getDescription()%></font>
                                     <br/><br/>
                                 <%}%>
+
+                                <div style="margin-left:3px; width: 160px; background:#e6e6e6;"><font class="smallfont" style="font-size:11px; text-decoration: underline;">More Information</font></div>
+                                <div style="margin-left:10px; width:160px;">
                                 <%if (twit!=null && twit.getWebsite_url().length()>0){%>
                                     <font class="smallfont">
-                                    <a href="<%=twit.getWebsite_url()%>" target="_blank">Website</a>
+                                    <a href="<%=twit.getWebsite_url()%>" target="_blank"  style="text-decoration: underline; color: #0000ff;">Website</a>
                                     |
-                                    <a href="http://www.twitter.com/<%=twitterusername%>/" target="_blank">Twitter</a>
+                                    <a href="http://www.twitter.com/<%=twitterusername%>/" target="_blank"  style="text-decoration: underline; color: #0000ff;">Twitter</a>
+                                    </font>
+                                    <br/>
+                                <%} else { %>
+                                    <font class="smallfont">
+                                    <a href="http://www.twitter.com/<%=twitterusername%>/" target="_blank"  style="text-decoration: underline; color: #0000ff;">Twitter</a>
                                     </font>
                                     <br/>
                                 <%}%>
@@ -109,10 +139,11 @@ if (twit!=null && twit.getIsceleb()){
                                     <font class="smallfont"><%=twit.getStatuses_count()%> updates</font>
                                     <br/>
                                 <%}%>
-                                <%if (twit!=null && twit.getIsceleb()){%>
-                                    <font class="smallfont"><a href="/twitter/<%=twit.getTwitterusername()%>/who/">Who @<%=twitterusername%> Tweets</a></font>
+                                <%if (1==1){%>
+                                    <font class="smallfont"><a href="/twitter/<%=twitterusername%>/who/"  style="text-decoration: underline; color: #0000ff;">Who @<%=twitterusername%> Tweets</a></font>
                                     <br/>
                                 <%}%>
+                                </div>
 
                                 <br/>
                                 <script type="text/javascript"><!--
@@ -132,7 +163,7 @@ if (twit!=null && twit.getIsceleb()){
                         <tr>
                             <td valign="top" width="175">
                                 <%=JsCelebMentions.get(twit, twitterusername, Pagez.getUserSession().getPl())%>
-                                <a href="javascript:toggleA();"><font class="tinyfont">embed in your blog/website</font></a>
+                                <a href="javascript:toggleA();"><font class="tinyfont">+ embed in your blog/website</font></a>
                                 <div id="toggleTextA" style="display: none">
                                     <input type="text" name="embedB" value="<%=Str.cleanForHtml("<script src=\"http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/js/celebtweets/\"></script>")%>" size="25">
                                     <br/><font class="smallfont">Copy and paste this code into your blog or website to display the box.</font>
@@ -142,7 +173,7 @@ if (twit!=null && twit.getIsceleb()){
                         <tr>
                             <td valign="top" width="175">
                                 <%=JsDifferentCelebs.get(twit, twitterusername, Pagez.getUserSession().getPl())%>
-                                <a href="javascript:toggleB();"><font class="tinyfont">embed in your blog/website</font></a>
+                                <a href="javascript:toggleB();"><font class="tinyfont">+ embed in your blog/website</font></a>
                                 <div id="toggleTextB" style="display: none">
                                     <input type="text" name="embedB" value="<%=Str.cleanForHtml("<script src=\"http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/js/differentcelebs/\"></script>")%>" size="25">
                                     <br/><font class="smallfont">Copy and paste this code into your blog or website to display the box.</font>
@@ -180,6 +211,8 @@ if (twit!=null && twit.getIsceleb()){
                             </font>
                         </div><br/>
                         <%=PublicTwitterWhoPanelVertical.getHtml(twit, twitterusername, Pagez.getUserSession().getPl(), request.getParameter("time"), request.getParameter("refresh"))%>
+                        <br/><br/>
+                        <a href="/twitter/<%=twitterusername%>/who/"><font class="mediumfont">who tweeted who details >></font></a>
                     </div>
                 <%}%>
             <%}%>
@@ -187,28 +220,36 @@ if (twit!=null && twit.getIsceleb()){
         </td>
         <td valign="top">
             <!-- Start Middle Col -->
-            <%if (twit!=null && twit.getTwitid()>0){%>
-            <%if (twit.getIsceleb()){%>
-                <%--<font class="mediumfont"><%=twit.getRealname()%>'s recent tweets</font>--%>
-                <%--<br/><br/>--%>
+            <%if (twit!=null && twit.getTwitid()>0 && twit.getIsceleb()){%>
+                    <%--<font class="mediumfont"><%=twit.getRealname()%>'s recent tweets</font>--%>
+                    <%--<br/><br/>--%>
+                    <table cellpadding="3" cellspacing="0" border="0" width="100%">
+                        <tr>
+                            <td valign="top">
+                                <div class="roundedBoxNoRound" style="width:410px; overflow:hidden;">
+                                        <%
+                                            int tweetsPage = 1;
+                                            if (Num.isinteger(request.getParameter("tweetsPage"))){ tweetsPage = Integer.parseInt(request.getParameter("tweetsPage")); }
+                                        %>
+                                        <%=PublicTwitterTweetlist.getHtml(twit, tweetsPage, request.getParameter("refresh"))%>
+                                        <br/><br/>
+                                        <a href="/twitter/<%=twitterusername%>/?tweetsPage=<%=tweetsPage+1%>"><font class="mediumfont">older tweets >></font></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+            <%} else {%>
                 <table cellpadding="3" cellspacing="0" border="0" width="100%">
                     <tr>
                         <td valign="top">
                             <div class="roundedBoxNoRound" style="width:410px; overflow:hidden;">
-
-                                    <%
-                                        int tweetsPage = 1;
-                                        if (Num.isinteger(request.getParameter("tweetsPage"))){ tweetsPage = Integer.parseInt(request.getParameter("tweetsPage")); }
-                                    %>
-                                    <%=PublicTwitterTweetlist.getHtml(twit, tweetsPage, request.getParameter("refresh"))%>
-                                    <br/><br/>
-                                    <a href="/twitter/<%=twitterusername%>/?tweetsPage=<%=tweetsPage+1%>"><font class="mediumfont">older tweets >></font></a>
+                                <font class="mediumfont">@<%=twitterusername%> isn't listed as a tracked <%=Pagez.getUserSession().getPl().getCelebiscalled()%> so we don't have their tweets but you can still see <a href="/twitter/<%=twitterusername%>/who/" style="text-decoration: underline; color: #0000ff;">who's tweeted them</a>!</font>
                             </div>
                         </td>
                     </tr>
                 </table>
+
             <%}%>
-        <%}%>
             <!-- End Middle Col -->
         </td>
     </tr>

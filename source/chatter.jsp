@@ -9,6 +9,7 @@
 <%@ page import="com.celebtwit.embed.JsCelebMentions" %>
 <%@ page import="com.celebtwit.embed.JsDifferentCelebs" %>
 <%@ page import="com.celebtwit.dao.Mention" %>
+<%@ page import="java.net.URLEncoder" %>
 
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
@@ -66,10 +67,31 @@ metaKeywords = pagetitleName1 + " " + pagetitleName2 + " " + nameOnScreen1 + " "
 <%@ include file="/template/header.jsp" %>
 
 
+<script language="javascript">
+function toggleLink() {
+    var ele = document.getElementById("toggleLink");
+    if(ele.style.display == "block") {
+        ele.style.display = "none";
+    } else {
+        ele.style.display = "block";
+    }
+}
+</script>
 
 
 
 <div class="roundedBox" style="width:630px;">
+    <center>
+        <%
+        String tweetThisStatus = "chatter between @"+twitterusername1+" and @"+twitterusername2+ " at " + "http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/chatter/"+twitterusername1+"/"+twitterusername2+"/";
+        tweetThisStatus = URLEncoder.encode(tweetThisStatus, "UTF-8");
+        %>
+        <font class="smallfont"><a href="javascript:toggleLink();" style="text-decoration: underline; color: #0000ff;">Link to this Page</a> | <a href="http://twitter.com/home?status=<%=tweetThisStatus%>" style="text-decoration: underline; color: #0000ff;" target="_blank">Tweet This</a></font>
+        <div id="toggleLink" style="display: none; text-align: center;">
+            <textarea rows="1" cols="80" name="linkurl" id="linkurl" style="font-size:9px;" onclick="javascript:document.getElementById('linkurl').select();"><%=Str.cleanForHtml("http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/chatter/"+twitterusername1+"/"+twitterusername2+"/")%></textarea>
+            <br/><font class="tinyfont">Copy and paste the above URL into your blog, email, im or website to link to this page.</font>
+        </div>
+    </center>
     <center><font class="largefont">twitter chatter between</font><br/></center>
     <table cellpadding="10" cellspacing="5" border="0" width="100%">
         <tr>

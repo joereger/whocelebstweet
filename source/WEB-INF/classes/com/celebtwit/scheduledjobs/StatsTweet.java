@@ -77,22 +77,28 @@ public class StatsTweet implements StatefulJob {
         status.append("@"+twit.getTwitterusername());
         status.append(" was tweeted ");
         status.append(mentions+ " times ");
-        status.append("by "+uniqueCelebs+" different "+pl.getCelebiscalled()+"s ");
+        if (uniqueCelebs==1){
+            status.append("by "+uniqueCelebs+" "+pl.getCelebiscalled()+" ");
+        } else {
+            status.append("by "+uniqueCelebs+" different "+pl.getCelebiscalled()+"s ");
+        }
         status.append("in last 7 days ");
         status.append("http://"+pl.getName()+"/twitter/"+twit.getTwitterusername());
         logger.debug("status="+status.toString());
         logger.debug("status.length()="+status.length());
         //Update status
         try{
-            if (status.length()>0){
-                if (SystemProperty.getProp(SystemProperty.PROP_DOSTATTWEETS).equals("1")){
-                    Twitter twitter = new Twitter(pl.getTwitterusername(), pl.getTwitterpassword());
-                    twitter.update(status.toString());
-                    //Update the laststatstweet date
-                    twit.setLaststatstweet(new Date());
-                    twit.save();
-                } else {
-                    logger.debug("Not running because SystemProperty.PROP_DOSTATTWEETS != 1.");
+            if (mentions>0){
+                if (status.length()>0){
+                    if (SystemProperty.getProp(SystemProperty.PROP_DOSTATTWEETS).equals("1")){
+                        Twitter twitter = new Twitter(pl.getTwitterusername(), pl.getTwitterpassword());
+                        twitter.update(status.toString());
+                        //Update the laststatstweet date
+                        twit.setLaststatstweet(new Date());
+                        twit.save();
+                    } else {
+                        logger.debug("Not running because SystemProperty.PROP_DOSTATTWEETS != 1.");
+                    }
                 }
             }
         } catch (Exception ex){
