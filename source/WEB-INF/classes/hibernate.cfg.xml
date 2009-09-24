@@ -7,6 +7,7 @@
 
         <mapping resource="com/celebtwit/dao/Dbcache.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Dbcacheexpirable.hbm.xml" />
+        <mapping resource="com/celebtwit/dao/Emailme.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Error.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Pageperformance.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Systemprop.hbm.xml" />

@@ -124,9 +124,7 @@ if (twit!=null && twit.getIsceleb()){
                         <tr>
                             <td valign="top">
                                 <div class="roundedBoxNoRound" style="width:410px; overflow:hidden;">
-
                                         <%=tweet%>
-
                                         <br/><br/>
                                         <a href="/twitter/<%=twitterusername%>/"><font class="mediumfont">all of @<%=twitterusername%>'s tweets >></font></a>
                                 </div>

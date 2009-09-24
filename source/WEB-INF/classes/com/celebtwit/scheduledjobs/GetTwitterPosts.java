@@ -360,38 +360,22 @@ public class GetTwitterPosts implements StatefulJob {
     public static void saveMention(Twit twitToUpdate, Twitpost twitpost, Twitpl twitpl){
         Logger logger = Logger.getLogger(GetTwitterPosts.class);
         try{
-            //See if any exact mentions exist (other thread processing... something like that)
-            int numberOfSameMentions =NumFromUniqueResult.getInt("select count(*) from Mention where twitpostid='"+twitpost.getTwitpostid()+"' and twitidceleb='"+twitpost.getTwitid()+"' and twitidmentioned='"+twitToUpdate.getTwitid()+"' and plid='"+twitpl.getPlid()+"'");
-            if (numberOfSameMentions==0){
-                //Only insert if there are no exactly similar mentions
-                Mention mention = new Mention();
-                mention.setTwitpostid(twitpost.getTwitpostid());
-                mention.setTwitidceleb(twitpost.getTwitid());
-                mention.setTwitidmentioned(twitToUpdate.getTwitid());
-                mention.setIsmentionedaceleb(twitToUpdate.getIsceleb());
-                mention.setCreated_at(twitpost.getCreated_at());
-                mention.setPlid(twitpl.getPlid()); // <-- Setting plid of mention to the one of the plids of the celeb
-                mention.save();
+            //Make sure it's not a self tweet
+            if (twitpost.getTwitid()!=twitToUpdate.getTwitid()){
+                //See if any exact mentions exist (other thread processing... something like that)
+                int numberOfSameMentions =NumFromUniqueResult.getInt("select count(*) from Mention where twitpostid='"+twitpost.getTwitpostid()+"' and twitidceleb='"+twitpost.getTwitid()+"' and twitidmentioned='"+twitToUpdate.getTwitid()+"' and plid='"+twitpl.getPlid()+"'");
+                if (numberOfSameMentions==0){
+                    //Only insert if there are no exactly similar mentions
+                    Mention mention = new Mention();
+                    mention.setTwitpostid(twitpost.getTwitpostid());
+                    mention.setTwitidceleb(twitpost.getTwitid());
+                    mention.setTwitidmentioned(twitToUpdate.getTwitid());
+                    mention.setIsmentionedaceleb(twitToUpdate.getIsceleb());
+                    mention.setCreated_at(twitpost.getCreated_at());
+                    mention.setPlid(twitpl.getPlid()); // <-- Setting plid of mention to the one of the plids of the celeb
+                    mention.save();
+                }
             }
-//            //See if any exact mentions exist (other thread processing... something like that)
-//            List<Mention> mentions = HibernateUtil.getSession().createCriteria(Mention.class)
-//                    .add(Restrictions.eq("twitpostid", twitpost.getTwitpostid()))
-//                    .add(Restrictions.eq("twitidceleb", twitpost.getTwitid()))
-//                    .add(Restrictions.eq("twitidmentioned", twitToUpdate.getTwitid()))
-//                    .add(Restrictions.eq("plid", twitpl.getPlid()))
-//                    .setCacheable(true)
-//                    .list();
-//            //Only insert if there are no exactly similar mentions
-//            if (mentions==null || mentions.size()==0){
-//                Mention mention = new Mention();
-//                mention.setTwitpostid(twitpost.getTwitpostid());
-//                mention.setTwitidceleb(twitpost.getTwitid());
-//                mention.setTwitidmentioned(twitToUpdate.getTwitid());
-//                mention.setIsmentionedaceleb(twitToUpdate.getIsceleb());
-//                mention.setCreated_at(twitpost.getCreated_at());
-//                mention.setPlid(twitpl.getPlid()); // <-- Setting plid of mention to the one of the plids of the celeb
-//                mention.save();
-//            }
         } catch (Exception ex) {
             logger.error("", ex);
         }

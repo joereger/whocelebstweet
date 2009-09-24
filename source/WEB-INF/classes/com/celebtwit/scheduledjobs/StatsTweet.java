@@ -67,32 +67,33 @@ public class StatsTweet implements StatefulJob {
 
     private void processTwitForPl(Twit twit, Pl pl){
         Logger logger = Logger.getLogger(this.getClass().getName());
-        //Calculate start/end date
-        StartDateEndDate sted = new StartDateEndDate(StartDateEndDate.TYPE_LAST7DAYS);
-        //Count mentions/stats
-        int mentions = CountMentionsByCelebs.get(twit, sted.getStartDate(), sted.getEndDate(), pl.getPlid());
-        int uniqueCelebs = CountUniqueCelebsWhoMentioned.get(twit, sted.getStartDate(), sted.getEndDate(), pl.getPlid());
-        //Build status
-        StringBuffer status = new StringBuffer();
-        status.append("@"+twit.getTwitterusername());
-        status.append(" was tweeted ");
-        status.append(mentions+ " times ");
-        if (uniqueCelebs==1){
-            status.append("by "+uniqueCelebs+" "+pl.getCelebiscalled()+" ");
-        } else {
-            status.append("by "+uniqueCelebs+" different "+pl.getCelebiscalled()+"s ");
-        }
-        status.append("in last 7 days ");
-        status.append("http://"+pl.getName()+"/twitter/"+twit.getTwitterusername());
-        logger.debug("status="+status.toString());
-        logger.debug("status.length()="+status.length());
-        //Update status
         try{
+            //Calculate start/end date
+            StartDateEndDate sted = new StartDateEndDate(StartDateEndDate.TYPE_LAST7DAYS);
+            //Count mentions/stats
+            int mentions = CountMentionsByCelebs.get(twit, sted.getStartDate(), sted.getEndDate(), pl.getPlid());
+            int uniqueCelebs = CountUniqueCelebsWhoMentioned.get(twit, sted.getStartDate(), sted.getEndDate(), pl.getPlid());
+            //Build status
+            StringBuffer status = new StringBuffer();
+            status.append("@"+twit.getTwitterusername());
+            status.append(" was tweeted ");
+            status.append(mentions+ " times ");
+            if (uniqueCelebs==1){
+                status.append("by "+uniqueCelebs+" "+pl.getCelebiscalled()+" ");
+            } else {
+                status.append("by "+uniqueCelebs+" different "+pl.getCelebiscalled()+"s ");
+            }
+            status.append("in last 7 days ");
+            status.append("http://"+pl.getName()+"/twitter/"+twit.getTwitterusername());
+            logger.debug("status="+status.toString());
+            logger.debug("status.length()="+status.length());
+            //Update status
             if (mentions>0){
                 if (status.length()>0){
                     if (SystemProperty.getProp(SystemProperty.PROP_DOSTATTWEETS).equals("1")){
+                        logger.debug("pl="+pl.getName()+" twitterusername="+pl.getTwitterusername()+" pass="+pl.getTwitterpassword());
                         Twitter twitter = new Twitter(pl.getTwitterusername(), pl.getTwitterpassword());
-                        twitter.update(status.toString());
+                        twitter.updateStatus(status.toString());
                         //Update the laststatstweet date
                         twit.setLaststatstweet(new Date());
                         twit.save();

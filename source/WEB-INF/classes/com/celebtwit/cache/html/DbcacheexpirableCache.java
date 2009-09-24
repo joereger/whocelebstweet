@@ -51,20 +51,22 @@ public class DbcacheexpirableCache {
     public static void put(String key, String group, Object obj, Date expirationdate) {
         Logger logger = Logger.getLogger(Dbcacheexpirable.class);
         try{
-
             //Delete any existing entries from the same group/key
-            List<Dbcacheexpirable> dbcaches = HibernateUtil.getSession().createCriteria(Dbcacheexpirable.class)
-                                               .add(Restrictions.eq("grp", group))
-                                               .add(Restrictions.eq("keyname", key))
-                                               .setCacheable(true)
-                                               .list();
-            if (dbcaches!=null && dbcaches.size()>0){
-                for (Iterator<Dbcacheexpirable> dbcacheIterator=dbcaches.iterator(); dbcacheIterator.hasNext();) {
-                    Dbcacheexpirable dbcache=dbcacheIterator.next();
-                    dbcache.delete();
+            try{
+                List<Dbcacheexpirable> dbcaches = HibernateUtil.getSession().createCriteria(Dbcacheexpirable.class)
+                                                   .add(Restrictions.eq("grp", group))
+                                                   .add(Restrictions.eq("keyname", key))
+                                                   .setCacheable(true)
+                                                   .list();
+                if (dbcaches!=null && dbcaches.size()>0){
+                    for (Iterator<Dbcacheexpirable> dbcacheIterator=dbcaches.iterator(); dbcacheIterator.hasNext();) {
+                        Dbcacheexpirable dbcache=dbcacheIterator.next();
+                        dbcache.delete();
+                    }
                 }
+            } catch (Exception ex){
+                logger.error("", ex);
             }
-
             //Save the value
             Dbcacheexpirable dbcacheNew = new Dbcacheexpirable();
             dbcacheNew.setDate(new Date());
@@ -73,7 +75,6 @@ public class DbcacheexpirableCache {
             dbcacheNew.setKeyname(key);
             dbcacheNew.setVal(obj);
             dbcacheNew.save();
-
         } catch (Exception ex){
             logger.error("", ex);
         }
