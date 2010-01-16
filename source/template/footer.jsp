@@ -10,6 +10,8 @@
         <%@ include file="footer-politicians.jsp" %>
     <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whotechpunditstweet.com")) { %>
         <%@ include file="footer-techpundits.jsp" %>
+        <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("peachtweets.com")) { %>
+        <%@ include file="footer-atlantatechpundits.jsp" %>
     <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whotriathletestweet.com")) { %>
         <%@ include file="footer-triathletes.jsp" %>
     <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whocycliststweet.com")) { %>

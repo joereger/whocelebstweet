@@ -20,6 +20,7 @@ import java.util.*;
 
 import twitter4j.Twitter;
 import twitter4j.User;
+import twitter4j.IDs;
 
 /**
  * User: Joe Reger Jr
@@ -52,20 +53,17 @@ public class MakeFriends implements StatefulJob {
         if (pl.getTwitterusername().length()==0 || pl.getTwitterpassword().length()==0){
             return;
         }
-        List<User> twitterUsersFollowing = new ArrayList<User>();
+        List<Integer> twitterUsersFollowing = new ArrayList<Integer>();
         try{
             logger.debug("pl.getTwitterusername()="+pl.getTwitterusername()+" pl.getTwitterpassword()="+pl.getTwitterpassword());
             Twitter twitter = new Twitter(pl.getTwitterusername(), pl.getTwitterpassword());
-            for(int page=1; page<20; page++){
-                logger.debug("page="+page);
-                List<User> tuf = twitter.getFriends(page);
-                if (tuf!=null && tuf.size()>0){
-                    twitterUsersFollowing.addAll(tuf);
-                } else {
-                    break;
+            IDs ids = twitter.getFriendsIDs();
+            if (ids!=null && ids.getIDs()!=null){
+                for (int i = 0; i < ids.getIDs().length; i++) {
+                    int id = ids.getIDs()[i];
+                    twitterUsersFollowing.add(id);
                 }
             }
-            logger.error("processPl("+pl.getName()+") twitterUsersFollowing.size()="+twitterUsersFollowing.size());
         } catch (Exception ex){
             logger.error("", ex);
         }
@@ -82,9 +80,10 @@ public class MakeFriends implements StatefulJob {
             Twit twit=iterator.next();
             //Use the list of friends for this pl to see if this user is a friend
             boolean followingThisUser = false;
-            for (Iterator<User> userIterator=twitterUsersFollowing.iterator(); userIterator.hasNext();) {
-                User user=userIterator.next();
-                if (user.getScreenName().trim().equalsIgnoreCase(twit.getTwitterusername().trim())){
+            for (Iterator<Integer> userIterator=twitterUsersFollowing.iterator(); userIterator.hasNext();) {
+                Integer userid = userIterator.next();
+                String useridStr = String.valueOf(userid);
+                if (useridStr.equals(twit.getTwitteruserid())){
                     followingThisUser = true;
                 }
             }
@@ -101,7 +100,7 @@ public class MakeFriends implements StatefulJob {
             if (SystemProperty.getProp(SystemProperty.PROP_DOSTATTWEETS).equals("1")){
                 logger.debug("pl.getTwitterusername()="+pl.getTwitterusername()+" pl.getTwitterpassword()="+pl.getTwitterpassword());
                 Twitter twitter = new Twitter(pl.getTwitterusername(), pl.getTwitterpassword());
-                twitter.create(twit.getTwitterusername());
+                twitter.createFriendship(twit.getTwitterusername());
             } else {
                 logger.debug("Woulda created a friendship with "+twit.getTwitterusername()+" but SystemProperty.PROP_DOSTATTWEETS != 1.");
             }

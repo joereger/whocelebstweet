@@ -24,7 +24,7 @@ import com.celebtwit.helpers.CountUniqueCelebsWhoMentioned;
 import java.util.*;
 
 import twitter4j.Twitter;
-import twitter4j.User;
+
 
 /**
  * User: Joe Reger Jr

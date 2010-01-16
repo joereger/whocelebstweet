@@ -16,6 +16,7 @@ public class Twit extends BasePersistentClass implements java.io.Serializable, A
     // Fields
      private int twitid;
      private String twitterusername;
+     private String twitteruserid;
      private String realname;
      private boolean isceleb;
      private String since_id;
@@ -168,5 +169,13 @@ public class Twit extends BasePersistentClass implements java.io.Serializable, A
 
     public void setLaststatstweet(Date laststatstweet) {
         this.laststatstweet=laststatstweet;
+    }
+
+    public String getTwitteruserid() {
+        return twitteruserid;
+    }
+
+    public void setTwitteruserid(String twitteruserid) {
+        this.twitteruserid = twitteruserid;
     }
 }

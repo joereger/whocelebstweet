@@ -42,5 +42,23 @@
         <property name="twitterpassword" type="text">
             <column name="twitterpassword" not-null="true" />
         </property>
+        <property name="listownerscreenname1" type="text">
+            <column name="listownerscreenname1" not-null="true" />
+        </property>
+        <property name="listid1" type="text">
+            <column name="listid1" not-null="true" />
+        </property>
+        <property name="listownerscreenname2" type="text">
+            <column name="listownerscreenname2" not-null="true" />
+        </property>
+        <property name="listid2" type="text">
+            <column name="listid2" not-null="true" />
+        </property>
+        <property name="listownerscreenname3" type="text">
+            <column name="listownerscreenname3" not-null="true" />
+        </property>
+        <property name="listid3" type="text">
+            <column name="listid3" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>

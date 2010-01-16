@@ -19,6 +19,8 @@ public class TwitterStatus {
     private String followers_count;
     private String statuses_count;
     private String following;
+    private String twitterusername;
+    private String twitteruserid;
 
 
     public Date getCreated_at() {
@@ -99,5 +101,21 @@ public class TwitterStatus {
 
     public void setFollowing(String following) {
         this.following=following;
+    }
+
+    public String getTwitterusername() {
+        return twitterusername;
+    }
+
+    public void setTwitterusername(String twitterusername) {
+        this.twitterusername = twitterusername;
+    }
+
+    public String getTwitteruserid() {
+        return twitteruserid;
+    }
+
+    public void setTwitteruserid(String twitteruserid) {
+        this.twitteruserid = twitteruserid;
     }
 }

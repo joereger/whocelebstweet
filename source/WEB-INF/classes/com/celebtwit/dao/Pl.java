@@ -27,6 +27,12 @@ public class Pl extends BasePersistentClass implements java.io.Serializable, Aut
     private String sisterdomain3;
     private String twitterusername;
     private String twitterpassword;
+    private String listownerscreenname1;
+    private String listid1;
+    private String listownerscreenname2;
+    private String listid2;
+    private String listownerscreenname3;
+    private String listid3;
 
 
 
@@ -184,5 +190,53 @@ public class Pl extends BasePersistentClass implements java.io.Serializable, Aut
 
     public void setSistername(String sistername) {
         this.sistername=sistername;
+    }
+
+    public String getListownerscreenname1() {
+        return listownerscreenname1;
+    }
+
+    public void setListownerscreenname1(String listownerscreenname1) {
+        this.listownerscreenname1 = listownerscreenname1;
+    }
+
+    public String getListid1() {
+        return listid1;
+    }
+
+    public void setListid1(String listid1) {
+        this.listid1 = listid1;
+    }
+
+    public String getListownerscreenname2() {
+        return listownerscreenname2;
+    }
+
+    public void setListownerscreenname2(String listownerscreenname2) {
+        this.listownerscreenname2 = listownerscreenname2;
+    }
+
+    public String getListid2() {
+        return listid2;
+    }
+
+    public void setListid2(String listid2) {
+        this.listid2 = listid2;
+    }
+
+    public String getListownerscreenname3() {
+        return listownerscreenname3;
+    }
+
+    public void setListownerscreenname3(String listownerscreenname3) {
+        this.listownerscreenname3 = listownerscreenname3;
+    }
+
+    public String getListid3() {
+        return listid3;
+    }
+
+    public void setListid3(String listid3) {
+        this.listid3 = listid3;
     }
 }

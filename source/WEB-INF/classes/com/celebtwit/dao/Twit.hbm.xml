@@ -19,6 +19,9 @@
         <property name="twitterusername" type="string">
             <column name="twitterusername" not-null="true" />
         </property>
+        <property name="twitteruserid" type="string">
+            <column name="twitteruserid" not-null="true" />
+        </property>
         <property name="realname" type="string">
             <column name="realname" not-null="true" />
         </property>

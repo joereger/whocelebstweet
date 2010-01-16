@@ -181,6 +181,28 @@
         </trigger>
     </job>
 
+    <job>
+        <job-detail>
+          <name>twitterListSync</name>
+          <group>surveyJobs</group>
+          <job-class>com.celebtwit.scheduledjobs.TwitterListSync</job-class>
+          <volatility>false</volatility>
+          <durability>false</durability>
+          <recover>false</recover>
+        </job-detail>
+        <trigger>
+          <!-- Sample cron triggers: http://www.opensymphony.com/quartz/wikidocs/TutorialLesson6.html -->
+          <cron>
+            <name>twitterListSyncTrigger</name>
+            <group>surveyTriggers</group>
+            <job-name>twitterListSync</job-name>
+            <job-group>surveyJobs</job-group>
+            <!-- every 18 hours -->
+            <cron-expression>0 0 0/18 * * ?</cron-expression>
+          </cron>
+        </trigger>
+    </job>
+
 
     <job>
         <job-detail>

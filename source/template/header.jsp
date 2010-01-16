@@ -18,6 +18,8 @@
         <%@ include file="header-politicians.jsp" %>
     <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whotechpunditstweet.com")) { %>
         <%@ include file="header-techpundits.jsp" %>
+    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("peachtweets.com")) { %>
+        <%@ include file="header-atlantatechpundits.jsp" %>
     <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whotriathletestweet.com")) { %>
         <%@ include file="header-triathletes.jsp" %>
     <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whocycliststweet.com")) { %>

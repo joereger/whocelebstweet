@@ -29,6 +29,8 @@ SysadminManuallyRunScheduledTask sysadminManuallyRunScheduledTask = (SysadminMan
                     sysadminManuallyRunScheduledTask.runMakeFriends();
                 } else if (request.getParameter("task").equals("StatsTweet")){
                     sysadminManuallyRunScheduledTask.runStatsTweet();
+                } else if (request.getParameter("task").equals("TwitterListSync")){
+                    sysadminManuallyRunScheduledTask.runTwitterListSync();
                 } else {
                     throw new ValidationException("task not found.");    
                 }
@@ -51,6 +53,7 @@ SysadminManuallyRunScheduledTask sysadminManuallyRunScheduledTask = (SysadminMan
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=MakeFriends"><font class="mediumfont">MakeFriends</font></a>
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=StatsTweet"><font class="mediumfont">StatsTweet</font></a>
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=GetTwitterPosts"><font class="mediumfont">GetTwitterPosts</font></a>
+<br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=TwitterListSync"><font class="mediumfont">TwitterListSync</font></a>
 
 
 <%@ include file="/template/footer.jsp" %>

@@ -29,6 +29,7 @@ String acl = "sysadmin";
     twit.setProfile_image_url("");
     twit.setSince_id("1");
     twit.setTwitterusername("");
+    twit.setTwitteruserid("");
     twit.setDescription("");
     twit.setWebsite_url("");
     twit.setStatuses_count(0);

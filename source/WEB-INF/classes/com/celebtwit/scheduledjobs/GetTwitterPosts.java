@@ -106,6 +106,7 @@ public class GetTwitterPosts implements StatefulJob {
             String profile_image_url = twit.getProfile_image_url();
             String website_url = twit.getWebsite_url();
             String description = twit.getDescription();
+            String twitteruserid = twit.getTwitteruserid();
             int statuses_count = twit.getStatuses_count();
             int followers_count = twit.getFollowers_count();
             boolean foundAPost = false;
@@ -126,6 +127,7 @@ public class GetTwitterPosts implements StatefulJob {
                     profile_image_url = status.getProfile_image_url();
                     website_url = status.getWebsite_url();
                     description = status.getDescription();
+                    twitteruserid = status.getTwitteruserid();
                     if (Num.isinteger(status.getStatuses_count())){ statuses_count = Integer.parseInt(status.getStatuses_count()); }
                     if (Num.isinteger(status.getFollowers_count())){ followers_count = Integer.parseInt(status.getFollowers_count()); }
                     //Only keep the highest status seen so far
@@ -153,6 +155,7 @@ public class GetTwitterPosts implements StatefulJob {
                 twit.setDescription(description);
                 twit.setFollowers_count(followers_count);
                 twit.setStatuses_count(statuses_count);
+                twit.setTwitteruserid(twitteruserid);
                 twit.save();
                 //Flush the cache for this user
                 DbcacheexpirableCache.flush("PublicTwitterTweetlist.java-twitid-"+twit.getTwitid());
@@ -269,6 +272,8 @@ public class GetTwitterPosts implements StatefulJob {
                     ts.setFollowers_count(elUser.elementText("followers_count"));
                     ts.setStatuses_count(elUser.elementText("statuses_count"));
                     ts.setFollowing(elUser.elementText("following"));
+                    ts.setTwitterusername(elUser.elementText("screen_name"));
+                    ts.setTwitteruserid(elUser.elementText("id"));
                 }
                 out.add(ts);
                 logger.debug("parsing xml - id="+ts.getId()+" created_at="+ts.getCreated_at()+" text="+ts.getText());
@@ -334,6 +339,7 @@ public class GetTwitterPosts implements StatefulJob {
                     newTwit.setRealname("");
                     newTwit.setSince_id("1");
                     newTwit.setTwitterusername(mentionedUsername);
+                    newTwit.setTwitteruserid("");
                     newTwit.setProfile_image_url("");
                     newTwit.setDescription("");
                     newTwit.setWebsite_url("");
