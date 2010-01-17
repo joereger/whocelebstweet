@@ -1,4 +1,6 @@
-
+<%@ page import="com.celebtwit.dao.Pl" %>
+<%@ page import="com.celebtwit.privatelabel.*" %>
+<%@ page import="com.celebtwit.htmlui.*" %>
 <%
     String finalMetaKeywords = "";
     if (metaKeywords!=null && !metaKeywords.equals("")){ finalMetaKeywords = metaKeywords; }
@@ -9,24 +11,31 @@
     if (metaDescription!=null && !metaDescription.equals("")){ finalMetaDescription = metaDescription; }
 %>
 
-<% if (Pagez.getUserSession()!=null && Pagez.getUserSession().getPl()!=null) { %>
-    <% if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whocelebstweet.com")) { %>
+<%
+Pl plHeaderFooter = PlFinder.find(request);
+if (Pagez.getUserSession()==null){Pagez.setUserSession(new UserSession()); logger.debug("Pagez.getUserSession() was null so created new UserSession()");}
+Pagez.getUserSession().setIsSisterPl(PlFinder.isSisterPl(request, plHeaderFooter));
+logger.debug("Pagez.getUserSession().isSisterPl()="+Pagez.getUserSession().isSisterPl());
+%>
+
+<% if (plHeaderFooter!=null) { %>
+    <% if (plHeaderFooter.getName().equalsIgnoreCase("whocelebstweet.com")) { %>
         <%@ include file="header-celebtwit.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whoathletestweet.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whoathletestweet.com")) { %>
         <%@ include file="header-athletes.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whopoliticianstweet.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whopoliticianstweet.com")) { %>
         <%@ include file="header-politicians.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whotechpunditstweet.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whotechpunditstweet.com")) { %>
         <%@ include file="header-techpundits.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("peachtweets.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("peachtweets.com")) { %>
         <%@ include file="header-atlantatechpundits.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whotriathletestweet.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whotriathletestweet.com")) { %>
         <%@ include file="header-triathletes.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whocycliststweet.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whocycliststweet.com")) { %>
         <%@ include file="header-cyclists.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whomodelstweet.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whomodelstweet.com")) { %>
         <%@ include file="header-models.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whoceostweet.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whoceostweet.com")) { %>
         <%@ include file="header-ceos.jsp" %>
     <% } else { %>
         <%@ include file="header-celebtwit.jsp" %>

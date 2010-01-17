@@ -37,7 +37,6 @@ public class UserSession implements Serializable {
         logger.debug("New UserSession created.");
         try{
             createdate = Calendar.getInstance();
-
         } catch (Exception ex){
             logger.error("", ex);
         }

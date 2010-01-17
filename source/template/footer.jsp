@@ -1,24 +1,24 @@
 <%@ page import="com.celebtwit.pageperformance.PagePerformanceUtil" %>
 <%@ page import="com.celebtwit.systemprops.InstanceProperties" %>
 
-<% if (Pagez.getUserSession()!=null && Pagez.getUserSession().getPl()!=null) { %>
-    <% if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whocelebstweet.com")) { %>
+<% if (plHeaderFooter!=null) { %>
+    <% if (plHeaderFooter.getName().equalsIgnoreCase("whocelebstweet.com")) { %>
         <%@ include file="footer-celebtwit.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whoathletestweet.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whoathletestweet.com")) { %>
         <%@ include file="footer-athletes.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whopoliticianstweet.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whopoliticianstweet.com")) { %>
         <%@ include file="footer-politicians.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whotechpunditstweet.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whotechpunditstweet.com")) { %>
         <%@ include file="footer-techpundits.jsp" %>
-        <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("peachtweets.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("peachtweets.com")) { %>
         <%@ include file="footer-atlantatechpundits.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whotriathletestweet.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whotriathletestweet.com")) { %>
         <%@ include file="footer-triathletes.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whocycliststweet.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whocycliststweet.com")) { %>
         <%@ include file="footer-cyclists.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whomodelstweet.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whomodelstweet.com")) { %>
         <%@ include file="footer-models.jsp" %>
-    <% } else if (Pagez.getUserSession().getPl().getName().equalsIgnoreCase("whoceostweet.com")) { %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whoceostweet.com")) { %>
         <%@ include file="footer-ceos.jsp" %>
     <% } else { %>
         <%@ include file="footer-celebtwit.jsp" %>
