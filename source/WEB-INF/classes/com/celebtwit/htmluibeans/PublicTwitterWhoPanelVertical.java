@@ -34,7 +34,7 @@ public class PublicTwitterWhoPanelVertical {
     public static String getHtml(Twit twit, String twitterusername, Pl pl, String requestParamTime, boolean forceRefresh){
         Logger logger = Logger.getLogger(PublicTwitterWhoPanelVertical.class);
         String out = "";
-        String key = "twitter.jsp-whopanelvertical-twitid="+twit.getTwitid()+"-twitterusername-"+twitterusername+"-time-"+requestParamTime;
+        String key = "twitter.jsp-whopanelvertical-twitid="+twit.getTwitid()+"-twitterusername-"+twitterusername+"-time-"+requestParamTime+"-adnetworkname-"+Pagez.getUserSession().getAdNetworkName();
         String group = "PublicTwitterWhoPanelVertical.java-plid-"+pl.getPlid();
         Object fromCache = DbcacheexpirableCache.get(key, group);
         if (fromCache!=null && !forceRefresh){

@@ -25,7 +25,7 @@ public class PublicRightcolListCelebs {
     public static String getHtml(Pl pl){
         Logger logger = Logger.getLogger(PublicTwitterWhoPanel.class);
         String out = "";
-        String key = "plid-"+pl.getPlid();
+        String key = "plid-"+pl.getPlid()+"-adnetworkname-"+Pagez.getUserSession().getAdNetworkName();
         String group = "PublicRightcolListCelebs.java";
         Object fromCache = DbcacheexpirableCache.get(key, group);
         if (fromCache!=null){

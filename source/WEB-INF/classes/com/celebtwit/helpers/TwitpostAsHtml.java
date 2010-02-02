@@ -1,16 +1,14 @@
 package com.celebtwit.helpers;
 
-import com.celebtwit.dao.Twitpost;
+import com.celebtwit.ads.AdUtil;
 import com.celebtwit.dao.Twit;
+import com.celebtwit.dao.Twitpost;
 import com.celebtwit.util.Time;
 import com.celebtwit.util.Util;
-import com.celebtwit.util.Str;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-import java.net.URLEncoder;
+import java.util.regex.Pattern;
 
 /**
  * User: Joe Reger Jr
@@ -168,7 +166,7 @@ public class TwitpostAsHtml {
         out.append("        <img src=\""+imgUrl+"\" width=\"48\" height=\"48\" border=\"0\"\">");
         out.append("        </td>");        
         out.append("        <td>");
-        out.append(getAdsenseHalfBanner());
+        out.append(AdUtil.get234x60());
         out.append("        </td>");
         out.append("    </tr>");
         out.append("</table>");
@@ -177,21 +175,7 @@ public class TwitpostAsHtml {
         return out.toString();
     }
 
-    private static String getAdsenseHalfBanner(){
-        StringBuffer out = new StringBuffer();
-        out.append("<script type=\"text/javascript\"><!--\n" +
-                "google_ad_client = \"pub-9883617370563969\";\n" +
-                "/* 234x60, WhoCelebs Half Banner */\n" +
-                "google_ad_slot = \"5458098190\";\n" +
-                "google_ad_width = 234;\n" +
-                "google_ad_height = 60;\n" +
-                "//-->\n" +
-                "</script>\n" +
-                "<script type=\"text/javascript\"\n" +
-                "src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">\n" +
-                "</script>");
-         return out.toString();
-    }
+
 
 
 }

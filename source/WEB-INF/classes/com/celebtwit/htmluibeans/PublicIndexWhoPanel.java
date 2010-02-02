@@ -34,7 +34,7 @@ public class PublicIndexWhoPanel {
     public static String getHtml(Pl pl, String requestParamTime, boolean forceRefresh){
         Logger logger = Logger.getLogger(PublicTwitterWhoPanel.class);
         String out = "";
-        String key = "index.jsp-whopanel-time-"+requestParamTime;
+        String key = "index.jsp-whopanel-time-"+requestParamTime+"-adnetworkname-"+Pagez.getUserSession().getAdNetworkName();
         String group = "PublicIndexWhoPanel.java-plid-"+pl.getPlid();
         Object fromCache = DbcacheexpirableCache.get(key, group);
         if (fromCache!=null && !forceRefresh){

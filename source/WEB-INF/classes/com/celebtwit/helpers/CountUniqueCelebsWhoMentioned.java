@@ -29,7 +29,7 @@ public class CountUniqueCelebsWhoMentioned {
     }
 
     public static int get(Twit twit, Date startDate, Date endDate, int plid){
-        Logger logger = Logger.getLogger(GetTwitterPosts.class);
+        Logger logger = Logger.getLogger(CountUniqueCelebsWhoMentioned.class);
         if (twit==null || twit.getTwitid()==0){
             return 0;
         }

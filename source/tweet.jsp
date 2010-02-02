@@ -8,6 +8,7 @@
 <%@ page import="com.celebtwit.embed.JsCelebMentions" %>
 <%@ page import="com.celebtwit.embed.JsDifferentCelebs" %>
 <%@ page import="com.celebtwit.util.Num" %>
+<%@ page import="com.celebtwit.ads.AdUtil" %>
 <%@ page import="com.celebtwit.htmluibeans.*" %>
 
 <%
@@ -78,17 +79,18 @@ if (twit!=null && twit.getIsceleb()){
 
 
 
-
+<%if (twit!=null && twit.getIsceleb()){%>
+    <font class="largefont" style="font-size:60px;"> <%=twit.getRealname()%> </font>
+<%} else {%>
+    <font class="largefont" style="font-size:60px;"> @<%=twitterusername%> </font>
+<%}%>
 <table cellpadding="3" cellspacing="0" border="0" width="100%">
     <tr>
         <td valign="top" width="200">
             <!-- Start Left Col -->
             <div class="roundedBox" style="width:200px;">
                 <%if (twit!=null && twit.getIsceleb()){%>
-                    <img src="<%=twitimageurl%>" width="48" height="48" border="0" align="left" alt="<%=twit.getRealname()%>">
-                    <font class="largefont"> <%=twit.getRealname()%> </font>
-                <%} else {%>
-                    <font class="largefont"> @<%=twitterusername%> </font>
+                    <center><img src="<%=twitimageurl%>" width="48" height="48" border="0" align="left" alt="<%=twit.getRealname()%>"></center>
                 <%}%>
                 <br/>
                 <%if (twit!=null && twit.getIsceleb()){%>
@@ -99,17 +101,7 @@ if (twit!=null && twit.getIsceleb()){
                 <br/>
                 <br/><br/><br/><br/><br/>
                 <center>
-                <script type="text/javascript"><!--
-                google_ad_client = "pub-9883617370563969";
-                /* 160x600, Skyscraper */
-                google_ad_slot = "2576530148";
-                google_ad_width = 160;
-                google_ad_height = 600;
-                //-->
-                </script>
-                <script type="text/javascript"
-                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-                </script>
+                <%=AdUtil.get160x600()%>
                 </center>
             </div>
             <!-- End Left Col -->
@@ -135,17 +127,8 @@ if (twit!=null && twit.getIsceleb()){
             <%}%>
             <br/><br/>
             <center>
-            <script type="text/javascript"><!--
-            google_ad_client = "pub-9883617370563969";
-            /* 336x280, created 8/3/09 */
-            google_ad_slot = "6301770143";
-            google_ad_width = 336;
-            google_ad_height = 280;
-            //-->
-            </script>
-            <script type="text/javascript"
-            src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-            </script>
+            <%=AdUtil.get400x600()%>
+            <%=AdUtil.get336x280()%>
             </center>
             <!-- End Middle Col -->
         </td>

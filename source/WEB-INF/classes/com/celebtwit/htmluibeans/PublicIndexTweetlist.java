@@ -1,20 +1,16 @@
 package com.celebtwit.htmluibeans;
 
+import com.celebtwit.cache.html.DbcacheexpirableCache;
 import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twitpost;
-import com.celebtwit.dao.Twit;
 import com.celebtwit.dao.hibernate.HibernateUtil;
-import com.celebtwit.cache.html.DbcacheexpirableCache;
-import com.celebtwit.helpers.*;
+import com.celebtwit.helpers.TwitpostAsHtml;
 import com.celebtwit.htmlui.Pagez;
-import com.celebtwit.util.RandomString;
 import com.celebtwit.util.Num;
-import com.celebtwit.util.Time;
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -40,7 +36,7 @@ public class PublicIndexTweetlist {
     public static String getHtml(Pl pl, int page, boolean forceRefresh){
         Logger logger = Logger.getLogger(PublicTwitterWhoPanel.class);
         String out = "";
-        String key = "plid-"+pl.getPlid()+"-page-"+page;
+        String key = "plid-"+pl.getPlid()+"-page-"+page+"-adnetworkname-"+Pagez.getUserSession().getAdNetworkName();
         String group = "PublicIndexTweetlist.java";
         Object fromCache = DbcacheexpirableCache.get(key, group);
         if (fromCache!=null && !forceRefresh){

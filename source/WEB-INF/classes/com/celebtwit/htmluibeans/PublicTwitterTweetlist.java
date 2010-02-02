@@ -38,7 +38,7 @@ public class PublicTwitterTweetlist {
     public static String getHtml(Twit twit, int page, boolean forceRefresh){
         Logger logger = Logger.getLogger(PublicTwitterWhoPanel.class);
         String out = "";
-        String key = "page-"+page;
+        String key = "page-"+page+"-adnetworkname-"+Pagez.getUserSession().getAdNetworkName();
         String group = "PublicTwitterTweetlist.java-twitid-"+twit.getTwitid();
         Object fromCache = DbcacheexpirableCache.get(key, group);
         if (fromCache!=null && !forceRefresh){

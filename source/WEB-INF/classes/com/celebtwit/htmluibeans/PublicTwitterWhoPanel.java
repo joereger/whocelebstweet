@@ -1,16 +1,15 @@
 package com.celebtwit.htmluibeans;
 
+import com.celebtwit.ads.AdUtil;
+import com.celebtwit.cache.html.DbcacheexpirableCache;
 import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twit;
 import com.celebtwit.helpers.*;
 import com.celebtwit.htmlui.Pagez;
-import com.celebtwit.cache.html.DbcacheexpirableCache;
+import org.apache.log4j.Logger;
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import org.apache.log4j.Logger;
 
 /**
  * User: Joe Reger Jr
@@ -34,7 +33,7 @@ public class PublicTwitterWhoPanel {
     public static String getHtml(Twit twit, String twitterusername, Pl pl, String requestParamTime, boolean forceRefresh){
         Logger logger = Logger.getLogger(PublicTwitterWhoPanel.class);
         String out = "";
-        String key = "twitter.jsp-whopanel-twitid="+twit.getTwitid()+"-twitterusername-"+twitterusername+"-time-"+requestParamTime;
+        String key = "twitter.jsp-whopanel-twitid="+twit.getTwitid()+"-twitterusername-"+twitterusername+"-time-"+requestParamTime+"-adnetworkname-"+Pagez.getUserSession().getAdNetworkName();
         String group = "PublicTwitterWhoPanel.java-plid-"+pl.getPlid();
         Object fromCache = DbcacheexpirableCache.get(key, group);
         if (fromCache!=null && !forceRefresh){
@@ -112,17 +111,7 @@ public class PublicTwitterWhoPanel {
         out.append("            <tr>\n");
         out.append("                <td valign=\"top\" width=\"50%\" rowspan=\"2\">\n");
 
-        out.append("                         <script type=\"text/javascript\">\n" +
-                "                            google_ad_client = \"pub-9883617370563969\";\n" +
-                "                            /* 250x250 WhoCelebsTwitter */\n" +
-                "                            google_ad_slot = \"3938353254\";\n" +
-                "                            google_ad_width = 250;\n" +
-                "                            google_ad_height = 250;\n" +
-                "                            //\n" +
-                "                            </script>\n" +
-                "                            <script type=\"text/javascript\"\n" +
-                "                            src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">\n" +
-                "                            </script>");
+        out.append(AdUtil.get300x250());
 
         out.append("                </td>\n");
         out.append("                <td valign=\"top\" height=\"40\">\n");

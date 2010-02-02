@@ -1,5 +1,7 @@
 package com.celebtwit.htmlui;
 
+import com.celebtwit.ads.AdNetworkFactory;
+import com.celebtwit.ads.AssignAdNetwork;
 import com.celebtwit.dao.User;
 import com.celebtwit.dao.Userrole;
 import com.celebtwit.dao.Pl;
@@ -31,6 +33,7 @@ public class UserSession implements Serializable {
     private Calendar createdate = Calendar.getInstance();
     private int plid = 1;
     private boolean isSisterPl = false;
+    private String adNetworkName = AdNetworkFactory.getDefaultAdNetwork().getAdNetworkName();
 
     public UserSession(){
         Logger logger = Logger.getLogger(this.getClass().getName());
@@ -109,12 +112,6 @@ public class UserSession implements Serializable {
     }
 
 
-
-
-
-
-
-
     public String getMessage() {
         return message;
     }
@@ -161,4 +158,14 @@ public class UserSession implements Serializable {
     public void setIsSisterPl(boolean sisterPl) {
         isSisterPl=sisterPl;
     }
+
+
+    public String getAdNetworkName() {
+        return adNetworkName;
+    }
+
+    public void setAdNetworkName(String adNetworkName) {
+        this.adNetworkName = adNetworkName;
+    }
+
 }

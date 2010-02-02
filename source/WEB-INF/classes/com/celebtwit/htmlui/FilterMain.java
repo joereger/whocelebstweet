@@ -1,25 +1,25 @@
 package com.celebtwit.htmlui;
 
+import com.celebtwit.ads.AssignAdNetwork;
+import com.celebtwit.cache.providers.CacheFactory;
+import com.celebtwit.dao.Pl;
+import com.celebtwit.dao.User;
+import com.celebtwit.privatelabel.PlFinder;
+import com.celebtwit.session.PersistentLogin;
+import com.celebtwit.session.UrlSplitter;
+import com.celebtwit.systemprops.BaseUrl;
+import com.celebtwit.systemprops.SystemProperty;
+import com.celebtwit.util.Time;
+import com.celebtwit.xmpp.SendXMPPMessage;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Calendar;
-
-import com.celebtwit.cache.providers.CacheFactory;
-import com.celebtwit.session.UrlSplitter;
-import com.celebtwit.session.PersistentLogin;
-import com.celebtwit.dao.User;
-import com.celebtwit.dao.Pl;
-import com.celebtwit.util.Time;
-import com.celebtwit.systemprops.SystemProperty;
-import com.celebtwit.systemprops.BaseUrl;
-import com.celebtwit.xmpp.SendXMPPMessage;
-import com.celebtwit.privatelabel.PlFinder;
 
 /**
  * User: Joe Reger Jr
@@ -62,15 +62,19 @@ public class FilterMain implements Filter {
                 //Find the userSession
                 Object obj = CacheFactory.getCacheProvider().get(httpServletRequest.getSession().getId(), "userSession");
                 if (obj!=null && (obj instanceof UserSession)){
-
                     logger.debug("found a userSession in the cache ((UserSession)obj).getPl().getName()="+((UserSession)obj).getPl().getName());
                     Pagez.setUserSession((UserSession)obj);
                 } else {
                     logger.debug("no userSession in cache so creating new UserSession()");
                     UserSession userSession = new UserSession();
                     Pagez.setUserSessionAndUpdateCache(userSession);
+                    //Set adnetwork to display... done on session creation so user sees same ads throughout session experience
+                    AssignAdNetwork.assign(httpServletRequest);
                 }
 
+                if (request.getParameter("ads")!=null || request.getParameter("safe")!=null){
+                    AssignAdNetwork.assign(httpServletRequest);    
+                }
 
                 //Production redirect to www.whocelebstwitter.com for https
                 //@todo make this configurable... i.e. no hard-coded urls
@@ -93,6 +97,8 @@ public class FilterMain implements Filter {
                 //Set userSession.isSisterPl()
                 Pagez.getUserSession().setIsSisterPl(PlFinder.isSisterPl(httpServletRequest, pl));
                 logger.debug("Pagez.getUserSession().setIsSisterPl("+Pagez.getUserSession().isSisterPl()+");");
+
+
 
                 //Redirect login page to https
                 if (SystemProperty.getProp(SystemProperty.PROP_ISSSLON).equals("1") && urlSplitter.getScheme().equals("http") && urlSplitter.getServletPath().equals("login.jsp")){
@@ -159,6 +165,10 @@ public class FilterMain implements Filter {
                     }
                 }
 
+
+                //For debugging/testing locally
+                //Pagez.getUserSession().setAdNetworkName(AdNetworkAdultFriendFinder.ADNETWORKNAME);
+                
 
             } else {
                 //It's an image, js, etc

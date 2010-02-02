@@ -6,6 +6,7 @@
 <%@ page import="com.celebtwit.dao.Twitpost" %>
 <%@ page import="com.celebtwit.util.Str" %>
 <%@ page import="com.celebtwit.util.Time" %>
+<%@ page import="com.celebtwit.ads.AdUtil" %>
 <%@ page import="com.celebtwit.embed.JsCelebMentions" %>
 <%@ page import="com.celebtwit.embed.JsDifferentCelebs" %>
 <%@ page import="com.celebtwit.dao.Mention" %>
@@ -118,7 +119,8 @@ function toggleLink() {
                 <font class="mediumfont">what they're saying to each other</font>
                 <br/><br/>
                 <%
-                    List<Mention> mentions = HibernateUtil.getSession().createQuery("from Mention where (twitidceleb='"+twitid1+"' and twitidmentioned='"+twitid2+"') or (twitidceleb='"+twitid2+"' and twitidmentioned='"+twitid1+"')").setMaxResults(200).list();
+                    String empty = "";
+                    List<Mention> mentions = HibernateUtil.getSession().createQuery(empty + "from Mention where (twitidceleb='"+twitid1+"' and twitidmentioned='"+twitid2+"') or (twitidceleb='"+twitid2+"' and twitidmentioned='"+twitid1+"')").setMaxResults(200).list();
                     ArrayList<Integer> twitpostids = new ArrayList<Integer>();
                     for (Iterator<Mention> menIt=mentions.iterator(); menIt.hasNext();) {
                         Mention mention=menIt.next();
@@ -143,17 +145,7 @@ function toggleLink() {
         </td>
         <td valign="top" width="160">
             <img src="/images/clear.gif" alt="" width="1" height="90"><br/>
-            <script type="text/javascript"><!--
-            google_ad_client = "pub-9883617370563969";
-            /* 160x600, Skyscraper */
-            google_ad_slot = "2576530148";
-            google_ad_width = 160;
-            google_ad_height = 600;
-            //-->
-            </script>
-            <script type="text/javascript"
-            src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-            </script>
+            <%=AdUtil.get160x600()%>
         </td>
     </tr>
 </table>

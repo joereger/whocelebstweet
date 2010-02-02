@@ -60,5 +60,13 @@
         <property name="listid3" type="text">
             <column name="listid3" not-null="true" />
         </property>
+        <property name="commasepadnetworks" type="string">
+            <column name="commasepadnetworks" not-null="true" />
+        </property>
+        <property name="isdisplayotherplson" type="boolean">
+            <column name="isdisplayotherplson" />
+        </property>
+
+
     </class>
 </hibernate-mapping>

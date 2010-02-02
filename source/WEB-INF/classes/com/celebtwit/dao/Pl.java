@@ -33,6 +33,8 @@ public class Pl extends BasePersistentClass implements java.io.Serializable, Aut
     private String listid2;
     private String listownerscreenname3;
     private String listid3;
+    private String commasepadnetworks;
+    private boolean isdisplayotherplson;
 
 
 
@@ -238,5 +240,21 @@ public class Pl extends BasePersistentClass implements java.io.Serializable, Aut
 
     public void setListid3(String listid3) {
         this.listid3 = listid3;
+    }
+
+    public String getCommasepadnetworks() {
+        return commasepadnetworks;
+    }
+
+    public void setCommasepadnetworks(String commasepadnetworks) {
+        this.commasepadnetworks = commasepadnetworks;
+    }
+
+    public boolean getIsdisplayotherplson() {
+        return isdisplayotherplson;
+    }
+
+    public void setIsdisplayotherplson(boolean isdisplayotherplson) {
+        this.isdisplayotherplson = isdisplayotherplson;
     }
 }

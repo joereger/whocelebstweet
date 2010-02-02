@@ -31,7 +31,7 @@ import org.apache.log4j.Logger;
 public class PersistentLogin {
 
     public static int daysToKeepPersistentRecordWithoutLogin = 365;
-    public static String cookieName = "keepmeloggedintopingfit";
+    public static String cookieName = "keepmeloggedintowhocelebstweet";
 
 
     public static int checkPersistentLogin(javax.servlet.http.Cookie cookie){

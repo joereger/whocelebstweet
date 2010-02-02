@@ -10,6 +10,7 @@
 <%@ page import="com.celebtwit.util.Num" %>
 <%@ page import="com.celebtwit.htmluibeans.*" %>
 <%@ page import="java.net.URLEncoder" %>
+<%@ page import="com.celebtwit.ads.AdUtil" %>
 
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
@@ -68,7 +69,11 @@ if (twit!=null && twit.getIsceleb()){
 
 
 
-
+<%if (twit!=null && twit.getIsceleb()){%>
+    <font class="largefont" style="font-size:60px;"> <%=twit.getRealname()%> </font>
+<%} else {%>
+    <font class="largefont" style="font-size:60px;"> @<%=twitterusername%> </font>
+<%}%>
 <table cellpadding="3" cellspacing="0" border="0" width="100%">
     <tr>
         <td valign="top">
@@ -99,13 +104,6 @@ if (twit!=null && twit.getIsceleb()){
                     }
                 }
                 </script>
-                <%if (twit!=null && twit.getIsceleb()){%>
-                    <img src="<%=twitimageurl%>" width="48" height="48" border="0" align="left" alt="<%=twit.getRealname()%>">
-                    <font class="largefont"> <%=twit.getRealname()%> </font>
-                <%} else {%>
-                    <font class="largefont"> @<%=twitterusername%> </font>
-                <%}%>
-                <br clear="all"/>
                 <%
                 String tweetThisStatus = "check out " + "http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/who/";
                 tweetThisStatus = URLEncoder.encode(tweetThisStatus, "UTF-8");
@@ -115,6 +113,10 @@ if (twit!=null && twit.getIsceleb()){
                     <textarea rows="1" cols="80" name="linkurl" id="linkurl" style="font-size:9px;" onclick="javascript:document.getElementById('linkurl').select();"><%=Str.cleanForHtml("http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/who/")%></textarea>
                     <br/><font class="tinyfont">Copy and paste the above URL into your blog, email, im or website to link to this page.</font>
                 </div>
+                <%if (twit!=null && twit.getIsceleb()){%>
+                    <center><br/><br/><img src="<%=twitimageurl%>" width="48" height="48" border="0" align="left" alt="<%=twit.getRealname()%>"></center>
+                <%}%>
+                <br clear="all"/>
                 <br><br>
                 <center>
                     <table cellpadding="3" cellspacing="0" border="0">
@@ -146,17 +148,7 @@ if (twit!=null && twit.getIsceleb()){
                                     <%}%>
                             </td>
                             <td valign="top" width="160">
-                                    <script type="text/javascript"><!--
-                                    google_ad_client = "pub-9883617370563969";
-                                    /* 160x90, link unit whocelebstweet smallfont */
-                                    google_ad_slot = "5409295921";
-                                    google_ad_width = 160;
-                                    google_ad_height = 90;
-                                    //-->
-                                    </script>
-                                    <script type="text/javascript"
-                                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-                                    </script>
+
                             </td>
                             <td valign="top" width="150">
                                 <%=JsCelebMentions.get(twit, twitterusername, Pagez.getUserSession().getPl())%>
@@ -235,17 +227,7 @@ if (twit!=null && twit.getIsceleb()){
 
 
                             <td valign="top">
-                                <script type="text/javascript"><!--
-                                google_ad_client = "pub-9883617370563969";
-                                /* 160x600, Skyscraper */
-                                google_ad_slot = "2576530148";
-                                google_ad_width = 160;
-                                google_ad_height = 600;
-                                //-->
-                                </script>
-                                <script type="text/javascript"
-                                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-                                </script>
+                                <%=AdUtil.get160x600()%>
                             </td>
 
                         </tr>

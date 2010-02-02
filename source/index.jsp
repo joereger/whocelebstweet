@@ -6,6 +6,7 @@
 <%@ page import="com.celebtwit.htmluibeans.PublicIndexWhoPanel" %>
 <%@ page import="com.celebtwit.htmluibeans.PublicIndexTweetlist" %>
 <%@ page import="com.celebtwit.util.Num" %>
+<%@ page import="com.celebtwit.ads.AdUtil" %>
 
 
 <%
@@ -75,17 +76,7 @@ String acl = "public";
             <%if (!Pagez.getUserSession().isSisterPl()){%>
                 <!--<img src="/images/clear.gif" alt="" width="1" height="70"><br/>-->
             <%}%>
-            <script type="text/javascript"><!--
-            google_ad_client = "pub-9883617370563969";
-            /* 160x600, Skyscraper */
-            google_ad_slot = "2576530148";
-            google_ad_width = 160;
-            google_ad_height = 600;
-            //-->
-            </script>
-            <script type="text/javascript"
-            src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-            </script>
+            <%=AdUtil.get160x600()%>
         </td>
     </tr>
 </table>

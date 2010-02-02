@@ -37,6 +37,8 @@ String acl = "sysadmin";
     pl.setListid2("");
     pl.setListownerscreenname3("");
     pl.setListid3("");
+    pl.setCommasepadnetworks("");
+    pl.setIsdisplayotherplson(true);
     if (request.getParameter("plid")!=null && Num.isinteger(request.getParameter("plid"))){
         pl = Pl.get(Integer.parseInt(request.getParameter("plid")));
     }
@@ -63,6 +65,8 @@ String acl = "sysadmin";
                 pl.setListid2(Textbox.getValueFromRequest("listid2", "ListID2", false, DatatypeInteger.DATATYPEID));
                 pl.setListownerscreenname3(Textbox.getValueFromRequest("listownerscreenname3", "List Owner ScreenName 3", false, DatatypeString.DATATYPEID));
                 pl.setListid3(Textbox.getValueFromRequest("listid3", "ListID3", false, DatatypeInteger.DATATYPEID));
+                pl.setCommasepadnetworks(Textbox.getValueFromRequest("commasepadnetworks", "Ad Networks", false, DatatypeString.DATATYPEID).toLowerCase());
+                pl.setIsdisplayotherplson(CheckboxBoolean.getValueFromRequest("isdisplayotherplson"));
                 //Validate data
                 if (PlVerification.isValid(pl)){
                     pl.save();
@@ -120,6 +124,26 @@ String acl = "sysadmin";
                     </td>
                     <td valign="top">
                         <%=Textbox.getHtml("celebiscalled", pl.getCelebiscalled(), 255, 35, "", "")%>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" style="text-align:right;">
+                        <font class="formfieldnamefont">Ad Networks</font>
+                        <br/><font class="tinyfont">Comma separated list of ad networks to display on this pl.  Blank is the default ad network.<br/>GoogleAdsense, AdultFriendFinder<br/>Set to NONE to use no ads</font>
+                    </td>
+                    <td valign="top">
+                        <%=Textbox.getHtml("commasepadnetworks", pl.getCommasepadnetworks(), 255, 35, "", "")%>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" style="text-align:right;">
+                        <font class="formfieldnamefont">Display Other Pls?</font>
+                        <br/><font class="tinyfont">Display links to other pls</font>
+                    </td>
+                    <td valign="top">
+                        <%=CheckboxBoolean.getHtml("isdisplayotherplson", pl.getIsdisplayotherplson(), "", "")%>
                     </td>
                 </tr>
 

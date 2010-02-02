@@ -10,6 +10,7 @@
 <%@ page import="com.celebtwit.util.Num" %>
 <%@ page import="com.celebtwit.htmluibeans.*" %>
 <%@ page import="java.net.URLEncoder" %>
+<%@ page import="com.celebtwit.ads.*" %>
 
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
@@ -54,21 +55,21 @@ if (twit!=null && twit.getIsceleb()){
 %>
 <%@ include file="/template/header.jsp" %>
 
+<%--<%--%>
+    <%--AdNetworkFactory.testRandom();--%>
+<%--%>--%>
+<%--RANDOM TEST DONE!--%>
 
-
-
+<%if (twit!=null && twit.getIsceleb()){%>
+    <font class="largefont" style="font-size:60px;"> <%=twit.getRealname()%> </font>
+<%} else {%>
+    <font class="largefont" style="font-size:60px;"> @<%=twitterusername%> </font>
+<%}%>
 <table cellpadding="3" cellspacing="0" border="0" width="100%">
     <tr>
         <td valign="top" width="200">
             <!-- Start Left Col -->
             <div class="roundedBox" style="width:200px;">
-                <%if (twit!=null && twit.getIsceleb()){%>
-                    <img src="<%=twitimageurl%>" width="48" height="48" border="0" align="left" alt="<%=twit.getRealname()%>">
-                    <font class="largefont"> <%=twit.getRealname()%> </font>
-                <%} else {%>
-                    <font class="largefont"> @<%=twitterusername%> </font>
-                <%}%>
-                <br clear="all"/>
 
                 <script language="javascript">
                 function toggleLink() {
@@ -107,6 +108,13 @@ if (twit!=null && twit.getIsceleb()){
                     <br/><font class="tinyfont">Copy and paste the above URL into your blog, email, im or website to link to this page.</font>
                 </div>
                 </center>
+
+                <%if (twit!=null && twit.getIsceleb()){%>
+                    <center><br/><br/><img src="<%=twitimageurl%>" width="48" height="48" border="0" align="middle" alt="<%=twit.getRealname()%>"></center>
+                <%}%>
+                <br clear="all"/>
+
+
                 <br clear="all">
                     <table cellpadding="10" cellspacing="5" border="0">
                         <tr>
@@ -146,17 +154,7 @@ if (twit!=null && twit.getIsceleb()){
                                 </div>
 
                                 <br/>
-                                <script type="text/javascript"><!--
-                                google_ad_client = "pub-9883617370563969";
-                                /* 160x90, link unit whocelebstweet smallfont */
-                                google_ad_slot = "5409295921";
-                                google_ad_width = 160;
-                                google_ad_height = 90;
-                                //-->
-                                </script>
-                                <script type="text/javascript"
-                                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-                                </script>
+                                <%=AdUtil.get160x90()%>
 
                             </td>
                         </tr>
