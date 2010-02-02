@@ -35,6 +35,8 @@ logger.debug("Pagez.getUserSession().isSisterPl()="+Pagez.getUserSession().isSis
         <%@ include file="header-cyclists.jsp" %>
     <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whomodelstweet.com")) { %>
         <%@ include file="header-models.jsp" %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whopornstarstweet.com")) { %>
+        <%@ include file="header-pornstars.jsp" %>
     <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whoceostweet.com")) { %>
         <%@ include file="header-ceos.jsp" %>
     <% } else { %>

@@ -23,6 +23,7 @@ public class AdNetworkFactory {
     public static ArrayList<AdNetwork> getAllNetworks(){
         ArrayList<AdNetwork> out = new ArrayList<AdNetwork>();
         out.add(new AdNetworkGoogleAdsense());
+        out.add(new AdNetworkPassionDotCom());
         out.add(new AdNetworkAdultFriendFinder());
         //Adnetworknone must always be last
         out.add(new AdNetworkNone());
@@ -59,14 +60,17 @@ public class AdNetworkFactory {
         int countTotal = 0;
         int countGoogle = 0;
         int countAff = 0;
+        int countPassion = 0;
         int countUnknown = 0;
         for (int i=0; i<timesToRun; i++){
             countTotal = countTotal + 1;
             AdNetwork adNetwork = AdNetworkFactory.getRandom();
             if (adNetwork.getAdNetworkName().equals(AdNetworkGoogleAdsense.ADNETWORKNAME)){
                 countGoogle = countGoogle + 1;
-            } else if (adNetwork.getAdNetworkName().equals(AdNetworkAdultFriendFinder.ADNETWORKNAME)){
+            } else if (adNetwork.getAdNetworkName().equals(AdNetworkPassionDotCom.ADNETWORKNAME)){
                 countAff = countAff + 1;
+            } else if (adNetwork.getAdNetworkName().equals(AdNetworkPassionDotCom.ADNETWORKNAME)){
+                countPassion = countPassion + 1;
             } else {
                 countUnknown = countUnknown + 1;
             }
@@ -74,6 +78,7 @@ public class AdNetworkFactory {
         logger.debug("countTotal="+countTotal);
         logger.debug("countGoogle="+countGoogle);
         logger.debug("countAff="+countAff);
+        logger.debug("countPassion="+countPassion);
         logger.debug("countUnknown="+countUnknown);
     }
 

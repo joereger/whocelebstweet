@@ -167,7 +167,7 @@ public class FilterMain implements Filter {
 
 
                 //For debugging/testing locally
-                //Pagez.getUserSession().setAdNetworkName(AdNetworkAdultFriendFinder.ADNETWORKNAME);
+                //Pagez.getUserSession().setAdNetworkName(AdNetworkPassionDotCom.ADNETWORKNAME);
                 
 
             } else {

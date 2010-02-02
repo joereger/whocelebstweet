@@ -18,6 +18,8 @@
         <%@ include file="footer-cyclists.jsp" %>
     <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whomodelstweet.com")) { %>
         <%@ include file="footer-models.jsp" %>
+    <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whopornstarstweet.com")) { %>
+        <%@ include file="footer-pornstars.jsp" %>
     <% } else if (plHeaderFooter.getName().equalsIgnoreCase("whoceostweet.com")) { %>
         <%@ include file="footer-ceos.jsp" %>
     <% } else { %>
