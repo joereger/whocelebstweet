@@ -24,6 +24,9 @@
         <property name="ismentionedaceleb" type="boolean">
             <column name="ismentionedaceleb" not-null="true" />
         </property>
+        <property name="ismentionedacelebverifiedon" type="timestamp">
+            <column name="ismentionedacelebverifiedon" not-null="true" />
+        </property>
         <property name="plid" type="int">
             <column name="plid" not-null="true" />
         </property>

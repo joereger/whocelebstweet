@@ -76,4 +76,20 @@ public class SysadminManuallyRunScheduledTask implements Serializable {
         return "sysadminmanuallyrunscheduledtask";
     }
 
+    public String runFixIsmentionedaceleb(){
+        Logger logger = Logger.getLogger(this.getClass().getName());
+        try{
+            FixIsmentionedaceleb task = new FixIsmentionedaceleb();
+            task.execute(null);} catch (Exception ex){logger.error("",ex);}
+        return "sysadminmanuallyrunscheduledtask";
+    }
+
+    public String runDbCachePurgeStaleItems(){
+        Logger logger = Logger.getLogger(this.getClass().getName());
+        try{
+            DbCachePurgeStaleItems task = new DbCachePurgeStaleItems();
+            task.execute(null);} catch (Exception ex){logger.error("",ex);}
+        return "sysadminmanuallyrunscheduledtask";
+    }
+
 }

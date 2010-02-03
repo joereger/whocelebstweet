@@ -34,6 +34,7 @@
                     <%
                     if (true){
                         List<Pl> plsFooter = HibernateUtil.getSession().createCriteria(Pl.class)
+                                                       .add(Restrictions.eq("isdisplayotherplson", true))
                                                        .addOrder(Order.asc("name"))
                                                        .setMaxResults(1000)
                                                        .setCacheable(true)

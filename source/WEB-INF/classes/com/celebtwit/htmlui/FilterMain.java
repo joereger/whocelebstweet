@@ -59,6 +59,12 @@ public class FilterMain implements Filter {
 //                logger.debug("---------------------------START REQUEST: "+httpServletRequest.getRequestURL());
 //                logger.debug("httpServletRequest.getSession().getId()="+httpServletRequest.getSession().getId());
 
+                //Find the PL
+                Pl pl = PlFinder.find(httpServletRequest);
+
+                //Set it to the usersession even though I'll overwrite in a moment
+                //Pagez.getUserSession().setPl(pl);
+
                 //Find the userSession
                 Object obj = CacheFactory.getCacheProvider().get(httpServletRequest.getSession().getId(), "userSession");
                 if (obj!=null && (obj instanceof UserSession)){
@@ -67,7 +73,10 @@ public class FilterMain implements Filter {
                 } else {
                     logger.debug("no userSession in cache so creating new UserSession()");
                     UserSession userSession = new UserSession();
+                    userSession.setPl(pl);
                     Pagez.setUserSessionAndUpdateCache(userSession);
+                    //Make sure the pl is set properly before AssignAdNetwork
+                    Pagez.getUserSession().setPl(pl);
                     //Set adnetwork to display... done on session creation so user sees same ads throughout session experience
                     AssignAdNetwork.assign(httpServletRequest);
                 }
@@ -90,7 +99,6 @@ public class FilterMain implements Filter {
 //                }
 
                 //Set Private Label (Pl)
-                Pl pl = PlFinder.find(httpServletRequest);
                 Pagez.getUserSession().setPl(pl);
                 logger.debug("Pagez.getUserSession().setPl("+pl.getName()+");");
 

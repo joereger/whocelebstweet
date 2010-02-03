@@ -55,7 +55,27 @@
 
 
 
-
+    <job>
+        <job-detail>
+          <name>fixIsmentionedaceleb</name>
+          <group>surveyJobs</group>
+          <job-class>com.celebtwit.scheduledjobs.FixIsmentionedaceleb</job-class>
+          <volatility>false</volatility>
+          <durability>false</durability>
+          <recover>false</recover>
+        </job-detail>
+        <trigger>
+          <!-- Sample cron triggers: http://www.opensymphony.com/quartz/wikidocs/TutorialLesson6.html -->
+          <cron>
+            <name>fixIsmentionedacelebTrigger</name>
+            <group>surveyTriggers</group>
+            <job-name>fixIsmentionedaceleb</job-name>
+            <job-group>surveyJobs</job-group>
+            <!-- every x minutes -->
+            <cron-expression>0 0/17 * * * ?</cron-expression>
+          </cron>
+        </trigger>
+    </job>
 
 
 
@@ -176,7 +196,9 @@
             <job-name>statsTweet</job-name>
             <job-group>surveyJobs</job-group>
             <!-- on 30th minute at specified hours -->
-            <cron-expression>0 30 11,12,13,14,15,16,17,18,19,20 * * ?</cron-expression>
+            <!--<cron-expression>0 30 11,12,13,14,15,16,17,18,19,20 * * ?</cron-expression>-->
+            <!-- every 20 minutes -->
+            <cron-expression>0 0/20 * * * ?</cron-expression>
           </cron>
         </trigger>
     </job>
@@ -197,8 +219,8 @@
             <group>surveyTriggers</group>
             <job-name>twitterListSync</job-name>
             <job-group>surveyJobs</job-group>
-            <!-- every 18 hours -->
-            <cron-expression>0 0 0/18 * * ?</cron-expression>
+            <!-- 5:45am on WED  -->
+            <cron-expression>0 45 5 ? * WED</cron-expression>
           </cron>
         </trigger>
     </job>

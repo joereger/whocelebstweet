@@ -1,29 +1,25 @@
 package com.celebtwit.scheduledjobs;
 
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.quartz.StatefulJob;
-import org.apache.log4j.Logger;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
-import com.celebtwit.systemprops.InstanceProperties;
-import com.celebtwit.systemprops.SystemProperty;
-import com.celebtwit.dao.Userpersistentlogin;
 import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twit;
 import com.celebtwit.dao.Twitpl;
 import com.celebtwit.dao.hibernate.HibernateUtil;
-import com.celebtwit.dao.hibernate.NumFromUniqueResult;
-import com.celebtwit.util.Time;
 import com.celebtwit.helpers.CountMentionsByCelebs;
-import com.celebtwit.helpers.StartDateEndDate;
 import com.celebtwit.helpers.CountUniqueCelebsWhoMentioned;
-
+import com.celebtwit.helpers.StartDateEndDate;
+import com.celebtwit.systemprops.InstanceProperties;
+import com.celebtwit.systemprops.SystemProperty;
+import com.celebtwit.util.Time;
+import org.apache.log4j.Logger;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.StatefulJob;
+import twitter4j.Status;
+import twitter4j.Twitter;
 
 import java.util.*;
-
-import twitter4j.Twitter;
 
 
 /**
@@ -32,6 +28,9 @@ import twitter4j.Twitter;
  * Time: 2:22:28 PM
  */
 public class StatsTweet implements StatefulJob {
+
+    private static int MAXTWEETSPERPLPERRUN = 10;
+    private HashMap<Integer, Integer> plTweetCounts = new HashMap<Integer, Integer>();
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         Logger logger = Logger.getLogger(this.getClass().getName());
@@ -44,7 +43,6 @@ public class StatsTweet implements StatefulJob {
                                        .add(Restrictions.eq("isceleb", true))
                                        .add(Restrictions.le("laststatstweet", weekAgo))
                                        .addOrder(Order.asc("laststatstweet"))
-                                       .setMaxResults(10)
                                        .setCacheable(true)
                                        .list();
                 for (Iterator<Twit> iterator=celebs.iterator(); iterator.hasNext();) {
@@ -58,21 +56,52 @@ public class StatsTweet implements StatefulJob {
 
     private void processTwit(Twit twit){
         Logger logger = Logger.getLogger(this.getClass().getName());
+        logger.debug("processTwit("+twit.getRealname()+")------------------------");
         for (Iterator<Twitpl> plIt=twit.getTwitpls().iterator(); plIt.hasNext();) {
             Twitpl twitpl=plIt.next();
             Pl pl = Pl.get(twitpl.getPlid());
-            processTwitForPl(twit, pl);
+            //If we haven't hit the limit of tweets per run per pl
+            if (!hasReachedTweetLimitPerPl(pl)){
+                boolean tweetMade = processTwitForPl(twit, pl);
+                //If a tweet was made, record it
+                if (tweetMade){ recordTweetCount(pl); }
+            }
         }
     }
 
-    private void processTwitForPl(Twit twit, Pl pl){
+    private void recordTweetCount(Pl pl){
+        if (plTweetCounts==null){plTweetCounts=new HashMap<Integer, Integer>();}
+        if (plTweetCounts.containsKey(pl.getPlid())){
+            int currentCount = plTweetCounts.get(pl.getPlid());
+            plTweetCounts.put(pl.getPlid(), currentCount + 1);
+        } else {
+            plTweetCounts.put(pl.getPlid(), 1);
+        }
+    }
+
+    private boolean hasReachedTweetLimitPerPl(Pl pl){
+        if (plTweetCounts==null){plTweetCounts=new HashMap<Integer, Integer>();}
+        if (plTweetCounts.containsKey(pl.getPlid())){
+            int currentCount = plTweetCounts.get(pl.getPlid());
+            if (currentCount>=MAXTWEETSPERPLPERRUN){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean processTwitForPl(Twit twit, Pl pl){
         Logger logger = Logger.getLogger(this.getClass().getName());
+        logger.debug("processTwitForPl("+twit.getRealname()+", "+pl.getName()+")");
+
         try{
             //Calculate start/end date
             StartDateEndDate sted = new StartDateEndDate(StartDateEndDate.TYPE_LAST7DAYS);
             //Count mentions/stats
             int mentions = CountMentionsByCelebs.get(twit, sted.getStartDate(), sted.getEndDate(), pl.getPlid());
+            logger.debug("mentions="+mentions);
             int uniqueCelebs = CountUniqueCelebsWhoMentioned.get(twit, sted.getStartDate(), sted.getEndDate(), pl.getPlid());
+            logger.debug("uniqueCelebs="+uniqueCelebs);
             //Build status
             StringBuffer status = new StringBuffer();
             status.append("@"+twit.getTwitterusername());
@@ -91,20 +120,26 @@ public class StatsTweet implements StatefulJob {
             if (mentions>0){
                 if (status.length()>0){
                     if (SystemProperty.getProp(SystemProperty.PROP_DOSTATTWEETS).equals("1")){
-                        logger.debug("pl="+pl.getName()+" twitterusername="+pl.getTwitterusername()+" pass="+pl.getTwitterpassword());
+                        logger.debug("pl="+pl.getName()+" twitterusername="+pl.getTwitterusername()+" twitterpass="+pl.getTwitterpassword());
                         Twitter twitter = new Twitter(pl.getTwitterusername(), pl.getTwitterpassword());
-                        twitter.updateStatus(status.toString());
+                        Status twitterStatus = twitter.updateStatus(status.toString());
+                        Long statusId = twitterStatus.getId();
+                        logger.debug("twutterStatus.getId()="+statusId);
                         //Update the laststatstweet date
                         twit.setLaststatstweet(new Date());
                         twit.save();
+                        //Return true, telling the main method(s) that a tweet was made
+                        return true;
                     } else {
-                        logger.debug("Not running because SystemProperty.PROP_DOSTATTWEETS != 1.");
+                        logger.debug("not running because SystemProperty.PROP_DOSTATTWEETS != 1.");
                     }
                 }
             }
         } catch (Exception ex){
             logger.error("", ex);
         }
+        //Return false, telling the main method(s) that a tweet was not made
+        return false;
     }
 
 

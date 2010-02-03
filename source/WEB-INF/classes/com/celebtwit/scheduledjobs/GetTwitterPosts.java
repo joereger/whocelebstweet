@@ -1,41 +1,31 @@
 package com.celebtwit.scheduledjobs;
 
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.quartz.StatefulJob;
-import org.apache.log4j.Logger;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.lang.time.DateFormatUtils;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Distinct;
-import org.hibernate.criterion.Projections;
-import org.dom4j.io.SAXReader;
-import org.dom4j.Document;
-import org.dom4j.Element;
+import com.celebtwit.cache.html.DbcacheexpirableCache;
 import com.celebtwit.dao.*;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.dao.hibernate.NumFromUniqueResult;
-import com.celebtwit.util.*;
-import com.celebtwit.session.PersistentLogin;
+import com.celebtwit.helpers.IsTwitACelebInThisPl;
 import com.celebtwit.systemprops.InstanceProperties;
-import com.celebtwit.cache.html.DbcacheexpirableCache;
+import com.celebtwit.util.Num;
+import com.celebtwit.util.Time;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthScope;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.log4j.Logger;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.StatefulJob;
 
-import java.util.*;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.text.ParseException;
-
-//import twitter4j.Status;
-import twitter4j.RateLimitStatus;
-import twitter4j.Twitter;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 
@@ -376,8 +366,10 @@ public class GetTwitterPosts implements StatefulJob {
                     mention.setTwitpostid(twitpost.getTwitpostid());
                     mention.setTwitidceleb(twitpost.getTwitid());
                     mention.setTwitidmentioned(twitToUpdate.getTwitid());
-                    mention.setIsmentionedaceleb(twitToUpdate.getIsceleb());
+                    //mention.setIsmentionedaceleb(twitToUpdate.getIsceleb());  //But are they a celeb for this pl???
+                    mention.setIsmentionedaceleb(IsTwitACelebInThisPl.isTwitACelebInThisPl(twitToUpdate, Pl.get(twitpl.getPlid())));
                     mention.setCreated_at(twitpost.getCreated_at());
+                    mention.setIsmentionedacelebverifiedon(Time.xYearsAgoStart(Calendar.getInstance(), 5).getTime()); // <-- set to a long time ago so it's verified w/in a couple hours
                     mention.setPlid(twitpl.getPlid()); // <-- Setting plid of mention to the one of the plids of the celeb
                     mention.save();
                 }

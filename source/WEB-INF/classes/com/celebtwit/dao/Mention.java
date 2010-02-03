@@ -3,10 +3,9 @@ package com.celebtwit.dao;
 import com.celebtwit.dao.hibernate.BasePersistentClass;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.session.AuthControlled;
+import org.apache.log4j.Logger;
 
 import java.util.Date;
-
-import org.apache.log4j.Logger;
 
 
 public class Mention extends BasePersistentClass implements java.io.Serializable, AuthControlled {
@@ -19,6 +18,7 @@ public class Mention extends BasePersistentClass implements java.io.Serializable
      private int twitpostid;
      private Date created_at;
      private int plid;
+     private Date ismentionedacelebverifiedon;
 
 
 
@@ -112,5 +112,13 @@ public class Mention extends BasePersistentClass implements java.io.Serializable
 
     public void setPlid(int plid) {
         this.plid=plid;
+    }
+
+    public Date getIsmentionedacelebverifiedon() {
+        return ismentionedacelebverifiedon;
+    }
+
+    public void setIsmentionedacelebverifiedon(Date ismentionedacelebverifiedon) {
+        this.ismentionedacelebverifiedon = ismentionedacelebverifiedon;
     }
 }
