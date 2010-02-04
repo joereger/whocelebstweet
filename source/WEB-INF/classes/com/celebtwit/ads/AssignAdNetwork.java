@@ -44,7 +44,7 @@ public class AssignAdNetwork {
         if (request.getParameter("ads")!=null){
             AdNetwork adNetwork = AdNetworkFactory.getByName(request.getParameter("ads"));
             if (adNetwork!=null){
-                logger.debug("assign() setting to One Specified in URL because request.getParameter('ads')");
+                logger.debug("assign() setting to "+adNetwork.getAdNetworkName()+" in URL because request.getParameter('ads')");
                 Pagez.getUserSession().setAdNetworkName(adNetwork.getAdNetworkName());
             }
         }

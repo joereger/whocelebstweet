@@ -17,7 +17,7 @@ public class AdUtil {
                 return Pagez.getUserSession().getAdNetworkName();
             }
         }
-        return AdNetworkFactory.getDefaultAdNetwork().getAdNetworkName();
+        return AdNetworkNone.ADNETWORKNAME;
     }
 
     public static String get160x600(){

@@ -1,12 +1,10 @@
 package com.celebtwit.util;
 
-import org.apache.log4j.Logger;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.Cookie;
 import java.util.*;
-
-import sun.reflect.Reflection;
 
 /**
  * User: Joe Reger Jr
@@ -211,6 +209,18 @@ public class Util {
         String filename = FilenameUtils.getName(infilename);
         String filenamebase = FilenameUtils.removeExtension(filename);
         return filenamebase;
+    }
+
+    public static boolean booleanFromString(String str){
+        Logger logger = Logger.getLogger(Util.class);
+        try{
+            if (str!=null && (str.equals("true") || str.equals("1"))){
+                return true;
+            }
+        } catch (Exception ex){
+            logger.error("", ex);
+        }
+        return false;
     }
 
 

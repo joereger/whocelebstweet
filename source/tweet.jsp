@@ -1,15 +1,10 @@
-<%@ page import="org.apache.log4j.Logger" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="com.celebtwit.helpers.*" %>
-<%@ page import="com.celebtwit.systemprops.SystemProperty" %>
 <%@ page import="com.celebtwit.dao.Twitpost" %>
+<%@ page import="com.celebtwit.helpers.FindTwitFromTwitterusername" %>
+<%@ page import="com.celebtwit.helpers.TwitpostAsHtml" %>
 <%@ page import="com.celebtwit.util.Str" %>
 <%@ page import="com.celebtwit.util.Time" %>
-<%@ page import="com.celebtwit.embed.JsCelebMentions" %>
-<%@ page import="com.celebtwit.embed.JsDifferentCelebs" %>
-<%@ page import="com.celebtwit.util.Num" %>
-<%@ page import="com.celebtwit.ads.AdUtil" %>
-<%@ page import="com.celebtwit.htmluibeans.*" %>
+<%@ page import="org.apache.log4j.Logger" %>
+<%@ page import="java.net.URLEncoder" %>
 
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
@@ -33,6 +28,8 @@ if (twit!=null){
         pagetitleName = twit.getRealname();
     }
 }
+//Get bigger version of the profile image
+twitimageurl = twitimageurl.replaceAll("_normal", "");
 %>
 <%
 Twitpost twitpost = null;
@@ -89,17 +86,77 @@ if (twit!=null && twit.getIsceleb()){
         <td valign="top" width="200">
             <!-- Start Left Col -->
             <div class="roundedBox" style="width:200px;">
+                <center>
+                <script language="javascript">
+                    function toggleLink() {
+                        var ele = document.getElementById("toggleLink");
+                        if(ele.style.display == "block") {
+                            ele.style.display = "none";
+                        } else {
+                            ele.style.display = "block";
+                        }
+                    }
+                    function toggleA() {
+                        var ele = document.getElementById("toggleTextA");
+                        if(ele.style.display == "block") {
+                            ele.style.display = "none";
+                        } else {
+                            ele.style.display = "block";
+                        }
+                    }
+                    function toggleB() {
+                        var ele = document.getElementById("toggleTextB");
+                        if(ele.style.display == "block") {
+                            ele.style.display = "none";
+                        } else {
+                            ele.style.display = "block";
+                        }
+                    }
+                </script>
+                <%
+                String tweetThisStatus = "check out " + "http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/tweet/"+twitpost.getTwitterguid()+"/";
+                tweetThisStatus = URLEncoder.encode(tweetThisStatus, "UTF-8");
+                %>
+                <font class="smallfont"><a href="javascript:toggleLink();" style="text-decoration: underline; color: #0000ff;">Link to this Page</a> | <a href="http://twitter.com/home?status=<%=tweetThisStatus%>" style="text-decoration: underline; color: #0000ff;" target="_blank">Tweet This</a></font>
+                <div id="toggleLink" style="display: none; text-align: left;">
+                    <textarea rows="1" cols="40" name="linkurl" id="linkurl" style="font-size:9px;" onclick="javascript:document.getElementById('linkurl').select();"><%=Str.cleanForHtml("http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/tweet/"+twitpost.getTwitterguid()+"/")%></textarea>
+                    <br/><font class="tinyfont">Copy and paste the above URL into your blog, email, im or website to link to this page.</font>
+                </div>
                 <%if (twit!=null && twit.getIsceleb()){%>
-                    <center><img src="<%=twitimageurl%>" width="48" height="48" border="0" align="left" alt="<%=twit.getRealname()%>"></center>
+                    <br/><br/><img src="<%=twitimageurl%>" width="190" border="0" alt="<%=twit.getRealname()%>">
                 <%}%>
-                <br/>
+                <br clear="all"/><br/>
+                <%--<%if (twit!=null && twit.getDescription().length()>0){%>--%>
+                    <%--<font class="normalfont" style="font-size:15px; color:#666666;"><%=twit.getDescription()%></font>--%>
+                    <%--<br/>--%>
+                <%--<%}%>--%>
+                <%--<%if (twit!=null && twit.getWebsite_url().length()>0){%>--%>
+                    <%--<font class="smallfont">--%>
+                    <%--<a href="<%=twit.getWebsite_url()%>" target="_blank"  style="text-decoration: underline; color: #0000ff;">Website</a>--%>
+                    <%--|--%>
+                    <%--<a href="http://www.twitter.com/<%=twitterusername%>/" target="_blank"  style="text-decoration: underline; color: #0000ff;">Twitter</a>--%>
+                    <%--</font>--%>
+                    <%--<br/>--%>
+                <%--<%} else { %>--%>
+                    <%--<font class="smallfont">--%>
+                    <%--<a href="http://www.twitter.com/<%=twitterusername%>/" target="_blank"  style="text-decoration: underline; color: #0000ff;">Twitter</a>--%>
+                    <%--</font>--%>
+                    <%--<br/>--%>
+                <%--<%}%>--%>
+                <%--<%if (twit!=null && twit.getFollowers_count()>0){%>--%>
+                    <%--<font class="smallfont"><%=twit.getFollowers_count()%> followers</font>--%>
+                    <%--<br/>--%>
+                <%--<%}%>--%>
+                <%--<%if (twit!=null && twit.getStatuses_count()>0){%>--%>
+                    <%--<font class="smallfont"><%=twit.getStatuses_count()%> updates</font>--%>
+                    <%--<br/>--%>
+                <%--<%}%>--%>
                 <%if (twit!=null && twit.getIsceleb()){%>
-                    <font class="smallfont"><a href="/twitter/<%=twit.getTwitterusername()%>/">More About <%=twit.getRealname()%></a></font>
-                <%} else { %>
-                    <font class="smallfont"><a href="/twitter/<%=twitterusername%>/">More About <%=twitterusername%></a></font>
+                    <font class="normalfont" style="font-weight:bold;"><a href="/twitter/<%=twit.getTwitterusername()%>/">@<%=twitterusername%>'s Profile</a></font>
+                    <br/>
                 <%}%>
-                <br/>
-                <br/><br/><br/><br/><br/>
+                </center>
+                <br/><br/><br/>
                 <center>
                 <%=AdUtil.get160x600()%>
                 </center>
@@ -118,7 +175,7 @@ if (twit!=null && twit.getIsceleb()){
                                 <div class="roundedBoxNoRound" style="width:410px; overflow:hidden;">
                                         <%=tweet%>
                                         <br/><br/>
-                                        <a href="/twitter/<%=twitterusername%>/"><font class="mediumfont">all of @<%=twitterusername%>'s tweets >></font></a>
+                                        <a href="/twitter/<%=twitterusername%>/"><font class="mediumfont">see all of @<%=twitterusername%>'s tweets</font></a>
                                 </div>
                             </td>
                         </tr>

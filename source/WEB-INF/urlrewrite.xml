@@ -55,6 +55,46 @@
 
 
 
+    <!-- Stats for PL -->
+
+    <rule>
+        <from>/stats/nonCelebsTweetedMostByCelebs/when/([a-zA-Z0-9\_]*)/</from>
+        <to last="true">/stats_nonCelebsTweetedMostByCelebs.jsp?time=$1</to>
+    </rule>
+
+    <rule>
+        <from>/stats/nonCelebsTweetedMostByCelebs/when/([a-zA-Z0-9\_]*)/</from>
+        <to last="true">/stats_celebsTweetedMostByCelebs.jsp?time=$1</to>
+    </rule>
+
+    <rule>
+        <from>/stats/nonCelebsTweetedByMostDifferentCelebs/when/([a-zA-Z0-9\_]*)/</from>
+        <to last="true">/stats_nonCelebsTweetedByMostDifferentCelebs.jsp?time=$1</to>
+    </rule>
+
+    <rule>
+        <from>/stats/celebsTweetedByMostDifferentCelebs/when/([a-zA-Z0-9\_]*)/</from>
+        <to last="true">/stats_celebsTweetedByMostDifferentCelebs.jsp?time=$1</to>
+    </rule>
+
+    <!-- Stats for Twit -->
+
+    <rule>
+        <from>/twitterstats/nonCelebsTweetedMostByTwit/([a-zA-Z0-9\_]*)/when/([a-zA-Z0-9\_]*)/</from>
+        <to last="true">/twitter_stats_nonCelebsTweetedMostByTwit.jsp?twitterusername=$1&amp;time=$2</to>
+    </rule>
+
+    <rule>
+        <from>/twitterstats/celebsTweetedMostByTwit/([a-zA-Z0-9\_]*)/when/([a-zA-Z0-9\_]*)/</from>
+        <to last="true">/twitter_stats_celebsTweetedMostByTwit.jsp?twitterusername=$1&amp;time=$2</to>
+    </rule>
+
+    <rule>
+        <from>/twitterstats/celebsWhoTweetedTwit/([a-zA-Z0-9\_]*)/when/([a-zA-Z0-9\_]*)/</from>
+        <to last="true">/twitter_stats_celebsWhoTweetedTwit.jsp?twitterusername=$1&amp;time=$2</to>
+    </rule>
+
+
     <!--<rule>-->
         <!--<from>/twitter/(.*)/(.*)/</from>-->
         <!--<to last="true">/twitter.jsp?twitterusername=$1</to>-->
