@@ -1,11 +1,10 @@
 package com.celebtwit.embed;
 
-import com.celebtwit.dao.Twit;
+import com.celebtwit.cache.html.DbcacheexpirableCache;
 import com.celebtwit.dao.Pl;
-import com.celebtwit.systemprops.SystemProperty;
+import com.celebtwit.dao.Twit;
 import com.celebtwit.helpers.CountUniqueCelebsWhoMentioned;
 import com.celebtwit.htmluibeans.PublicTwitterWhoPanel;
-import com.celebtwit.cache.html.DbcacheexpirableCache;
 import org.apache.log4j.Logger;
 
 /**
@@ -41,7 +40,7 @@ public class JsDifferentCelebs {
         }
 
         StringBuffer o = new StringBuffer();
-        o.append("<div style=\"width:150px; background-color:#cccccc; overflow:hidden; text-align:center;  padding: 5px; border: 2px #999999 solid;\">");
+        o.append("<div style=\"width:150px; background-color:#ffffff; overflow:hidden; text-align:center;  padding: 5px; border: 2px #cccccc solid;\">");
         o.append("<center>");
         o.append("<a href=\"http://"+pl.getCustomdomain1()+"/twitter/"+twitterusername+"/\">");
         if (twit!=null && twit.getIsceleb()){
@@ -51,9 +50,9 @@ public class JsDifferentCelebs {
         }
         o.append("</a>");
         o.append("<br>");
-        o.append("<font style=\"font-size:10px;\">has been tweeted by</font>");
+        o.append("<font style=\"font-size:10px; color:#aaaaaa;\">has been tweeted by</font>");
         o.append("<br>");
-        o.append("<font style=\"font-size:30px;\">"+uniqueCelebsWhoMentioned+"</font>");
+        o.append("<font style=\"font-size:30px; color:#aaaaaa;\">"+uniqueCelebsWhoMentioned+"</font>");
         o.append("<br>");
         o.append("<a href=\"http://"+pl.getCustomdomain1()+"/twitter/"+twitterusername+"/\"><font style=\"font-size:10px;\">different "+pl.getCelebiscalled()+"s!</font></a>");
         o.append("</center>");

@@ -1,18 +1,17 @@
 package com.celebtwit.htmluibeans;
 
-import com.celebtwit.dao.Pl;
-import com.celebtwit.dao.Twitpost;
-import com.celebtwit.dao.Twit;
-import com.celebtwit.dao.hibernate.HibernateUtil;
+import com.celebtwit.ads.AdNetworkNone;
 import com.celebtwit.cache.html.DbcacheexpirableCache;
-import com.celebtwit.helpers.*;
+import com.celebtwit.dao.Twit;
+import com.celebtwit.dao.Twitpost;
+import com.celebtwit.dao.hibernate.HibernateUtil;
+import com.celebtwit.helpers.TwitpostAsHtml;
 import com.celebtwit.htmlui.Pagez;
 import com.celebtwit.util.Num;
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -68,13 +67,16 @@ public class PublicTwitterTweetlist {
                                        .list();
         for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
             Twitpost twitpost=tpIt.next();
-            insertAdCount++;
-            if (insertAdCount>=randomAdInsertionPoint && adsInserted<maxAdsPerPage){
-                adsInserted++;
-                insertAdCount = 0;
-                randomAdInsertionPoint = 2 + Num.randomInt(4);
-                //randomAdInsertionPoint = 10000;
-                out.append(TwitpostAsHtml.getAdsenseAsTwitpost(380));
+            //Only insert ad if it's not the none adnetwork
+            if(!Pagez.getUserSession().getAdNetworkName().equals(AdNetworkNone.ADNETWORKNAME)){
+                insertAdCount++;
+                if (insertAdCount>=randomAdInsertionPoint && adsInserted<maxAdsPerPage){
+                    adsInserted++;
+                    insertAdCount = 0;
+                    randomAdInsertionPoint = 2 + Num.randomInt(4);
+                    //randomAdInsertionPoint = 10000;
+                    out.append(TwitpostAsHtml.getAdsenseAsTwitpost(380));
+                }
             }
             out.append(TwitpostAsHtml.get(twitpost, 380));
         }

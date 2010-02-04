@@ -1,5 +1,6 @@
 package com.celebtwit.htmluibeans;
 
+import com.celebtwit.ads.AdNetworkNone;
 import com.celebtwit.cache.html.DbcacheexpirableCache;
 import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twitpost;
@@ -66,14 +67,17 @@ public class PublicIndexTweetlist {
             .list();
         for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
             Twitpost twitpost=tpIt.next();
-            insertAdCount++;
-            if (insertAdCount>=randomAdInsertionPoint){
-                //insertAdCount = 0;
-                //randomAdInsertionPoint = Num.randomInt(10);
-                randomAdInsertionPoint = 10000;
-                out.append(TwitpostAsHtml.getAdsenseAsTwitpost(460));
+            //Only insert ad if it's not the none adnetwork
+            if(!Pagez.getUserSession().getAdNetworkName().equals(AdNetworkNone.ADNETWORKNAME)){
+                insertAdCount++;
+                if (insertAdCount>=randomAdInsertionPoint){
+                    //insertAdCount = 0;
+                    //randomAdInsertionPoint = Num.randomInt(10);
+                    randomAdInsertionPoint = 10000;
+                    out.append(TwitpostAsHtml.getAdsenseAsTwitpost(410));
+                }
             }
-            out.append(TwitpostAsHtml.get(twitpost, 460));
+            out.append(TwitpostAsHtml.get(twitpost, 410));
         }
         return out.toString();
     }

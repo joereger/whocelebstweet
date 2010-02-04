@@ -34,6 +34,8 @@ if (twit!=null){
         pagetitleName = twit.getRealname();
     }
 }
+//Get bigger version of the profile image
+twitimageurl = twitimageurl.replaceAll("_normal", "");
 %>
 <%
 pagetitle = pagetitleName + "'s Twitter Tweets on "+Pagez.getUserSession().getPl().getName()+"!  Always up-to-date!";
@@ -110,9 +112,9 @@ if (twit!=null && twit.getIsceleb()){
                 </center>
 
                 <%if (twit!=null && twit.getIsceleb()){%>
-                    <center><br/><br/><img src="<%=twitimageurl%>" width="48" height="48" border="0" align="middle" alt="<%=twit.getRealname()%>"></center>
+                    <%--<center><br/><br/><img src="<%=twitimageurl%>" width="48" height="48" border="0" align="middle" alt="<%=twit.getRealname()%>"></center>--%>
+                    <center><br/><br/><img src="<%=twitimageurl%>" width="190" border="0" align="middle" alt="<%=twit.getRealname()%>"></center>
                 <%}%>
-                <br clear="all"/>
 
 
                 <br clear="all">
@@ -120,12 +122,11 @@ if (twit!=null && twit.getIsceleb()){
                         <tr>
                             <td valign="top">
                                 <%if (twit!=null && twit.getDescription().length()>0){%>
-                                    <font class="normalfont"><%=twit.getDescription()%></font>
-                                    <br/><br/>
+                                    <font class="normalfont" style="font-size:15px; color:#666666;"><%=twit.getDescription()%></font>
+                                    <br/>
                                 <%}%>
-
-                                <div style="margin-left:3px; width: 160px; background:#e6e6e6;"><font class="smallfont" style="font-size:11px; text-decoration: underline;">More Information</font></div>
-                                <div style="margin-left:10px; width:160px;">
+                                <%--<div style="margin-left:3px; width: 160px; background:#e6e6e6;"><font class="smallfont" style="font-size:11px; text-decoration: underline;">More Information</font></div>--%>
+                                <div style="margin-left:0px; width:190px;">
                                 <%if (twit!=null && twit.getWebsite_url().length()>0){%>
                                     <font class="smallfont">
                                     <a href="<%=twit.getWebsite_url()%>" target="_blank"  style="text-decoration: underline; color: #0000ff;">Website</a>
@@ -148,7 +149,8 @@ if (twit!=null && twit.getIsceleb()){
                                     <br/>
                                 <%}%>
                                 <%if (1==1){%>
-                                    <font class="smallfont"><a href="/twitter/<%=twitterusername%>/who/"  style="text-decoration: underline; color: #0000ff;">Who @<%=twitterusername%> Tweets</a></font>
+                                    <br/>
+                                    <font class="normalfont" style="font-weight:bold;"><a href="/twitter/<%=twitterusername%>/who/"  style="text-decoration: underline; color: #0000ff;">@<%=twitterusername%>'s Stats</a></font>
                                     <br/>
                                 <%}%>
                                 </div>
@@ -207,10 +209,12 @@ if (twit!=null && twit.getIsceleb()){
                                 <%if (time.equals("today")){addToStyle=boldStyle;}else{addToStyle="";}%>
                                 <a href="/twitter/<%=twitterusername%>/when/today/<%=qs%>" style="<%=addToStyle%>">today</a>
                             </font>
-                        </div><br/>
+                        </div>
+                        <font class="largefont" style="font-size:40px;">stats</font>
+                        <br clear="all"/>
                         <%=PublicTwitterWhoPanelVertical.getHtml(twit, twitterusername, Pagez.getUserSession().getPl(), request.getParameter("time"), request.getParameter("refresh"))%>
                         <br/><br/>
-                        <a href="/twitter/<%=twitterusername%>/who/"><font class="mediumfont">who tweeted who details >></font></a>
+                        <a href="/twitter/<%=twitterusername%>/who/"><font class="mediumfont">more stats >></font></a>
                     </div>
                 <%}%>
             <%}%>

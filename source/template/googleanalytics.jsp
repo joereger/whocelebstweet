@@ -6,4 +6,5 @@
     try {
     var pageTracker = _gat._getTracker("UA-208946-9");
     pageTracker._trackPageview();
+    pageTracker._setCustomVar(1, "Private Label", "<%=Pagez.getUserSession().getPl().getName()%>", 3);
     } catch(err) {}</script>
