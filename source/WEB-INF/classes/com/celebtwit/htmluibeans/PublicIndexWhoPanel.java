@@ -58,11 +58,11 @@ public class PublicIndexWhoPanel {
         out.append("            <tr>\n");
         out.append("                <td valign=\"top\" width=\"50%\">\n");
         out.append(StatsOutputCached.nonCelebsTweetedMostByCelebs(pl, requestParamTime, 15, forceRefresh, false));
-        out.append("<br/><font class=\"normalfont\" style=\"font-weight:bold; margin-left:100px;\"><a href=\"/stats/nonCelebsTweetedMostByCelebs/when/"+requestParamTime+"/\">see more >></a></font>");
+        out.append("<br/><font class=\"normalfont\" style=\"font-weight:bold; margin-left:0px;\"><a href=\"/stats/nonCelebsTweetedMostByCelebs/when/"+requestParamTime+"/\">see more >></a></font>");
         out.append("                </td>\n");
         out.append("                <td valign=\"top\">\n");
         out.append(StatsOutputCached.celebsTweetedMostByCelebs(pl, requestParamTime, 15, forceRefresh, false));
-        out.append("<br/><font class=\"normalfont\" style=\"font-weight:bold; margin-left:100px;\"><a href=\"/stats/celebsTweetedMostByCelebs/when/"+requestParamTime+"/\">see more >></a></font>");
+        out.append("<br/><font class=\"normalfont\" style=\"font-weight:bold; margin-left:0px;\"><a href=\"/stats/celebsTweetedMostByCelebs/when/"+requestParamTime+"/\">see more >></a></font>");
         out.append("                </td>\n");
         out.append("            </tr>\n");
         out.append("            <tr>\n");
@@ -83,11 +83,11 @@ public class PublicIndexWhoPanel {
         out.append("            <tr>\n");
         out.append("                <td valign=\"top\" width=\"50%\">\n");
         out.append(StatsOutputCached.nonCelebsTweetedByMostDifferentCelebs(pl, requestParamTime, 15, forceRefresh, false));
-        out.append("<br/><font class=\"normalfont\" style=\"font-weight:bold; margin-left:100px;\"><a href=\"/stats/nonCelebsTweetedByMostDifferentCelebs/when/"+requestParamTime+"/\">see more >></a></font>");
+        out.append("<br/><font class=\"normalfont\" style=\"font-weight:bold; margin-left:0px;\"><a href=\"/stats/nonCelebsTweetedByMostDifferentCelebs/when/"+requestParamTime+"/\">see more >></a></font>");
         out.append("                </td>\n");
         out.append("                <td valign=\"top\">\n");
         out.append(StatsOutputCached.celebsTweetedByMostDifferentCelebs(pl, requestParamTime, 15, forceRefresh, false));
-        out.append("<br/><font class=\"normalfont\" style=\"font-weight:bold; margin-left:100px;\"><a href=\"//stats/celebsTweetedByMostDifferentCelebs/when/"+requestParamTime+"/\">see more >></a></font>");
+        out.append("<br/><font class=\"normalfont\" style=\"font-weight:bold; margin-left:0px;\"><a href=\"/stats/celebsTweetedByMostDifferentCelebs/when/"+requestParamTime+"/\">see more >></a></font>");
         out.append("                </td>\n");
         out.append("            </tr>\n");
         out.append("        </table>");

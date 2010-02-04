@@ -63,7 +63,7 @@
     </rule>
 
     <rule>
-        <from>/stats/nonCelebsTweetedMostByCelebs/when/([a-zA-Z0-9\_]*)/</from>
+        <from>/stats/celebsTweetedMostByCelebs/when/([a-zA-Z0-9\_]*)/</from>
         <to last="true">/stats_celebsTweetedMostByCelebs.jsp?time=$1</to>
     </rule>
 

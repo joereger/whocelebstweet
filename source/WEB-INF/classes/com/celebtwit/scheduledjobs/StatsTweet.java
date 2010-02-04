@@ -7,6 +7,7 @@ import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.helpers.CountMentionsByCelebs;
 import com.celebtwit.helpers.CountUniqueCelebsWhoMentioned;
 import com.celebtwit.helpers.StartDateEndDate;
+import com.celebtwit.pingfm.PingfmUpdate;
 import com.celebtwit.systemprops.InstanceProperties;
 import com.celebtwit.systemprops.SystemProperty;
 import com.celebtwit.util.Time;
@@ -113,7 +114,7 @@ public class StatsTweet implements StatefulJob {
                 status.append("by "+uniqueCelebs+" different "+pl.getCelebiscalled()+"s ");
             }
             status.append("in last 7 days ");
-            status.append("http://"+pl.getName()+"/twitter/"+twit.getTwitterusername());
+            status.append("http://"+pl.getName()+"/twitter/"+twit.getTwitterusername()+"/who/");
             logger.debug("status="+status.toString());
             logger.debug("status.length()="+status.length());
             //Update status
@@ -128,6 +129,16 @@ public class StatsTweet implements StatefulJob {
                         //Update the laststatstweet date
                         twit.setLaststatstweet(new Date());
                         twit.save();
+                        //Do ping.fm
+                        try{
+                            if (pl.getPingfmapikey()!=null && !pl.getPingfmapikey().equals("")){
+                                logger.debug("sending to ping.fm");
+                                PingfmUpdate pfm = new PingfmUpdate(pl.getPingfmapikey(), status.toString(), pl.getPlid());
+                                pfm.update();
+                            }
+                        } catch (Exception ex){
+                            logger.error("", ex);
+                        }
                         //Return true, telling the main method(s) that a tweet was made
                         return true;
                     } else {

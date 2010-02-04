@@ -1,29 +1,28 @@
 package com.celebtwit.startup;
 
-import com.celebtwit.systemprops.WebAppRootDir;
-import com.celebtwit.systemprops.InstanceProperties;
-import com.celebtwit.systemprops.SystemProperty;
-import com.celebtwit.dao.hibernate.HibernateUtil;
-import com.celebtwit.dao.hibernate.HibernateSessionQuartzCloser;
-import com.celebtwit.dao.hibernate.NumFromUniqueResult;
+import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.User;
 import com.celebtwit.dao.Userrole;
-import com.celebtwit.dao.Pl;
-import com.celebtwit.xmpp.SendXMPPMessage;
-import com.celebtwit.scheduledjobs.SystemStats;
+import com.celebtwit.dao.hibernate.HibernateSessionQuartzCloser;
+import com.celebtwit.dao.hibernate.HibernateUtil;
+import com.celebtwit.dao.hibernate.NumFromUniqueResult;
 import com.celebtwit.pageperformance.PagePerformanceUtil;
+import com.celebtwit.scheduledjobs.SystemStats;
+import com.celebtwit.systemprops.InstanceProperties;
+import com.celebtwit.systemprops.SystemProperty;
+import com.celebtwit.systemprops.WebAppRootDir;
+import com.celebtwit.xmpp.SendXMPPMessage;
+import org.apache.log4j.Logger;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerFactory;
+import org.quartz.impl.StdSchedulerFactory;
 
-import javax.servlet.*;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 import javax.management.ObjectName;
-
-import org.apache.log4j.Logger;
-import org.quartz.SchedulerFactory;
-import org.quartz.Scheduler;
-import org.quartz.impl.StdSchedulerFactory;
-
-
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import java.util.*;
 
 /**
@@ -220,6 +219,15 @@ public class ApplicationStartup implements ServletContextListener {
             pl.setCustomdomain3("www.whocelebstwitter.com");
             pl.setTwitterusername("whocelebstweet");
             pl.setTwitterpassword("whocelebstweetrules");
+            pl.setListownerscreenname1("");
+            pl.setListid1("");
+            pl.setListownerscreenname2("");
+            pl.setListid2("");
+            pl.setListownerscreenname3("");
+            pl.setListid3("");
+            pl.setCommasepadnetworks("");
+            pl.setIsdisplayotherplson(true);
+            pl.setPingfmapikey("");
             try{pl.save();}catch(Exception ex){logger.error(ex);}
         }
     }

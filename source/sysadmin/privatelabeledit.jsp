@@ -39,6 +39,7 @@ String acl = "sysadmin";
     pl.setListid3("");
     pl.setCommasepadnetworks("");
     pl.setIsdisplayotherplson(true);
+    pl.setPingfmapikey("");
     if (request.getParameter("plid")!=null && Num.isinteger(request.getParameter("plid"))){
         pl = Pl.get(Integer.parseInt(request.getParameter("plid")));
     }
@@ -67,6 +68,7 @@ String acl = "sysadmin";
                 pl.setListid3(Textbox.getValueFromRequest("listid3", "ListID3", false, DatatypeInteger.DATATYPEID));
                 pl.setCommasepadnetworks(Textbox.getValueFromRequest("commasepadnetworks", "Ad Networks", false, DatatypeString.DATATYPEID).toLowerCase());
                 pl.setIsdisplayotherplson(CheckboxBoolean.getValueFromRequest("isdisplayotherplson"));
+                pl.setPingfmapikey(Textbox.getValueFromRequest("pingfmapikey", "Ping.fm API Key", false, DatatypeString.DATATYPEID));
                 //Validate data
                 if (PlVerification.isValid(pl)){
                     pl.save();
@@ -134,6 +136,16 @@ String acl = "sysadmin";
                     </td>
                     <td valign="top">
                         <%=Textbox.getHtml("commasepadnetworks", pl.getCommasepadnetworks(), 255, 35, "", "")%>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" style="text-align:right;">
+                        <font class="formfieldnamefont">Ping.fm API Key</font>
+                        <br/><font class="tinyfont">Will send twitter updates through ping.fm</font>
+                    </td>
+                    <td valign="top">
+                        <%=Textbox.getHtml("pingfmapikey", pl.getPingfmapikey(), 255, 35, "", "")%>
                     </td>
                 </tr>
 

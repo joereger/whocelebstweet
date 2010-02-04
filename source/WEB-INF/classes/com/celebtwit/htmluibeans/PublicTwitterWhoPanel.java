@@ -75,13 +75,13 @@ public class PublicTwitterWhoPanel {
             out.append("                <td valign=\"top\" width=\"50%\">\n");
 
             out.append(StatsOutputCached.nonCelebsTweetedMostByTwit(twit, twitterusername, pl, requestParamTime, 15, forceRefresh, false));
-            out.append("<br/><font class=\"normalfont\" style=\"font-weight:bold; margin-left:100px;\"><a href=\"/twitterstats/nonCelebsTweetedMostByTwit/"+twitterusername+"/when/"+requestParamTime+"/\">see more >></a></font>");
+            out.append("<br/><font class=\"normalfont\" style=\"font-weight:bold; margin-left:0px;\"><a href=\"/twitterstats/nonCelebsTweetedMostByTwit/"+twitterusername+"/when/"+requestParamTime+"/\">see more >></a></font>");
 
             out.append("                </td>\n");
             out.append("                <td valign=\"top\">\n");
 
             out.append(StatsOutputCached.celebsTweetedMostByTwit(twit, twitterusername, pl, requestParamTime, 15, forceRefresh, false));
-            out.append("<br/><font class=\"normalfont\" style=\"font-weight:bold; margin-left:100px;\"><a href=\"/twitterstats/celebsTweetedMostByTwit/"+twitterusername+"/when/"+requestParamTime+"/\">see more >></a></font>");
+            out.append("<br/><font class=\"normalfont\" style=\"font-weight:bold; margin-left:0px;\"><a href=\"/twitterstats/celebsTweetedMostByTwit/"+twitterusername+"/when/"+requestParamTime+"/\">see more >></a></font>");
 
             out.append("                </td>\n");
             out.append("            </tr>\n");
@@ -115,7 +115,7 @@ public class PublicTwitterWhoPanel {
         out.append("                <td valign=\"top\">\n");
 
         out.append(StatsOutputCached.celebsWhoTweetedTwit(twit, twitterusername, pl, requestParamTime, 15, forceRefresh, false));
-        out.append("<br/><font class=\"normalfont\" style=\"font-weight:bold; margin-left:100px;\"><a href=\"/twitterstats/celebsWhoTweetedTwit/"+twitterusername+"/when/"+requestParamTime+"/\">see more >></a></font>");
+        out.append("<br/><font class=\"normalfont\" style=\"font-weight:bold; margin-left:0px;\"><a href=\"/twitterstats/celebsWhoTweetedTwit/"+twitterusername+"/when/"+requestParamTime+"/\">see more >></a></font>");
 
 
         out.append("                </td>\n");

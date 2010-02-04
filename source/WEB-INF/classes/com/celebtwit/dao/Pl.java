@@ -35,6 +35,7 @@ public class Pl extends BasePersistentClass implements java.io.Serializable, Aut
     private String listid3;
     private String commasepadnetworks;
     private boolean isdisplayotherplson;
+    private String pingfmapikey;
 
 
 
@@ -256,5 +257,13 @@ public class Pl extends BasePersistentClass implements java.io.Serializable, Aut
 
     public void setIsdisplayotherplson(boolean isdisplayotherplson) {
         this.isdisplayotherplson = isdisplayotherplson;
+    }
+
+    public String getPingfmapikey() {
+        return pingfmapikey;
+    }
+
+    public void setPingfmapikey(String pingfmapikey) {
+        this.pingfmapikey = pingfmapikey;
     }
 }
