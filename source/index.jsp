@@ -57,7 +57,7 @@ String acl = "public";
         <%if (time.equals("today")){statsTime="today";}%>
         <font class="largefont" style="font-size:30px;">stats <%=statsTime%></font><br/>
 
-        <%=PublicIndexWhoPanel.getHtml(Pagez.getUserSession().getPl(), request.getParameter("time"), request.getParameter("refresh"))%>
+        <%=PublicIndexWhoPanel.getHtml(Pagez.getUserSession().getPl(), time, request.getParameter("refresh"))%>
 
     </div>
 <%}%>

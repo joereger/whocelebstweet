@@ -6,6 +6,7 @@
 <%@ page import="com.celebtwit.util.Time" %>
 <%@ page import="com.celebtwit.util.Num" %>
 <%@ page import="com.celebtwit.dao.Twitpl" %>
+<%@ page import="com.celebtwit.helpers.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.celebtwit.dao.Pl" %>
 <%@ page import="com.celebtwit.scheduledjobs.GetTwitterPosts" %>
@@ -59,6 +60,8 @@ String acl = "sysadmin";
             twit.setRealname(realname);
             twit.setIsceleb(true);
             twit.save();
+            //Remove any blocks in the Listimportblock
+            ListimportblockHelper.removeBlock(twit.getTwitterusername());
             //Make sure any already-mentions are marked as being about a celeb, now that this twit is one
             HibernateUtil.getSession().createQuery("update Mention m set ismentionedaceleb=true where m.twitidmentioned='"+twit.getTwitid()+"'").executeUpdate();
             //Delete any existing pl relationships
@@ -104,6 +107,8 @@ String acl = "sysadmin";
 <%
     if (request.getParameter("action") != null && request.getParameter("action").equals("delete")) {
         try {
+            //Put a block on the Listimportblock so that it's not auto-imported again
+            ListimportblockHelper.addBlock(twit.getTwitterusername());
             //Make sure any already-mentions are *not* marked as being about a celeb, now that this twit is no longer one
             HibernateUtil.getSession().createQuery("update Mention m set ismentionedaceleb=false where m.twitidmentioned='"+twit.getTwitid()+"'").executeUpdate();
             //Delete mentions where this twit was acting as celeb... they don't count any more
@@ -183,7 +188,7 @@ String acl = "sysadmin";
         List<Twit> twits = HibernateUtil.getSession().createCriteria(Twit.class)
                                            .add(Restrictions.eq("isceleb", true))
                                            .addOrder(Order.asc("realname"))
-                                           .setMaxResults(1000)
+                                           .setMaxResults(5000)
                                            .setCacheable(true)
                                            .list();
         %>

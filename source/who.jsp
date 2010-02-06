@@ -216,7 +216,7 @@ if (twit!=null && twit.getIsceleb()){
                         <%if (time.equals("today")){statsTime="today";}%>
                         <font class="largefont" style="font-size:30px;">stats <%=statsTime%></font>
                         <br/>
-                        <%=PublicTwitterWhoPanel.getHtml(twit, twitterusername, Pagez.getUserSession().getPl(), request.getParameter("time"), request.getParameter("refresh"))%>
+                        <%=PublicTwitterWhoPanel.getHtml(twit, twitterusername, Pagez.getUserSession().getPl(), time, request.getParameter("refresh"))%>
                     </div>
                 <%}%>
             <%}%>

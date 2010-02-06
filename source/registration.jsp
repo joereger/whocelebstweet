@@ -1,9 +1,10 @@
-<%@ page import="org.apache.log4j.Logger" %>
 <%@ page import="com.celebtwit.htmluibeans.Registration" %>
-<%@ page import="com.celebtwit.htmlui.*" %>
+<%@ page import="com.celebtwit.pingfm.PingfmUpdate" %>
+<%@ page import="com.celebtwit.systemprops.BaseUrl" %>
 <%@ page import="com.celebtwit.systemprops.SystemProperty" %>
 <%@ page import="com.celebtwit.util.RandomString" %>
-<%@ page import="com.celebtwit.systemprops.BaseUrl" %>
+<%@ page import="com.celebtwit.util.Time" %>
+<%@ page import="org.apache.log4j.Logger" %>
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "Sign Up for an Account";
@@ -56,6 +57,17 @@ Registration registration = (Registration)Pagez.getBeanMgr().get("Registration")
 <%@ include file="/template/header.jsp" %>
 
 
+<%
+//    try{
+//        if (Pagez.getUserSession().getPl().getPingfmapikey()!=null && !Pagez.getUserSession().getPl().getPingfmapikey().equals("")){
+//            logger.debug("sending to ping.fm");
+//            PingfmUpdate pfm = new PingfmUpdate(Pagez.getUserSession().getPl().getPingfmapikey().trim(), "Hey, testing @"+ Time.nowInGmtString(), Pagez.getUserSession().getPl().getPlid());
+//            pfm.update();
+//        }
+//    } catch (Exception ex){
+//        logger.error("", ex);
+//    }
+%>
 
         <div style="width: 250px; float: right; padding-left: 20px;">
             <div class="rounded" style="padding: 15px; margin: 5px; background: #e6e6e6;">
