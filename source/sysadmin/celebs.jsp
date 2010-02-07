@@ -201,7 +201,7 @@ String acl = "sysadmin";
                 cols.add(new GridCol("Real Name", "<$realname$>", false, "", "tinyfont"));
                 cols.add(new GridCol("Twitter Username", "<$twitterusername$>", false, "", "tinyfont"));
             %>
-            <%=Grid.render(twits, cols, 1000, "/sysadmin/celebs.jsp", "page")%>
+            <%=Grid.render(twits, cols, 5000, "/sysadmin/celebs.jsp", "page")%>
         <%}%>
 
 

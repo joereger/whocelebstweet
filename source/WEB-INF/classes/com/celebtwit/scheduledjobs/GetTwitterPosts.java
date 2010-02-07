@@ -140,14 +140,17 @@ public class GetTwitterPosts implements StatefulJob {
                 //Update this twit
                 twit.setProfile_image_url(profile_image_url);
                 twit.setSince_id(String.valueOf(since_id_curr));
-                twit.setLastprocessed(new Date());
                 twit.setWebsite_url(website_url);
                 twit.setDescription(description);
                 twit.setFollowers_count(followers_count);
                 twit.setStatuses_count(statuses_count);
                 twit.setTwitteruserid(twitteruserid);
-                twit.save();
-                //Flush the cache for this user
+            }
+            //Set last processed and save the mofo
+            twit.setLastprocessed(new Date());
+            twit.save();
+            //If there was a post, flush cache
+            if (foundAPost){
                 DbcacheexpirableCache.flush("PublicTwitterTweetlist.java-twitid-"+twit.getTwitid());
             }
             //Report on RateLimitStatus
