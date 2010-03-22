@@ -70,7 +70,7 @@
         <!-- Name of cluster. Needs to be the same for all clusters, in order
              to find each other
         -->
-        <attribute name="ClusterName">KeywordEngine-TreeCache-Cluster</attribute>
+        <attribute name="ClusterName">Celebtwit-TreeCache-Cluster</attribute>
 
         <!-- JGroups protocol stack properties. Can also be a URL,
              e.g. file:/home/bela/default.xml

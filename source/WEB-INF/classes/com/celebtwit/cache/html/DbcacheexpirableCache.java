@@ -1,15 +1,15 @@
 package com.celebtwit.cache.html;
 
-import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.dao.Dbcacheexpirable;
+import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.util.Time;
-import com.celebtwit.util.DateDiff;
-
-
-import java.util.*;
-
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.Restrictions;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 
 /**
@@ -23,8 +23,12 @@ public class DbcacheexpirableCache {
 
     }
 
-
     public static Object get(String key, String group) {
+        return get(key, group, true);
+    }
+
+
+    public static Object get(String key, String group, boolean returnNullIfExpired) {
         Logger logger = Logger.getLogger(Dbcacheexpirable.class);
         try{
             List<Dbcacheexpirable> dbcaches = HibernateUtil.getSession().createCriteria(Dbcacheexpirable.class)
@@ -34,13 +38,18 @@ public class DbcacheexpirableCache {
                                                .list();
             if (dbcaches!=null && dbcaches.size()>0){
                 Dbcacheexpirable dbcache = dbcaches.get(0);
+                Object obj = dbcache.getVal();
                 //If it's expired delete and return null
                 if (dbcache.getExpirationdate().before(Calendar.getInstance().getTime())){
                     logger.debug("deleting Dbcacheexpirable because it's expired, returning null to force refresh");
                     dbcache.delete();
-                    return null;
+                    if (returnNullIfExpired){
+                        return null;
+                    } else {
+                        return obj;
+                    }
                 }
-                return dbcache.getVal();
+                return obj;
             }
         } catch (Exception ex){
             logger.error("", ex);

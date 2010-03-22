@@ -13,6 +13,21 @@ import java.util.*;
  */
 public class Util {
 
+    public static String countStr(int count, boolean includerankingnumbers){
+        //If no nums return blank
+        if (!includerankingnumbers){return "";}
+        //Otherwise generate the nums
+        StringBuffer out = new StringBuffer();
+        out.append(count);
+        out.append(".&nbsp;");
+        if (count<=9){
+            out.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+        } else if (count<=99){
+            out.append("&nbsp;&nbsp;");
+        }
+        return out.toString();
+    }
+
     public static List setToArrayList(Set set){
         List out = new ArrayList();
         for (Iterator iterator = set.iterator(); iterator.hasNext();) {

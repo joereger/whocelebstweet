@@ -1,7 +1,8 @@
 package com.celebtwit.cachedstuff;
 
+import com.celebtwit.dao.Pl;
+
 import java.util.Calendar;
-import java.io.Serializable;
 
 /**
  * User: Joe Reger Jr
@@ -11,7 +12,7 @@ import java.io.Serializable;
 public interface CachedStuff {
 
     public String getKey();
-    public void refresh();
+    public void refresh(Pl pl);
     public Calendar refreshedTimestamp();
     public int maxAgeInMinutes();
 

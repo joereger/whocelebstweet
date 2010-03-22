@@ -1,12 +1,13 @@
 package com.celebtwit.cachedstuff;
 
-import com.celebtwit.cache.providers.CacheFactory;
-import com.celebtwit.htmluibeans.PublicIndexCacheitem;
+import com.celebtwit.cache.html.DbcacheexpirableCache;
+import com.celebtwit.dao.Pl;
 import com.celebtwit.util.DateDiff;
+import com.celebtwit.util.Time;
+import org.apache.log4j.Logger;
 
 import java.util.Calendar;
-
-import org.apache.log4j.Logger;
+import java.util.Date;
 
 /**
  * User: Joe Reger Jr
@@ -14,26 +15,30 @@ import org.apache.log4j.Logger;
  * Time: 1:57:05 PM
  */
 public class GetCachedStuff {
+    
 
-    public static CachedStuff get(CachedStuff cs){
+    public static CachedStuff get(CachedStuff cs, Pl pl){
         Logger logger = Logger.getLogger(CachedStuff.class);
-        String key = cs.getKey();
-        String group = "CachedStuff";
         try{
-            Object obj = CacheFactory.getCacheProvider().get(key, group);
+            String key = cs.getKey();
+            String group = "CachedStuff-plid="+pl.getPlid();
+            //Note third argument which tells cache to return object instead of null even if expired
+            Object obj = DbcacheexpirableCache.get(key, group, false);
             if (obj!=null && (obj instanceof CachedStuff)){
                 CachedStuff cachedCs = (CachedStuff)obj;
                 int minago = DateDiff.dateDiff("minute", Calendar.getInstance(), cachedCs.refreshedTimestamp());
                 if (minago>cs.maxAgeInMinutes()){
-                    cs.refresh();
-                    CacheFactory.getCacheProvider().put(key, group, cs);
-                    return cs;
-                } else {
-                    return cachedCs;
+                    //Kick off the background thread to refresh
+                    logger.debug("minago>cs.maxAgeInMinutes() so kicking off thread to refresh");
+                    GetCachedStuffRefreshThread gcsrt = new GetCachedStuffRefreshThread(cs, pl, key, group);
+                    gcsrt.startThread();
                 }
+                //Immediately return most recently refreshed
+                return cachedCs;
             } else {
-                cs.refresh();
-                CacheFactory.getCacheProvider().put(key, group, cs);
+                cs.refresh(pl);
+                Date expirationdate = Time.xMinutesAgoEnd(Calendar.getInstance(), (-1)*cs.maxAgeInMinutes()).getTime();
+                DbcacheexpirableCache.put(key, group, cs, expirationdate);
                 return cs;
             }
         } catch (Exception ex){
@@ -42,20 +47,7 @@ public class GetCachedStuff {
         return cs;
     }
 
-    public static void refresh(CachedStuff cs){
-        Logger logger = Logger.getLogger(CachedStuff.class);
-        String key = cs.getKey();
-        String group = "CachedStuff";
-        try{
-            Object obj = CacheFactory.getCacheProvider().get(key, group);
-            if (obj!=null && (obj instanceof CachedStuff)){
-                CachedStuff cachedCs = (CachedStuff)obj;
-                cs.refresh();
-                CacheFactory.getCacheProvider().put(key, group, cs);
-            }
-        } catch (Exception ex){
-            logger.error("", ex);
-        }
-    }
+
+    
 
 }
