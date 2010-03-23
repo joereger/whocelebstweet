@@ -5,7 +5,6 @@ import com.celebtwit.dao.*;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.dao.hibernate.NumFromUniqueResult;
 import com.celebtwit.helpers.IsTwitACelebInThisPl;
-import com.celebtwit.systemprops.InstanceProperties;
 import com.celebtwit.util.Num;
 import com.celebtwit.util.Time;
 import org.apache.commons.httpclient.HttpClient;
@@ -41,13 +40,14 @@ public class GetTwitterPosts implements StatefulJob {
     private static String twitterpassword = "whocelebstweetrules";
 
     //Make sure multiple threads don't process the same twit
-    private static HashMap<Integer, Boolean> processingStatus = new HashMap<Integer, Boolean>();
+    //private static HashMap<Integer, Boolean> processingStatus = new HashMap<Integer, Boolean>();
     private static HashMap<Integer, Boolean> editedDuringProcessing = new HashMap<Integer, Boolean>();
     //private static boolean processRunning = false;
 
+
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         Logger logger = Logger.getLogger(this.getClass().getName());
-        if (InstanceProperties.getRunScheduledTasksOnThisInstance()){
+        //if (InstanceProperties.getRunScheduledTasksOnThisInstance()){
             logger.debug("execute() GetTwitterPosts called");
             //If another trigger is running, don't run
 //            if (processRunning){
@@ -79,9 +79,9 @@ public class GetTwitterPosts implements StatefulJob {
                     }
                 }
             }
-        } else {
-            logger.debug("InstanceProperties.getRunScheduledTasksOnThisInstance() is FALSE for this instance so this task is not being executed.");
-        }
+        //} else {
+        //    logger.debug("InstanceProperties.getRunScheduledTasksOnThisInstance() is FALSE for this instance so this task is not being executed.");
+        //}
         //Reset the processRunning thing so that others can run too
         //processRunning = false;
     }
@@ -164,14 +164,23 @@ public class GetTwitterPosts implements StatefulJob {
 
     //Processing Status
     private static void startProcessing(int twitid){
-        processingStatus.put(twitid, true);
+        String key = "twitid="+twitid;
+        String group = "GetTwitterPosts.java";
+        DbcacheexpirableCache.put(key, group, true, DbcacheexpirableCache.expireIn48Hrs());
     }
     private static void endProcessing(int twitid){
-        if (processingStatus.containsKey(twitid)){ processingStatus.remove(twitid); }
+        String key = "twitid="+twitid;
+        String group = "GetTwitterPosts.java";
+        DbcacheexpirableCache.flush(key, group);
     }
     public static boolean isProcessing(int twitid){
-        if (processingStatus.containsKey(twitid)){ return true; }
-        return false;
+        String key = "twitid="+twitid;
+        String group = "GetTwitterPosts.java";
+        Object fromCache = DbcacheexpirableCache.get(key, group);
+        if (fromCache!=null){
+            return true; //It's processing somewhere
+        }
+        return false;  //It's not processing
     }
 
     //EditedDuringProcessing

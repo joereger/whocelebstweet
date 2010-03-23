@@ -1,7 +1,6 @@
 package com.celebtwit.ads;
 
 
-
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -23,8 +22,8 @@ public class AdNetworkFactory {
     public static ArrayList<AdNetwork> getAllNetworks(){
         ArrayList<AdNetwork> out = new ArrayList<AdNetwork>();
         out.add(new AdNetworkGoogleAdsense());
-        out.add(new AdNetworkPassionDotCom());
-        out.add(new AdNetworkAdultFriendFinder());
+        //out.add(new AdNetworkPassionDotCom());
+        //out.add(new AdNetworkAdultFriendFinder());
         //Adnetworknone must always be last
         out.add(new AdNetworkNone());
         return out;
@@ -42,6 +41,15 @@ public class AdNetworkFactory {
             }
         }
         return getDefaultAdNetwork();
+    }
+
+    public static String getAllAsString(){
+        StringBuffer out = new StringBuffer();
+        for (Iterator<AdNetwork> iterator = AdNetworkFactory.getAllNetworks().iterator(); iterator.hasNext();) {
+            AdNetwork adNetwork = iterator.next();
+            out.append(adNetwork.getAdNetworkName()+",");
+        }
+        return out.toString();
     }
 
     public static AdNetwork getRandom(){

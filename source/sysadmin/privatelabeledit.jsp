@@ -9,6 +9,7 @@
 <%@ page import="org.apache.log4j.Logger" %>
 <%@ page import="com.celebtwit.htmlui.*" %>
 <%@ page import="com.celebtwit.helpers.*" %>
+<%@ page import="com.celebtwit.ads.*" %>
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
 String pagetitle = "Private Label";
@@ -132,7 +133,7 @@ String acl = "sysadmin";
                 <tr>
                     <td valign="top" style="text-align:right;">
                         <font class="formfieldnamefont">Ad Networks</font>
-                        <br/><font class="tinyfont">Comma separated list of ad networks to display on this pl.  Blank is the default ad network.<br/>GoogleAdsense, PassionDotCom, AdultFriendFinder<br/>Set to NONE to use no ads</font>
+                        <br/><font class="tinyfont">Comma separated list of ad networks to display on this pl.  Blank is the default ad network.<br/><%=AdNetworkFactory.getAllAsString()%><br/>Set to NONE to use no ads</font>
                     </td>
                     <td valign="top">
                         <%=Textbox.getHtml("commasepadnetworks", pl.getCommasepadnetworks(), 255, 35, "", "")%>

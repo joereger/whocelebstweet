@@ -143,6 +143,7 @@ public class FilterMain implements Filter {
                                             newUserSession.setUser(user);
                                             newUserSession.setIsloggedin(true);
                                             newUserSession.setIsLoggedInToBeta(true);
+                                            newUserSession.setPl(pl);
                                             Pagez.setUserSessionAndUpdateCache(newUserSession);
                                             wasAutoLoggedIn = true;
                                             //Notify via XMPP

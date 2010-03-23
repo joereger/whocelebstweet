@@ -168,7 +168,9 @@ public class DbcacheexpirableCache {
     }
 
 
-
+    public static Date expireIn48Hrs(){
+        return Time.xMinutesAgoEnd(Calendar.getInstance(), -1440*2).getTime();
+    }
 
 
 

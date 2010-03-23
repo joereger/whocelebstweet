@@ -210,6 +210,7 @@ public class ApplicationStartup implements ServletContextListener {
         Logger logger = Logger.getLogger(ApplicationStartup.class);
         String emptyStr = "";
         List pls = HibernateUtil.getSession().createQuery("from Pl"+emptyStr).list();
+        if (pls==null){logger.info("pls==null");} else if (pls.size()<=0){logger.info("pls.size()<=0");}
         if (pls==null || pls.size()<=0){
             Pl pl = new Pl();
             pl.setName("whoCelebsTweet.com");
@@ -228,6 +229,11 @@ public class ApplicationStartup implements ServletContextListener {
             pl.setCommasepadnetworks("");
             pl.setIsdisplayotherplson(true);
             pl.setPingfmapikey("");
+            pl.setSisterdomain1("");
+            pl.setSisterdomain2("");
+            pl.setSisterdomain3("");
+            pl.setSistername("");
+            pl.setCommasepadnetworks("");
             try{pl.save();}catch(Exception ex){logger.error(ex);}
         }
     }

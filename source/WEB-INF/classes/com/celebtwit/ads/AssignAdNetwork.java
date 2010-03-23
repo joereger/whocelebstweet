@@ -32,7 +32,7 @@ public class AssignAdNetwork {
         if (request.getHeader("user-agent")!=null){
             if (request.getHeader("user-agent").indexOf("googlebot")>-1){
                 logger.debug("assign() setting to AdSense because Googlebot");
-                Pagez.getUserSession().setAdNetworkName(AdNetworkGoogleAdsense.ADNETWORKNAME);
+                Pagez.getUserSession().setAdNetworkName(AdNetworkNone.ADNETWORKNAME);
             }
         }
         //Override with url param = safe=1
@@ -66,7 +66,7 @@ public class AssignAdNetwork {
                 Pagez.getUserSession().setAdNetworkName(AdNetworkNone.ADNETWORKNAME);
                 return;
             }
-            //Choose a random ad network
+            //Choose a random ad network from those in the list of acceptable pl ads
             int attempts = 0;
             int maxattempts = 100;
             boolean assignmentmade = false;
@@ -87,10 +87,9 @@ public class AssignAdNetwork {
             }
         } else {
             //Blank commasepadnetworks in pl so... go with random
-            logger.debug("setByPl() setting to Random because pl.getCommasepadnetworks()==null || pl.getCommasepadnetworks().trim().length()>0");
-            Pagez.getUserSession().setAdNetworkName(AdNetworkFactory.getRandom().getAdNetworkName());
+            logger.debug("setByPl() setting to None because pl.getCommasepadnetworks()==null || pl.getCommasepadnetworks().trim().length()>0");
+            Pagez.getUserSession().setAdNetworkName(AdNetworkNone.ADNETWORKNAME);
         }
-
     }
 
     private static void safeReferers(HttpServletRequest request){
@@ -100,7 +99,7 @@ public class AssignAdNetwork {
             ArrayList<String> urlsThatShouldBeSafe = new ArrayList<String>();
             urlsThatShouldBeSafe.add("joereger.com");
             urlsThatShouldBeSafe.add("ideasdefine.com");
-            urlsThatShouldBeSafe.add("facebook.com");
+            //urlsThatShouldBeSafe.add("facebook.com");
             for (int i = 0; i < urlsThatShouldBeSafe.size(); i++) {
                 String url = urlsThatShouldBeSafe.get(i);
                 //If the url is anywhere in the referer show the safe ad network
