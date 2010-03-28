@@ -21,6 +21,8 @@ String acl = "sysadmin";
             sysadminSystemProps.setDostattweets(Textbox.getValueFromRequest("dostattweets", "dostattweets", true, DatatypeString.DATATYPEID));
             sysadminSystemProps.setSendxmpp(Textbox.getValueFromRequest("sendxmpp", "sendxmpp", true, DatatypeString.DATATYPEID));
             sysadminSystemProps.setSmtpoutboundserver(Textbox.getValueFromRequest("smtpoutboundserver", "smtpoutboundserver", true, DatatypeString.DATATYPEID));
+            sysadminSystemProps.setTwitteraccesstoken(Textbox.getValueFromRequest("twitteraccesstoken", "twitteraccesstoken", false, DatatypeString.DATATYPEID));
+            sysadminSystemProps.setTwitteraccesstokensecret(Textbox.getValueFromRequest("twitteraccesstokensecret", "twitteraccesstokensecret", false, DatatypeString.DATATYPEID));
             sysadminSystemProps.saveProps();
             Pagez.getUserSession().setMessage("Save complete.");
         } catch (ValidationException vex) {
@@ -95,6 +97,33 @@ String acl = "sysadmin";
                 </td>
                 <td valign="top">
                     <%=Textbox.getHtml("dostattweets", sysadminSystemProps.getDostattweets(), 255, 35, "", "")%>
+                </td>
+            </tr>
+
+            <tr>
+                <td valign="top">
+                    <font class="formfieldnamefont">Twitter OAuth</font>
+                </td>
+                <td valign="top">
+                    <a href="/twitterredirectorsysprop">Authorize Twitter</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td valign="top">
+                    <font class="formfieldnamefont">Twitter Access Token</font>
+                </td>
+                <td valign="top">
+                    <%=Textbox.getHtml("twitteraccesstoken", sysadminSystemProps.getTwitteraccesstoken(), 255, 35, "", "")%>
+                </td>
+            </tr>
+
+            <tr>
+                <td valign="top">
+                    <font class="formfieldnamefont">Twitter Access Token Secret</font>
+                </td>
+                <td valign="top">
+                    <%=Textbox.getHtml("twitteraccesstokensecret", sysadminSystemProps.getTwitteraccesstokensecret(), 255, 35, "", "")%>
                 </td>
             </tr>
 

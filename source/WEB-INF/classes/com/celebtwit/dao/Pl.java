@@ -3,6 +3,7 @@ package com.celebtwit.dao;
 import com.celebtwit.cache.providers.CacheFactory;
 import com.celebtwit.dao.hibernate.BasePersistentClass;
 import com.celebtwit.dao.hibernate.HibernateUtil;
+import com.celebtwit.htmlui.UserSession;
 import com.celebtwit.privatelabel.PlFinder;
 import com.celebtwit.session.AuthControlled;
 import com.celebtwit.util.GeneralException;
@@ -27,6 +28,8 @@ public class Pl extends BasePersistentClass implements java.io.Serializable, Aut
     private String sisterdomain3;
     private String twitterusername;
     private String twitterpassword;
+    private String twitteraccesstoken="";
+    private String twitteraccesstokensecret="";
     private String listownerscreenname1;
     private String listid1;
     private String listownerscreenname2;
@@ -88,7 +91,10 @@ public class Pl extends BasePersistentClass implements java.io.Serializable, Aut
     }
 
     public boolean canEdit(User user){
-        return canRead(user);
+        if (UserSession.isUserASysadmin(user)){
+            return true;
+        }
+        return false;
     }
 
 
@@ -265,5 +271,21 @@ public class Pl extends BasePersistentClass implements java.io.Serializable, Aut
 
     public void setPingfmapikey(String pingfmapikey) {
         this.pingfmapikey = pingfmapikey;
+    }
+
+    public String getTwitteraccesstoken() {
+        return twitteraccesstoken;
+    }
+
+    public void setTwitteraccesstoken(String twitteraccesstoken) {
+        this.twitteraccesstoken = twitteraccesstoken;
+    }
+
+    public String getTwitteraccesstokensecret() {
+        return twitteraccesstokensecret;
+    }
+
+    public void setTwitteraccesstokensecret(String twitteraccesstokensecret) {
+        this.twitteraccesstokensecret = twitteraccesstokensecret;
     }
 }

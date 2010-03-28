@@ -234,6 +234,8 @@ public class ApplicationStartup implements ServletContextListener {
             pl.setSisterdomain3("");
             pl.setSistername("");
             pl.setCommasepadnetworks("");
+            pl.setTwitteraccesstoken("");
+            pl.setTwitteraccesstokensecret("");
             try{pl.save();}catch(Exception ex){logger.error(ex);}
         }
     }

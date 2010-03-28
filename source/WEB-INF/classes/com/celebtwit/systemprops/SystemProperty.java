@@ -1,11 +1,10 @@
 package com.celebtwit.systemprops;
 
-import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.dao.Systemprop;
+import com.celebtwit.dao.hibernate.HibernateUtil;
+import org.apache.log4j.Logger;
 
 import java.util.*;
-
-import org.apache.log4j.Logger;
 
 /**
  * User: Joe Reger Jr
@@ -28,6 +27,8 @@ public class SystemProperty {
     public static String PROP_SMTPOUTBOUNDSERVER = "PROP_SMTPOUTBOUNDSERVER";
     public static String PROP_ISSSLON = "PROP_ISSSLON";
     public static String PROP_DOSTATTWEETS = "PROP_DOSTATTWEETS";
+    public static String PROP_TWITTERACCESSTOKEN = "PROP_TWITTERACCESSTOKEN";
+    public static String PROP_TWITTERACCESSTOKENSECRET = "PROP_TWITTERACCESSTOKENSECRET";
 
 
     private static void loadAllPropsAndDefaultValues(){
@@ -39,6 +40,8 @@ public class SystemProperty {
         props.put(PROP_SMTPOUTBOUNDSERVER, "localhost");
         props.put(PROP_ISSSLON, "0");
         props.put(PROP_DOSTATTWEETS, "0");
+        props.put(PROP_TWITTERACCESSTOKEN, " ");
+        props.put(PROP_TWITTERACCESSTOKENSECRET, " ");
     }
 
 

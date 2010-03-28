@@ -1,17 +1,16 @@
 package com.celebtwit.htmlui;
 
 import com.celebtwit.ads.AdNetworkFactory;
-import com.celebtwit.ads.AssignAdNetwork;
+import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.User;
 import com.celebtwit.dao.Userrole;
-import com.celebtwit.dao.Pl;
+import org.apache.log4j.Logger;
+import twitter4j.Twitter;
+import twitter4j.http.RequestToken;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Calendar;
-
-import org.apache.log4j.Logger;
+import java.util.Iterator;
 
 /**
  * User: Joe Reger Jr
@@ -34,6 +33,8 @@ public class UserSession implements Serializable {
     private int plid = 1;
     private boolean isSisterPl = false;
     private String adNetworkName = AdNetworkFactory.getDefaultAdNetwork().getAdNetworkName();
+    private Twitter twitter;
+    private RequestToken twitterRequestToken;
 
     public UserSession(){
         Logger logger = Logger.getLogger(this.getClass().getName());
@@ -59,16 +60,20 @@ public class UserSession implements Serializable {
     public void setUser(User user) {
         if (user!=null){
             userid = user.getUserid();
-            isSysadmin = false;
-            for (Iterator<Userrole> iterator = user.getUserroles().iterator(); iterator.hasNext();) {
-                Userrole userrole = iterator.next();
-                if (userrole.getRoleid()== Userrole.SYSADMIN){
-                    isSysadmin = true;
-                }
-            }
+            isSysadmin = isUserASysadmin(user);
         } else {
             userid = 0;
         }
+    }
+
+    public static boolean isUserASysadmin(User user){
+        for (Iterator<Userrole> iterator = user.getUserroles().iterator(); iterator.hasNext();) {
+            Userrole userrole = iterator.next();
+            if (userrole.getRoleid()== Userrole.SYSADMIN){
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean getIsloggedin() {
@@ -168,4 +173,19 @@ public class UserSession implements Serializable {
         this.adNetworkName = adNetworkName;
     }
 
+    public Twitter getTwitter() {
+        return twitter;
+    }
+
+    public void setTwitter(Twitter twitter) {
+        this.twitter = twitter;
+    }
+
+    public RequestToken getTwitterRequestToken() {
+        return twitterRequestToken;
+    }
+
+    public void setTwitterRequestToken(RequestToken twitterRequestToken) {
+        this.twitterRequestToken = twitterRequestToken;
+    }
 }

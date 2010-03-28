@@ -41,6 +41,8 @@ String acl = "sysadmin";
     pl.setCommasepadnetworks("");
     pl.setIsdisplayotherplson(true);
     pl.setPingfmapikey("");
+    pl.setTwitteraccesstoken("");
+    pl.setTwitteraccesstokensecret("");
     if (request.getParameter("plid")!=null && Num.isinteger(request.getParameter("plid"))){
         pl = Pl.get(Integer.parseInt(request.getParameter("plid")));
     }
@@ -70,6 +72,8 @@ String acl = "sysadmin";
                 pl.setCommasepadnetworks(Textbox.getValueFromRequest("commasepadnetworks", "Ad Networks", false, DatatypeString.DATATYPEID).toLowerCase());
                 pl.setIsdisplayotherplson(CheckboxBoolean.getValueFromRequest("isdisplayotherplson"));
                 pl.setPingfmapikey(Textbox.getValueFromRequest("pingfmapikey", "Ping.fm API Key", false, DatatypeString.DATATYPEID));
+                pl.setTwitteraccesstoken(Textbox.getValueFromRequest("twitteraccesstoken", "Twitter Access Token", false, DatatypeString.DATATYPEID));
+                pl.setTwitteraccesstokensecret(Textbox.getValueFromRequest("twitteraccesstokensecret", "Twitter Access Token Secret", false, DatatypeString.DATATYPEID));
                 //Validate data
                 if (PlVerification.isValid(pl)){
                     pl.save();
@@ -219,6 +223,14 @@ String acl = "sysadmin";
                 </tr>
                 <tr>
                     <td valign="top" style="text-align:right;">
+                        <font class="formfieldnamefont">Twitter OAuth</font>
+                    </td>
+                    <td valign="top">
+                        <a href="/twitterredirector?plid=<%=pl.getPlid()%>">Authorize Twitter</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" style="text-align:right;">
                         <font class="formfieldnamefont">Twitter Username</font>
                     </td>
                     <td valign="top">
@@ -231,6 +243,22 @@ String acl = "sysadmin";
                     </td>
                     <td valign="top">
                         <%=Textbox.getHtml("twitterpassword", pl.getTwitterpassword(), 255, 35, "", "")%>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" style="text-align:right;">
+                        <font class="formfieldnamefont">Twitter Access Token</font>
+                    </td>
+                    <td valign="top">
+                        <%=Textbox.getHtml("twitteraccesstoken", pl.getTwitteraccesstoken(), 255, 35, "", "")%>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" style="text-align:right;">
+                        <font class="formfieldnamefont">Twitter Access Token Secret</font>
+                    </td>
+                    <td valign="top">
+                        <%=Textbox.getHtml("twitteraccesstokensecret", pl.getTwitteraccesstokensecret(), 255, 35, "", "")%>
                     </td>
                 </tr>
                 <tr>

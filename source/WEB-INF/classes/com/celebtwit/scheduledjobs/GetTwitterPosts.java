@@ -5,23 +5,21 @@ import com.celebtwit.dao.*;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.dao.hibernate.NumFromUniqueResult;
 import com.celebtwit.helpers.IsTwitACelebInThisPl;
+import com.celebtwit.systemprops.SystemProperty;
 import com.celebtwit.util.Num;
 import com.celebtwit.util.Time;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.StatefulJob;
+import twitter4j.Paging;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.http.AccessToken;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -199,96 +197,135 @@ public class GetTwitterPosts implements StatefulJob {
     }
 
 
-
-
-
     public static ArrayList<TwitterStatus> callApi(Twit twit, long since_id, int page){
         Logger logger = Logger.getLogger(GetTwitterPosts.class);
         ArrayList<TwitterStatus> out = new ArrayList<TwitterStatus>();
-        HttpClient client = new HttpClient();
+        try{
+            TwitterFactory twitterFactory = new TwitterFactory();
+            Twitter twitter = twitterFactory.getInstance();
+            AccessToken accessToken = new AccessToken(SystemProperty.getProp(SystemProperty.PROP_TWITTERACCESSTOKEN), SystemProperty.getProp(SystemProperty.PROP_TWITTERACCESSTOKENSECRET));
+            twitter.setOAuthAccessToken(accessToken);
 
-        // pass our credentials to HttpClient, they will only be used for
-        // authenticating to servers with realm "realm" on the host
-        // "www.verisign.com", to authenticate against
-        // an arbitrary realm or host change the appropriate argument to null.
-        client.getState().setCredentials(
-            new AuthScope(null, -1, null),
-            new UsernamePasswordCredentials(twitterusername, twitterpassword)
-        );
-        client.getParams().setAuthenticationPreemptive(true);
-
-        // create a GET method that reads a file over HTTPS, we're assuming
-        // that this file requires basic authentication using the realm above.
-        GetMethod post = new GetMethod("http://twitter.com/statuses/user_timeline.xml");
-
-        // Tell the GET method to automatically handle authentication. The
-        // method will use any appropriate credentials to handle basic
-        // authentication requests.  Setting this value to false will cause
-        // any request for authentication to return with a status of 401.
-        // It will then be up to the client to handle the authentication.
-        post.setDoAuthentication(true);
-
-        //Needs to be less than 140 chars
-        post.setQueryString("id="+twit.getTwitterusername()+"&since_id="+since_id+"&page="+page+"&count=200");
-        
-
-        try {
-            int requestStatus = client.executeMethod( post );
-            logger.debug("-----------page="+page);
-            logger.debug(post.getResponseBodyAsString());
-            logger.debug("-----------");
-            //Parse that mofo
-            SAXReader reader = new SAXReader();
-            Document document = reader.read(post.getResponseBodyAsStream());
-            Element root = document.getRootElement();
-            //Check 4 errorz
-            for (Iterator i = root.elementIterator(); i.hasNext(); ) {
-                Element el = (Element)i.next();
-                if (el.getName().equals("error")){
-                    logger.debug("API ERROR: "+el.getText());
-                    return new ArrayList<TwitterStatus>();
-                }
-            }
-            //Iterate again looking for
-            for (Iterator i = root.elementIterator("status"); i.hasNext(); ) {
-                Element el = (Element)i.next();
-                //logger.debug("-----------page="+page);
-                //logger.debug(el.asXML());
-                //logger.debug("-----------");
-
-                //Sat Apr 18 03:17:25 +0000 2009
-                SimpleDateFormat df = new SimpleDateFormat("EEE MMM d HH:mm:ss Z yyyy");
-                Date created_at = new Date();
-                try{ created_at = df.parse(el.elementText("created_at")); } catch (Exception ex){ logger.error("", ex); }
-
+            Paging paging = new Paging(page, 200, since_id);
+            List<Status> statuses = twitter.getUserTimeline(twit.getTwitterusername(), paging);
+            logger.debug("statuses.size()="+statuses.size()+" id="+twit.getTwitterusername()+"&since_id="+since_id+"&page="+page+"&count=200");
+            for (Status status : statuses) {
+                logger.debug(status.getUser().getScreenName() + ":" + status.getText());
                 TwitterStatus ts = new TwitterStatus();
-                ts.setId(el.elementText("id"));
-                ts.setCreated_at(created_at);
-                ts.setCreated_at_string(el.elementText("created_at"));
-                ts.setText(el.elementText("text"));
-                for (Iterator j = el.elementIterator("user"); j.hasNext(); ) {
-                    Element elUser = (Element)j.next();
-                    ts.setProfile_image_url(elUser.elementText("profile_image_url"));
-                    ts.setWebsite_url(elUser.elementText("url"));
-                    ts.setDescription(elUser.elementText("description"));
-                    ts.setFollowers_count(elUser.elementText("followers_count"));
-                    ts.setStatuses_count(elUser.elementText("statuses_count"));
-                    ts.setFollowing(elUser.elementText("following"));
-                    ts.setTwitterusername(elUser.elementText("screen_name"));
-                    ts.setTwitteruserid(elUser.elementText("id"));
-                }
+                ts.setId(String.valueOf(status.getId()));
+                ts.setCreated_at(status.getCreatedAt());
+                ts.setText(nullToEmpty(status.getText()));
+                ts.setProfile_image_url(status.getUser().getProfileImageURL().toString());
+                String websiteurl = "";
+                if (status.getUser().getURL()!=null){websiteurl=status.getUser().getURL().toString();}
+                ts.setWebsite_url(websiteurl);
+                ts.setDescription(nullToEmpty(status.getUser().getDescription()));
+                ts.setFollowers_count(String.valueOf(status.getUser().getFollowersCount()));
+                ts.setStatuses_count(String.valueOf(status.getUser().getStatusesCount()));
+                ts.setFollowing(String.valueOf(status.getUser().getFriendsCount()));
+                ts.setTwitterusername(status.getUser().getScreenName());
+                ts.setTwitteruserid(String.valueOf(status.getUser().getId()));
                 out.add(ts);
-                logger.debug("parsing xml - id="+ts.getId()+" created_at="+ts.getCreated_at()+" text="+ts.getText());
-                //logger.debug("-----------");
             }
         } catch (Exception ex){
-            logger.error("",ex);
-        } finally {
-            post.releaseConnection();
+            logger.error("", ex);
         }
-        logger.debug("done processing.");
         return out;
     }
+
+    private static String nullToEmpty(String in){
+        if (in==null){ return "";}
+        return in;
+    }
+
+
+//    public static ArrayList<TwitterStatus> callApiOld(Twit twit, long since_id, int page){
+//        Logger logger = Logger.getLogger(GetTwitterPosts.class);
+//        ArrayList<TwitterStatus> out = new ArrayList<TwitterStatus>();
+//        HttpClient client = new HttpClient();
+//
+//        // pass our credentials to HttpClient, they will only be used for
+//        // authenticating to servers with realm "realm" on the host
+//        // "www.verisign.com", to authenticate against
+//        // an arbitrary realm or host change the appropriate argument to null.
+//        client.getState().setCredentials(
+//            new AuthScope(null, -1, null),
+//            new UsernamePasswordCredentials(twitterusername, twitterpassword)
+//        );
+//        client.getParams().setAuthenticationPreemptive(true);
+//
+//        // create a GET method that reads a file over HTTPS, we're assuming
+//        // that this file requires basic authentication using the realm above.
+//        GetMethod post = new GetMethod("http://twitter.com/statuses/user_timeline.xml");
+//
+//        // Tell the GET method to automatically handle authentication. The
+//        // method will use any appropriate credentials to handle basic
+//        // authentication requests.  Setting this value to false will cause
+//        // any request for authentication to return with a status of 401.
+//        // It will then be up to the client to handle the authentication.
+//        post.setDoAuthentication(true);
+//
+//        //Needs to be less than 140 chars
+//        post.setQueryString("id="+twit.getTwitterusername()+"&since_id="+since_id+"&page="+page+"&count=200");
+//
+//
+//        try {
+//            int requestStatus = client.executeMethod( post );
+//            logger.debug("-----------page="+page);
+//            logger.debug(post.getResponseBodyAsString());
+//            logger.debug("-----------");
+//            //Parse that mofo
+//            SAXReader reader = new SAXReader();
+//            Document document = reader.read(post.getResponseBodyAsStream());
+//            Element root = document.getRootElement();
+//            //Check 4 errorz
+//            for (Iterator i = root.elementIterator(); i.hasNext(); ) {
+//                Element el = (Element)i.next();
+//                if (el.getName().equals("error")){
+//                    logger.debug("API ERROR: "+el.getText());
+//                    return new ArrayList<TwitterStatus>();
+//                }
+//            }
+//            //Iterate again looking for
+//            for (Iterator i = root.elementIterator("status"); i.hasNext(); ) {
+//                Element el = (Element)i.next();
+//                //logger.debug("-----------page="+page);
+//                //logger.debug(el.asXML());
+//                //logger.debug("-----------");
+//
+//                //Sat Apr 18 03:17:25 +0000 2009
+//                SimpleDateFormat df = new SimpleDateFormat("EEE MMM d HH:mm:ss Z yyyy");
+//                Date created_at = new Date();
+//                try{ created_at = df.parse(el.elementText("created_at")); } catch (Exception ex){ logger.error("", ex); }
+//
+//                TwitterStatus ts = new TwitterStatus();
+//                ts.setId(el.elementText("id"));
+//                ts.setCreated_at(created_at);
+//                //ts.setCreated_at_string(el.elementText("created_at"));
+//                ts.setText(el.elementText("text"));
+//                for (Iterator j = el.elementIterator("user"); j.hasNext(); ) {
+//                    Element elUser = (Element)j.next();
+//                    ts.setProfile_image_url(elUser.elementText("profile_image_url"));
+//                    ts.setWebsite_url(elUser.elementText("url"));
+//                    ts.setDescription(elUser.elementText("description"));
+//                    ts.setFollowers_count(elUser.elementText("followers_count"));
+//                    ts.setStatuses_count(elUser.elementText("statuses_count"));
+//                    ts.setFollowing(elUser.elementText("following"));
+//                    ts.setTwitterusername(elUser.elementText("screen_name"));
+//                    ts.setTwitteruserid(elUser.elementText("id"));
+//                }
+//                out.add(ts);
+//                logger.debug("parsing xml - id="+ts.getId()+" created_at="+ts.getCreated_at()+" text="+ts.getText());
+//                //logger.debug("-----------");
+//            }
+//        } catch (Exception ex){
+//            logger.error("",ex);
+//        } finally {
+//            post.releaseConnection();
+//        }
+//        logger.debug("done processing.");
+//        return out;
+//    }
 
 
 

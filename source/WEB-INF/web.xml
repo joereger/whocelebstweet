@@ -60,6 +60,50 @@
     </filter-mapping>
 
 
+
+
+
+    <servlet>
+        <servlet-name>TwitterCallbackServlet</servlet-name>
+        <servlet-class>com.celebtwit.twitteroauth.CallbackServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TwitterCallbackServlet</servlet-name>
+        <url-pattern>/twittercallback</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RedirToTwitterServlet</servlet-name>
+        <servlet-class>com.celebtwit.twitteroauth.RedirToTwitterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RedirToTwitterServlet</servlet-name>
+        <url-pattern>/twitterredirector</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>TwitterCallbackServletSysprop</servlet-name>
+        <servlet-class>com.celebtwit.twitteroauth.CallbackServletSysprop</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TwitterCallbackServletSysprop</servlet-name>
+        <url-pattern>/twittercallbacksysprop</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RedirToTwitterServletSysprop</servlet-name>
+        <servlet-class>com.celebtwit.twitteroauth.RedirToTwitterServletSysprop</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RedirToTwitterServletSysprop</servlet-name>
+        <url-pattern>/twitterredirectorsysprop</url-pattern>
+    </servlet-mapping>
+
+
+
+
+
     <servlet>
         <servlet-name>EmailActivationServlet</servlet-name>
         <servlet-class>com.celebtwit.email.EmailActivationServlet</servlet-class>

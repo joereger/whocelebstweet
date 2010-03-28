@@ -42,6 +42,12 @@
         <property name="twitterpassword" type="text">
             <column name="twitterpassword" not-null="true" />
         </property>
+        <property name="twitteraccesstoken" type="text">
+            <column name="twitteraccesstoken" not-null="true" />
+        </property>
+        <property name="twitteraccesstokensecret" type="text">
+            <column name="twitteraccesstokensecret" not-null="true" />
+        </property>
         <property name="listownerscreenname1" type="text">
             <column name="listownerscreenname1" not-null="true" />
         </property>

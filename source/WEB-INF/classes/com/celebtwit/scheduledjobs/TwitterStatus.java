@@ -10,7 +10,6 @@ import java.util.Date;
 public class TwitterStatus {
 
     private Date created_at;
-    private String created_at_string;
     private String text;
     private String id;
     private String profile_image_url;
@@ -47,13 +46,6 @@ public class TwitterStatus {
         this.id=id;
     }
 
-    public String getCreated_at_string() {
-        return created_at_string;
-    }
-
-    public void setCreated_at_string(String created_at_string) {
-        this.created_at_string=created_at_string;
-    }
 
     public String getProfile_image_url() {
         return profile_image_url;
