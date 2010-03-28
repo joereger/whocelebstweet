@@ -117,7 +117,6 @@ public class PublicTwitterWhoPanel {
         out.append(StatsOutputCached.celebsWhoTweetedTwit(twit, twitterusername, pl, requestParamTime, 15, forceRefresh, false));
         out.append("<br/><font class=\"normalfont\" style=\"font-weight:bold; margin-left:0px;\"><a href=\"/twitterstats/celebsWhoTweetedTwit/"+twitterusername+"/when/"+requestParamTime+"/\">see more >></a></font>");
 
-
         out.append("                </td>\n");
         out.append("            </tr>\n");
         out.append("        </table>");

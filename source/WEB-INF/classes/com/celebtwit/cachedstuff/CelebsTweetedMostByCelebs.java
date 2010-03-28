@@ -62,7 +62,7 @@ public class CelebsTweetedMostByCelebs implements CachedStuff, Serializable {
     }
 
     public int maxAgeInMinutes() {
-        return 180;
+        return 60*24;
     }
 
     public String getHtml() {

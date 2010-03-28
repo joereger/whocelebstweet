@@ -60,7 +60,7 @@ public class NonCelebsTweetedByMostDifferentCelebs implements CachedStuff, Seria
     }
 
     public int maxAgeInMinutes() {
-        return 180;
+        return 60*24;
     }
 
     public String getHtml() {

@@ -74,6 +74,8 @@ public class GetTwitterPosts implements StatefulJob {
                         } catch (Exception ex) { logger.error("", ex); }
                         removeFromEditedDuringProcessing(twit.getTwitid());
                     }
+                } else {
+                    logger.debug("skipping("+twit.getTwitterusername()+") because isProcessing()=true");
                 }
             }
         //} else {
@@ -163,7 +165,7 @@ public class GetTwitterPosts implements StatefulJob {
     private static void startProcessing(int twitid){
         String key = "twitid="+twitid;
         String group = "GetTwitterPosts.java";
-        DbcacheexpirableCache.put(key, group, true, DbcacheexpirableCache.expireIn48Hrs());
+        DbcacheexpirableCache.put(key, group, true, DbcacheexpirableCache.expireIn24Hrs());
     }
     private static void endProcessing(int twitid){
         String key = "twitid="+twitid;

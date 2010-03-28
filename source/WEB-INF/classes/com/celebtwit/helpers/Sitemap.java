@@ -1,23 +1,22 @@
 package com.celebtwit.helpers;
 
+import com.celebtwit.dao.Pl;
+import com.celebtwit.dao.Twit;
+import com.celebtwit.dao.hibernate.HibernateUtil;
+import com.celebtwit.htmlui.Pagez;
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import com.celebtwit.dao.Twitpost;
-import com.celebtwit.dao.Twit;
-import com.celebtwit.dao.Pl;
-import com.celebtwit.dao.hibernate.HibernateUtil;
-import com.celebtwit.htmlui.Pagez;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import java.util.List;
-import java.util.Iterator;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * User: Joe Reger Jr
@@ -54,7 +53,7 @@ public class Sitemap extends HttpServlet {
         out.print("<url>");
         out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/suggest.jsp"+"</loc>");
         out.print("<changefreq>monthly</changefreq>");
-        out.print("<priority>.5</priority>");
+        out.print("<priority>.7</priority>");
         out.print("</url>");
 
 
@@ -77,34 +76,81 @@ public class Sitemap extends HttpServlet {
             out.print("<url>");
             out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/who/"+"</loc>");
             out.print("<changefreq>daily</changefreq>");
+            out.print("<priority>.9</priority>");
+            out.print("</url>");
+
+
+
+            //Weekly big long list of who pages
+
+            out.print("<url>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/nonCelebsTweetedMostByTwit/"+twit.getTwitterusername()+"/when/thisweek/"+"</loc>");
+            out.print("<changefreq>weekly</changefreq>");
             out.print("<priority>.7</priority>");
             out.print("</url>");
 
             out.print("<url>");
-            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/when/thismonth/"+"</loc>");
-            out.print("<changefreq>daily</changefreq>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/celebsTweetedMostByTwit/"+twit.getTwitterusername()+"/when/thisweek/"+"</loc>");
+            out.print("<changefreq>weekly</changefreq>");
+            out.print("<priority>.7</priority>");
+            out.print("</url>");
+
+            out.print("<url>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/celebsWhoTweetedTwit/"+twit.getTwitterusername()+"/when/thisweek/"+"</loc>");
+            out.print("<changefreq>weekly</changefreq>");
+            out.print("<priority>.7</priority>");
+            out.print("</url>");
+
+
+            //Monthly big long list of who pages
+
+            out.print("<url>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/nonCelebsTweetedMostByTwit/"+twit.getTwitterusername()+"/when/alltime/"+"</loc>");
+            out.print("<changefreq>monthly</changefreq>");
             out.print("<priority>.6</priority>");
             out.print("</url>");
 
             out.print("<url>");
-            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/when/thisweek/"+"</loc>");
-            out.print("<changefreq>daily</changefreq>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/celebsTweetedMostByTwit/"+twit.getTwitterusername()+"/when/alltime/"+"</loc>");
+            out.print("<changefreq>monthly</changefreq>");
             out.print("<priority>.6</priority>");
             out.print("</url>");
+
+            out.print("<url>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/celebsWhoTweetedTwit/"+twit.getTwitterusername()+"/when/alltime/"+"</loc>");
+            out.print("<changefreq>monthly</changefreq>");
+            out.print("<priority>.6</priority>");
+            out.print("</url>");
+
+
+
+
+
+
+
+
 
             out.print("<url>");
             out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/when/yesterday/"+"</loc>");
             out.print("<changefreq>daily</changefreq>");
-            out.print("<priority>.5</priority>");
+            out.print("<priority>.4</priority>");
             out.print("</url>");
+
+
+            out.print("<url>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/when/thisweek/"+"</loc>");
+            out.print("<changefreq>weekly</changefreq>");
+            out.print("<priority>.3</priority>");
+            out.print("</url>");
+
+
 
             out.print("<url>");
             out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/when/today/"+"</loc>");
             out.print("<changefreq>daily</changefreq>");
-            out.print("<priority>.5</priority>");
+            out.print("<priority>.2</priority>");
             out.print("</url>");
-
-            
+ 
         }
 
 
