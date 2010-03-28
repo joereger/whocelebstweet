@@ -219,7 +219,6 @@ public class ApplicationStartup implements ServletContextListener {
             pl.setCustomdomain2("whocelebstweet.com");
             pl.setCustomdomain3("www.whocelebstwitter.com");
             pl.setTwitterusername("whocelebstweet");
-            pl.setTwitterpassword("whocelebstweetrules");
             pl.setListownerscreenname1("");
             pl.setListid1("");
             pl.setListownerscreenname2("");

@@ -1,26 +1,24 @@
 package com.celebtwit.scheduledjobs;
 
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.quartz.StatefulJob;
-import org.apache.log4j.Logger;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
-import com.celebtwit.systemprops.InstanceProperties;
-import com.celebtwit.systemprops.SystemProperty;
-import com.celebtwit.dao.Userpersistentlogin;
 import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twit;
 import com.celebtwit.dao.hibernate.HibernateUtil;
-import com.celebtwit.dao.hibernate.NumFromUniqueResult;
-
-
-import java.util.*;
-
-import twitter4j.Twitter;
-import twitter4j.User;
+import com.celebtwit.systemprops.InstanceProperties;
+import com.celebtwit.systemprops.SystemProperty;
+import org.apache.log4j.Logger;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.StatefulJob;
 import twitter4j.IDs;
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.http.AccessToken;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * User: Joe Reger Jr
@@ -50,13 +48,16 @@ public class MakeFriends implements StatefulJob {
 
     private void processPl(Pl pl){
         Logger logger = Logger.getLogger(this.getClass().getName());
-        if (pl.getTwitterusername().length()==0 || pl.getTwitterpassword().length()==0){
+        if (pl.getTwitteraccesstoken().length()==0 || pl.getTwitteraccesstokensecret().length()==0){
             return;
         }
         List<Integer> twitterUsersFollowing = new ArrayList<Integer>();
         try{
-            logger.debug("pl.getTwitterusername()="+pl.getTwitterusername()+" pl.getTwitterpassword()="+pl.getTwitterpassword());
-            Twitter twitter = new Twitter(pl.getTwitterusername(), pl.getTwitterpassword());
+            TwitterFactory twitterFactory = new TwitterFactory();
+            Twitter twitter = twitterFactory.getInstance();
+            AccessToken accessToken = new AccessToken(pl.getTwitteraccesstoken(), pl.getTwitteraccesstokensecret());
+            twitter.setOAuthAccessToken(accessToken);
+
             IDs ids = twitter.getFriendsIDs();
             if (ids!=null && ids.getIDs()!=null){
                 for (int i = 0; i < ids.getIDs().length; i++) {
@@ -98,8 +99,11 @@ public class MakeFriends implements StatefulJob {
         Logger logger = Logger.getLogger(this.getClass().getName());
         try{
             if (SystemProperty.getProp(SystemProperty.PROP_DOSTATTWEETS).equals("1")){
-                logger.debug("pl.getTwitterusername()="+pl.getTwitterusername()+" pl.getTwitterpassword()="+pl.getTwitterpassword());
-                Twitter twitter = new Twitter(pl.getTwitterusername(), pl.getTwitterpassword());
+                TwitterFactory twitterFactory = new TwitterFactory();
+                Twitter twitter = twitterFactory.getInstance();
+                AccessToken accessToken = new AccessToken(pl.getTwitteraccesstoken(), pl.getTwitteraccesstokensecret());
+                twitter.setOAuthAccessToken(accessToken);
+
                 twitter.createFriendship(twit.getTwitterusername());
             } else {
                 logger.debug("Woulda created a friendship with "+twit.getTwitterusername()+" but SystemProperty.PROP_DOSTATTWEETS != 1.");

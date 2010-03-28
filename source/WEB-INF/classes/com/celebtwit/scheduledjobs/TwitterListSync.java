@@ -16,7 +16,9 @@ import org.quartz.JobExecutionException;
 import org.quartz.StatefulJob;
 import twitter4j.PagableResponseList;
 import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
 import twitter4j.User;
+import twitter4j.http.AccessToken;
 
 import java.util.Calendar;
 import java.util.Iterator;
@@ -37,7 +39,7 @@ public class TwitterListSync implements StatefulJob {
                 //List 1
                 List<Pl> pls = HibernateUtil.getSession().createCriteria(Pl.class)
                                        .add(Restrictions.ne("twitterusername", ""))
-                                       .add(Restrictions.ne("twitterpassword", ""))
+                                       .add(Restrictions.ne("twitteraccesstoken", ""))
                                        .addOrder(Order.asc("plid"))
                                        .setCacheable(true)
                                        .list();
@@ -70,7 +72,11 @@ public class TwitterListSync implements StatefulJob {
     private void processPl(Pl pl, String listownerscreenname, String listid){
         Logger logger = Logger.getLogger(this.getClass().getName());
         try{
-            Twitter twitter = new Twitter(pl.getTwitterusername(), pl.getTwitterpassword());
+            TwitterFactory twitterFactory = new TwitterFactory();
+            Twitter twitter = twitterFactory.getInstance();
+            AccessToken accessToken = new AccessToken(pl.getTwitteraccesstoken(), pl.getTwitteraccesstokensecret());
+            twitter.setOAuthAccessToken(accessToken);
+
             boolean keepworking = true;
             long cursor = -1;
             int count = 0;

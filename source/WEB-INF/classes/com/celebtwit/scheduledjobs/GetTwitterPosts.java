@@ -35,7 +35,6 @@ public class GetTwitterPosts implements StatefulJob {
 
     //regged w/joereger@charter.net
     private static String twitterusername = "whocelebstweet";
-    private static String twitterpassword = "whocelebstweetrules";
 
     //Make sure multiple threads don't process the same twit
     //private static HashMap<Integer, Boolean> processingStatus = new HashMap<Integer, Boolean>();

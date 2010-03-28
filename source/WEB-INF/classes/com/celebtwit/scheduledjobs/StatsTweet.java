@@ -19,6 +19,8 @@ import org.quartz.JobExecutionException;
 import org.quartz.StatefulJob;
 import twitter4j.Status;
 import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.http.AccessToken;
 
 import java.util.*;
 
@@ -121,8 +123,11 @@ public class StatsTweet implements StatefulJob {
             if (mentions>0){
                 if (status.length()>0){
                     if (SystemProperty.getProp(SystemProperty.PROP_DOSTATTWEETS).equals("1")){
-                        logger.debug("pl="+pl.getName()+" twitterusername="+pl.getTwitterusername()+" twitterpass="+pl.getTwitterpassword());
-                        Twitter twitter = new Twitter(pl.getTwitterusername(), pl.getTwitterpassword());
+                        TwitterFactory twitterFactory = new TwitterFactory();
+                        Twitter twitter = twitterFactory.getInstance();
+                        AccessToken accessToken = new AccessToken(pl.getTwitteraccesstoken(), pl.getTwitteraccesstokensecret());
+                        twitter.setOAuthAccessToken(accessToken);
+                        
                         Status twitterStatus = twitter.updateStatus(status.toString());
                         Long statusId = twitterStatus.getId();
                         logger.debug("twutterStatus.getId()="+statusId);

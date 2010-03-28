@@ -31,7 +31,6 @@ String acl = "sysadmin";
     pl.setSisterdomain2("");
     pl.setSisterdomain3("");
     pl.setTwitterusername("");
-    pl.setTwitterpassword("");
     pl.setListownerscreenname1("");
     pl.setListid1("");
     pl.setListownerscreenname2("");
@@ -62,7 +61,6 @@ String acl = "sysadmin";
                 pl.setSisterdomain2(Textbox.getValueFromRequest("sisterdomain2", "Sisterdomain2", false, DatatypeString.DATATYPEID).toLowerCase());
                 pl.setSisterdomain3(Textbox.getValueFromRequest("sisterdomain3", "Sisterdomain3", false, DatatypeString.DATATYPEID).toLowerCase());
                 pl.setTwitterusername(Textbox.getValueFromRequest("twitterusername", "Twitter Username", false, DatatypeString.DATATYPEID));
-                pl.setTwitterpassword(Textbox.getValueFromRequest("twitterpassword", "Twitter Password", false, DatatypeString.DATATYPEID));
                 pl.setListownerscreenname1(Textbox.getValueFromRequest("listownerscreenname1", "List Owner ScreenName 1", false, DatatypeString.DATATYPEID));
                 pl.setListid1(Textbox.getValueFromRequest("listid1", "ListID1", false, DatatypeInteger.DATATYPEID));
                 pl.setListownerscreenname2(Textbox.getValueFromRequest("listownerscreenname2", "List Owner ScreenName 2", false, DatatypeString.DATATYPEID));
@@ -235,14 +233,6 @@ String acl = "sysadmin";
                     </td>
                     <td valign="top">
                         <%=Textbox.getHtml("twitterusername", pl.getTwitterusername(), 255, 35, "", "")%>
-                    </td>
-                </tr>
-                <tr>
-                    <td valign="top" style="text-align:right;">
-                        <font class="formfieldnamefont">Twitter Password</font>
-                    </td>
-                    <td valign="top">
-                        <%=Textbox.getHtml("twitterpassword", pl.getTwitterpassword(), 255, 35, "", "")%>
                     </td>
                 </tr>
                 <tr>

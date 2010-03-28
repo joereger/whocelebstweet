@@ -1,10 +1,12 @@
 package com.celebtwit.helpers;
 
-import com.celebtwit.dao.Twit;
 import com.celebtwit.dao.Pl;
-import twitter4j.Twitter;
-import twitter4j.User;
+import com.celebtwit.dao.Twit;
 import org.apache.log4j.Logger;
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.User;
+import twitter4j.http.AccessToken;
 
 /**
  * Created by IntelliJ IDEA.
@@ -31,7 +33,10 @@ public class GetTwitteruseridFromTwitterusername {
         } else {
             //Need to go to the api
             try{
-                Twitter twitter = new Twitter(pl.getTwitterusername(), pl.getTwitterpassword());
+                TwitterFactory twitterFactory = new TwitterFactory();
+                Twitter twitter = twitterFactory.getInstance();
+                AccessToken accessToken = new AccessToken(pl.getTwitteraccesstoken(), pl.getTwitteraccesstokensecret());
+                twitter.setOAuthAccessToken(accessToken);
                 User user = twitter.showUser(twit.getTwitterusername());
                 if (user!=null && user.getId()>0){
                     twit.setTwitteruserid(String.valueOf(user.getId()));

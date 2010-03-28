@@ -27,7 +27,6 @@ public class Pl extends BasePersistentClass implements java.io.Serializable, Aut
     private String sisterdomain2;
     private String sisterdomain3;
     private String twitterusername;
-    private String twitterpassword;
     private String twitteraccesstoken="";
     private String twitteraccesstokensecret="";
     private String listownerscreenname1;
@@ -161,13 +160,7 @@ public class Pl extends BasePersistentClass implements java.io.Serializable, Aut
         this.twitterusername=twitterusername;
     }
 
-    public String getTwitterpassword() {
-        return twitterpassword;
-    }
 
-    public void setTwitterpassword(String twitterpassword) {
-        this.twitterpassword=twitterpassword;
-    }
 
     public String getSisterdomain1() {
         return sisterdomain1;
