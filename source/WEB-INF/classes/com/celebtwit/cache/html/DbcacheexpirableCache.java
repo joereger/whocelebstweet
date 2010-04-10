@@ -28,7 +28,7 @@ public class DbcacheexpirableCache {
     }
 
 
-    public static Object get(String key, String group, boolean returnNullIfExpired) {
+    public static Object get(String key, String group, boolean deleteIfExpired) {
         Logger logger = Logger.getLogger(Dbcacheexpirable.class);
         try{
             List<Dbcacheexpirable> dbcaches = HibernateUtil.getSession().createCriteria(Dbcacheexpirable.class)
@@ -39,15 +39,11 @@ public class DbcacheexpirableCache {
             if (dbcaches!=null && dbcaches.size()>0){
                 Dbcacheexpirable dbcache = dbcaches.get(0);
                 Object obj = dbcache.getVal();
-                //If it's expired delete and return null
-                if (dbcache.getExpirationdate().before(Calendar.getInstance().getTime())){
-                    logger.debug("deleting Dbcacheexpirable because it's expired, returning null to force refresh");
+                //If it's expired delete and deleteIfExpired=true then return null
+                if (deleteIfExpired && dbcache.getExpirationdate().before(Calendar.getInstance().getTime())){
+                    logger.debug("object expired and deleteIfExpired==true");
                     dbcache.delete();
-                    if (returnNullIfExpired){
-                        return null;
-                    } else {
-                        return obj;
-                    }
+                    return null;
                 }
                 return obj;
             }
@@ -92,7 +88,10 @@ public class DbcacheexpirableCache {
     public static void purgeStaleItems(){
         Logger logger = Logger.getLogger(Dbcacheexpirable.class);
         try{
-            String now = Time.dateformatfordb(Calendar.getInstance());
+            //X days grace period on cleanup
+            int gracePeriod = 10;
+            Calendar endOfGracePeriod = Time.xDaysAgoEnd(Calendar.getInstance(), (-1)*gracePeriod);
+            String now = Time.dateformatfordb(endOfGracePeriod);
             HibernateUtil.getSession().createQuery("delete Dbcacheexpirable d where d.dbcacheexpirableid>0 and d.expirationdate<'"+now+"'").executeUpdate();
         } catch (Exception ex){logger.error("", ex);}
 

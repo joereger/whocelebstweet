@@ -22,23 +22,29 @@ public class GetCachedStuff {
         try{
             String key = cs.getKey();
             String group = "CachedStuff-plid="+pl.getPlid();
+            logger.debug("get(key="+key+" group="+group+")");
             //Note third argument which tells cache to return object instead of null even if expired
             Object obj = DbcacheexpirableCache.get(key, group, false);
             if (obj!=null && (obj instanceof CachedStuff)){
                 CachedStuff cachedCs = (CachedStuff)obj;
                 int minago = DateDiff.dateDiff("minute", Calendar.getInstance(), cachedCs.refreshedTimestamp());
+                logger.debug("get() not null minago="+minago+" cs.maxAgeInMinutes()="+cs.maxAgeInMinutes());
                 if (minago>cs.maxAgeInMinutes()){
                     //Kick off the background thread to refresh
-                    logger.debug("minago>cs.maxAgeInMinutes() so kicking off thread to refresh");
+                    logger.debug("get() minago>cs.maxAgeInMinutes() so kicking off thread to refresh and returning immediately");
                     GetCachedStuffRefreshThread gcsrt = new GetCachedStuffRefreshThread(cs, pl, key, group);
                     gcsrt.startThread();
                 }
                 //Immediately return most recently refreshed
+                logger.debug("get() returning cachedCs");
                 return cachedCs;
             } else {
+                logger.debug("get() obj!=null so refreshing before returning");
                 cs.refresh(pl);
+                logger.debug("get() done refreshing");
                 Date expirationdate = Time.xMinutesAgoEnd(Calendar.getInstance(), (-1)*cs.maxAgeInMinutes()).getTime();
                 DbcacheexpirableCache.put(key, group, cs, expirationdate);
+                logger.debug("get() returning cs (new/refreshed)");
                 return cs;
             }
         } catch (Exception ex){
