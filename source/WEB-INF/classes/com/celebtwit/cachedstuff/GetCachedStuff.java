@@ -39,7 +39,7 @@ public class GetCachedStuff {
                 logger.debug("get() returning cachedCs");
                 return cachedCs;
             } else {
-                logger.debug("get() obj!=null so refreshing before returning");
+                logger.debug("get() obj=null so refreshing before returning");
                 cs.refresh(pl);
                 logger.debug("get() done refreshing");
                 Date expirationdate = Time.xMinutesAgoEnd(Calendar.getInstance(), (-1)*cs.maxAgeInMinutes()).getTime();

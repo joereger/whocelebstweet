@@ -1,55 +1,45 @@
-package com.celebtwit.htmluibeans;
+package com.celebtwit.cachedstuff;
+
 
 import com.celebtwit.ads.AdNetworkNone;
-import com.celebtwit.cache.html.DbcacheexpirableCache;
+import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twit;
 import com.celebtwit.dao.Twitpost;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.helpers.TwitpostAsHtml;
 import com.celebtwit.htmlui.Pagez;
 import com.celebtwit.util.Num;
-import org.apache.log4j.Logger;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
 /**
  * User: Joe Reger Jr
- * Date: Apr 29, 2009
- * Time: 4:44:52 PM
+ * Date: Jan 29, 2008
+ * Time: 2:03:07 PM
  */
-public class PublicTwitterTweetlist {
+public class TwitterTweetlist implements CachedStuff, Serializable {
 
-    public static String getHtml(Twit twit, int page){
-        return getHtml(twit, page, false);
+    private Calendar refreshedTimestamp;
+    private String html;
+
+    private Twit twit;
+    private int page;
+
+    public TwitterTweetlist(Twit twit, int page) {
+        this.twit = twit;
+        this.page = page;
     }
 
-    public static String getHtml(Twit twit, int page, String refreshRequestParam){
-        boolean forceRefresh = false;
-        if (refreshRequestParam!=null && (refreshRequestParam.equals("true") || refreshRequestParam.equals("1"))){
-            forceRefresh = true;
-        }
-        return getHtml(twit, page, forceRefresh);
+    public String getKey() {
+        return "TwitterTweetlist-twitid"+twit.getTwitid()+"-page"+page;
     }
 
-    public static String getHtml(Twit twit, int page, boolean forceRefresh){
-        Logger logger = Logger.getLogger(PublicTwitterWhoPanel.class);
-        String out = "";
-        String key = "page-"+page+"-adnetworkname-"+Pagez.getUserSession().getAdNetworkName();
-        String group = "PublicTwitterTweetlist.java-twitid-"+twit.getTwitid();
-        Object fromCache = DbcacheexpirableCache.get(key, group);
-        if (fromCache!=null && !forceRefresh){
-            try{out = (String)fromCache;}catch(Exception ex){logger.error("", ex);}
-        } else {
-            out = generateHtml(twit, page);
-            DbcacheexpirableCache.put(key, group, out, DbcacheexpirableCache.expireIn24Hrs());
-        }
-        return out;
-    }
-
-    private static String generateHtml(Twit twit, int page){
+    public void refresh(Pl pl) {
         StringBuffer out = new StringBuffer();
         int perPage = 20;
         int maxAdsPerPage = 3;
@@ -80,8 +70,20 @@ public class PublicTwitterTweetlist {
             }
             out.append(TwitpostAsHtml.get(twitpost, 380));
         }
-        return out.toString();
+        //End Refresh
+        html = out.toString();
+        refreshedTimestamp = Calendar.getInstance();
     }
 
+    public Calendar refreshedTimestamp() {
+        return refreshedTimestamp;
+    }
 
+    public int maxAgeInMinutes() {
+        return 60;
+    }
+
+    public String getHtml() {
+        return html;
+    }
 }

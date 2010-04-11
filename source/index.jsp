@@ -4,9 +4,11 @@
 <%@ page import="com.celebtwit.helpers.*" %>
 <%@ page import="com.celebtwit.dao.Twitpost" %>
 <%@ page import="com.celebtwit.htmluibeans.PublicIndexWhoPanel" %>
-<%@ page import="com.celebtwit.htmluibeans.PublicIndexTweetlist" %>
 <%@ page import="com.celebtwit.util.Num" %>
 <%@ page import="com.celebtwit.ads.AdUtil" %>
+<%@ page import="com.celebtwit.cachedstuff.CachedStuff" %>
+<%@ page import="com.celebtwit.cachedstuff.IndexTweetlist" %>
+<%@ page import="com.celebtwit.cachedstuff.GetCachedStuff" %>
 
 
 <%
@@ -75,7 +77,12 @@ String acl = "public";
                         int tweetsPage = 1;
                         if (Num.isinteger(request.getParameter("tweetsPage"))){ tweetsPage = Integer.parseInt(request.getParameter("tweetsPage")); }
                     %>
-                    <%=PublicIndexTweetlist.getHtml(Pagez.getUserSession().getPl(), tweetsPage, request.getParameter("refresh"))%>
+                    <%
+                    CachedStuff cs = new IndexTweetlist(tweetsPage);
+                    IndexTweetlist obj = (IndexTweetlist) GetCachedStuff.get(cs, Pagez.getUserSession().getPl());
+                    String tweetlist = obj.getHtml();
+                    %>
+                    <%=tweetlist%>
                     <br/><br/>
                     <a href="/index.jsp?tweetsPage=<%=tweetsPage+1%>"><font class="normalfont">older tweets >></font></a>
             </div>

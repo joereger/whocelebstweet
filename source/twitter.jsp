@@ -1,16 +1,14 @@
-<%@ page import="org.apache.log4j.Logger" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="com.celebtwit.helpers.*" %>
-<%@ page import="com.celebtwit.systemprops.SystemProperty" %>
-<%@ page import="com.celebtwit.dao.Twitpost" %>
-<%@ page import="com.celebtwit.util.Str" %>
-<%@ page import="com.celebtwit.util.Time" %>
+<%@ page import="com.celebtwit.cachedstuff.CachedStuff" %>
+<%@ page import="com.celebtwit.cachedstuff.GetCachedStuff" %>
+<%@ page import="com.celebtwit.cachedstuff.TwitterTweetlist" %>
 <%@ page import="com.celebtwit.embed.JsCelebMentions" %>
 <%@ page import="com.celebtwit.embed.JsDifferentCelebs" %>
+<%@ page import="com.celebtwit.helpers.FindTwitFromTwitterusername" %>
+<%@ page import="com.celebtwit.htmluibeans.PublicTwitterWhoPanelVertical" %>
 <%@ page import="com.celebtwit.util.Num" %>
-<%@ page import="com.celebtwit.htmluibeans.*" %>
+<%@ page import="com.celebtwit.util.Str" %>
+<%@ page import="org.apache.log4j.Logger" %>
 <%@ page import="java.net.URLEncoder" %>
-<%@ page import="com.celebtwit.ads.*" %>
 
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
@@ -233,7 +231,12 @@ if (twit!=null && twit.getIsceleb()){
                                             int tweetsPage = 1;
                                             if (Num.isinteger(request.getParameter("tweetsPage"))){ tweetsPage = Integer.parseInt(request.getParameter("tweetsPage")); }
                                         %>
-                                        <%=PublicTwitterTweetlist.getHtml(twit, tweetsPage, request.getParameter("refresh"))%>
+                                        <%
+                                        CachedStuff cs = new TwitterTweetlist(twit, tweetsPage);
+                                        TwitterTweetlist obj = (TwitterTweetlist) GetCachedStuff.get(cs, Pagez.getUserSession().getPl());
+                                        String tweetlist = obj.getHtml();
+                                        %>
+                                        <%=tweetlist%>
                                         <br/><br/>
                                         <a href="/twitter/<%=twitterusername%>/?tweetsPage=<%=tweetsPage+1%>"><font class="mediumfont">older tweets >></font></a>
                                 </div>

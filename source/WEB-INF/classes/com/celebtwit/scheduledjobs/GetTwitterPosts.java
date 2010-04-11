@@ -148,10 +148,6 @@ public class GetTwitterPosts implements StatefulJob {
             //Set last processed and save the mofo
             twit.setLastprocessed(new Date());
             twit.save();
-            //If there was a post, flush cache
-            if (foundAPost){
-                DbcacheexpirableCache.flush("PublicTwitterTweetlist.java-twitid-"+twit.getTwitid());
-            }
             //Report on RateLimitStatus
             //RateLimitStatus rls = twitter.rateLimitStatus();
             //logger.debug("Twitter RateLimitStatus: hourlylimit="+rls.getHourlyLimit()+" remaininghits="+rls.getRemainingHits()+" resettimeinseconds="+rls.getResetTimeInSeconds()+" datetime="+Time.dateformatcompactwithtime(Time.getCalFromDate(rls.getDateTime())));
