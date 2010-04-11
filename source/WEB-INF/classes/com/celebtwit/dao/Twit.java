@@ -3,12 +3,9 @@ package com.celebtwit.dao;
 import com.celebtwit.dao.hibernate.BasePersistentClass;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.session.AuthControlled;
+import org.apache.log4j.Logger;
 
 import java.util.Date;
-import java.util.Set;
-import java.util.HashSet;
-
-import org.apache.log4j.Logger;
 
 
 public class Twit extends BasePersistentClass implements java.io.Serializable, AuthControlled {
@@ -27,7 +24,12 @@ public class Twit extends BasePersistentClass implements java.io.Serializable, A
      private int followers_count;
      private int statuses_count;
      private Date laststatstweet;
-     private Set<Twitpl> twitpls = new HashSet<Twitpl>();
+     private int pl01;
+     private int pl02;
+     private int pl03;
+     private int pl04;
+     private int pl05;
+
      
 
 
@@ -123,14 +125,7 @@ public class Twit extends BasePersistentClass implements java.io.Serializable, A
         this.profile_image_url=profile_image_url;
     }
 
-    public Set<Twitpl> getTwitpls() {
-        return twitpls;
-    }
-
-    public void setTwitpls(Set<Twitpl> twitpls) {
-        this.twitpls=twitpls;
-    }
-
+    
     public String getWebsite_url() {
         return website_url;
     }
@@ -177,5 +172,45 @@ public class Twit extends BasePersistentClass implements java.io.Serializable, A
 
     public void setTwitteruserid(String twitteruserid) {
         this.twitteruserid = twitteruserid;
+    }
+
+    public int getPl01() {
+        return pl01;
+    }
+
+    public void setPl01(int pl01) {
+        this.pl01 = pl01;
+    }
+
+    public int getPl02() {
+        return pl02;
+    }
+
+    public void setPl02(int pl02) {
+        this.pl02 = pl02;
+    }
+
+    public int getPl03() {
+        return pl03;
+    }
+
+    public void setPl03(int pl03) {
+        this.pl03 = pl03;
+    }
+
+    public int getPl04() {
+        return pl04;
+    }
+
+    public void setPl04(int pl04) {
+        this.pl04 = pl04;
+    }
+
+    public int getPl05() {
+        return pl05;
+    }
+
+    public void setPl05(int pl05) {
+        this.pl05 = pl05;
     }
 }

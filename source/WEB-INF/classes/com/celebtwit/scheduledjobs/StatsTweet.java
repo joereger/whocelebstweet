@@ -2,11 +2,11 @@ package com.celebtwit.scheduledjobs;
 
 import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twit;
-import com.celebtwit.dao.Twitpl;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.helpers.CountMentionsByCelebs;
 import com.celebtwit.helpers.CountUniqueCelebsWhoMentioned;
 import com.celebtwit.helpers.StartDateEndDate;
+import com.celebtwit.helpers.TwitPlHelper;
 import com.celebtwit.pingfm.PingfmUpdate;
 import com.celebtwit.systemprops.InstanceProperties;
 import com.celebtwit.systemprops.SystemProperty;
@@ -60,9 +60,10 @@ public class StatsTweet implements StatefulJob {
     private void processTwit(Twit twit){
         Logger logger = Logger.getLogger(this.getClass().getName());
         logger.debug("processTwit("+twit.getRealname()+")------------------------");
-        for (Iterator<Twitpl> plIt=twit.getTwitpls().iterator(); plIt.hasNext();) {
-            Twitpl twitpl=plIt.next();
-            Pl pl = Pl.get(twitpl.getPlid());
+        ArrayList<Integer> plsTwitIsIn = TwitPlHelper.getPlidsTwitIsIn(twit);
+        for (Iterator iterator = plsTwitIsIn.iterator(); iterator.hasNext();) {
+            Integer plid = (Integer) iterator.next();
+            Pl pl = Pl.get(plid);
             //If we haven't hit the limit of tweets per run per pl
             if (!hasReachedTweetLimitPerPl(pl)){
                 boolean tweetMade = processTwitForPl(twit, pl);

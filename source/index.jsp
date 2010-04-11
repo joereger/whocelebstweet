@@ -78,7 +78,7 @@ String acl = "public";
                         if (Num.isinteger(request.getParameter("tweetsPage"))){ tweetsPage = Integer.parseInt(request.getParameter("tweetsPage")); }
                     %>
                     <%
-                    CachedStuff cs = new IndexTweetlist(tweetsPage);
+                    CachedStuff cs = new IndexTweetlist(tweetsPage, Pagez.getUserSession().getAdNetworkName());
                     IndexTweetlist obj = (IndexTweetlist) GetCachedStuff.get(cs, Pagez.getUserSession().getPl());
                     String tweetlist = obj.getHtml();
                     %>

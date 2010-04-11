@@ -234,7 +234,7 @@ if (twit!=null && twit.getIsceleb()){
                                                 if (Num.isinteger(request.getParameter("tweetsPage"))){ tweetsPage = Integer.parseInt(request.getParameter("tweetsPage")); }
                                             %>
                                             <%
-                                            CachedStuff cs = new TwitterTweetlist(twit, tweetsPage);
+                                            CachedStuff cs = new TwitterTweetlist(twit, tweetsPage, Pagez.getUserSession().getAdNetworkName());
                                             TwitterTweetlist obj = (TwitterTweetlist) GetCachedStuff.get(cs, Pagez.getUserSession().getPl());
                                             String tweetlist = obj.getHtml();
                                             %>

@@ -4,14 +4,13 @@ import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twit;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.util.Num;
-import twitter4j.Twitter;
-import twitter4j.User;
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.Order;
+import twitter4j.Twitter;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,11 +31,12 @@ public class SendLocalListToTwitterList {
         //Connect to mama twitter with the twitterusername/password, not the ones from the pl... need permission on this list yo
         Twitter twitter = new Twitter(twitterusername, twitterpassword);
         //Get Twits to sync
+        //TwitplQuery
+        ArrayList<Integer> plidList = new ArrayList<Integer>();
+        plidList.add(pl.getPlid());
         List<Twit> celebs = HibernateUtil.getSession().createCriteria(Twit.class)
                                        .add(Restrictions.eq("isceleb", true))
-                                       .addOrder(Order.asc("twitid"))
-                                       .createCriteria("twitpls")
-                                       .add(Restrictions.eq("plid", pl.getPlid()))
+                                       .add(TwitPlHelper.getCrit(plidList))
                                        .setMaxResults(1500)
                                        .setCacheable(true)
                                        .list();

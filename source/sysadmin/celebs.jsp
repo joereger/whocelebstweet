@@ -5,7 +5,6 @@
 <%@ page import="com.celebtwit.htmlui.*" %>
 <%@ page import="com.celebtwit.util.Time" %>
 <%@ page import="com.celebtwit.util.Num" %>
-<%@ page import="com.celebtwit.dao.Twitpl" %>
 <%@ page import="com.celebtwit.helpers.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.celebtwit.dao.Pl" %>
@@ -64,22 +63,17 @@ String acl = "sysadmin";
             ListimportblockHelper.removeBlock(twit.getTwitterusername());
             //Make sure any already-mentions are marked as being about a celeb, now that this twit is one
             HibernateUtil.getSession().createQuery("update Mention m set ismentionedaceleb=true where m.twitidmentioned='"+twit.getTwitid()+"'").executeUpdate();
-            //Delete any existing pl relationships
-            for (Iterator<Twitpl> tplIt=twit.getTwitpls().iterator(); tplIt.hasNext();) {
-                Twitpl twitpl=tplIt.next();
-                tplIt.remove();
-            }
-            //Create Twitpls for those pls selected
+            //Create List of pls selected in box
             ArrayList<String> plidsSelected = Checkboxes.getValueFromRequest("plids", "Private Label", false);
+            ArrayList<Integer> plidsSelectedInts = new ArrayList<Integer>();
             for (Iterator<String> plIt=plidsSelected.iterator(); plIt.hasNext();) {
                 String plidStr=plIt.next();
                 if (Num.isinteger(plidStr)){
-                    Twitpl twitpl = new Twitpl();
-                    twitpl.setTwitid(twit.getTwitid());
-                    twitpl.setPlid(Integer.parseInt(plidStr));
-                    twit.getTwitpls().add(twitpl);
+                    plidsSelectedInts.add(Integer.parseInt(plidStr));
                 }
             }
+            //Put in these pls, remove from others
+            TwitPlHelper.putIntoThesePlsAndRemoveFromOthers(twit, plidsSelectedInts);
             //Any edit to twit will force twitter api refresh
             if (twit.getTwitid()>0){
                 HibernateUtil.getSession().createQuery("delete Mention m where m.twitidceleb='"+twit.getTwitid()+"'").executeUpdate();
@@ -91,7 +85,7 @@ String acl = "sysadmin";
             }
             //Set since_id to 1 so twitter api refreshes
             twit.setSince_id("1");
-            //Refresh the twit to pick up the Twitpl changes
+            //Refresh the twit
             twit.save();
             //Flush the right col list cache
             DbcacheexpirableCache.flush("PublicRightcolListCelebs.java");
@@ -160,14 +154,8 @@ String acl = "sysadmin";
             <tr>
                 <td valign="top" colspan="3">
                     <%
-                        ArrayList<String> values = new ArrayList<String>();
-                        for (Iterator<Twitpl> plIt=twit.getTwitpls().iterator(); plIt.hasNext();) {
-                            Twitpl twitpl=plIt.next();
-                            values.add(String.valueOf(twitpl.getPlid()));
-                        }
-                    %>
-                    <%
                         TreeMap<String, String> options = new TreeMap<String, String>();
+                        ArrayList<String> values = new ArrayList<String>();
                         List<Pl> pls = HibernateUtil.getSession().createCriteria(Pl.class)
                                 .addOrder(Order.asc("name"))
                                 .setCacheable(true)
@@ -175,6 +163,9 @@ String acl = "sysadmin";
                         for (Iterator<Pl> plIterator=pls.iterator(); plIterator.hasNext();) {
                             Pl pl=plIterator.next();
                             options.put(String.valueOf(pl.getPlid()), pl.getName());
+                            if (TwitPlHelper.isTwitACelebInThisPl(twit, pl)){
+                                values.add(String.valueOf(pl.getPlid()));
+                            }
                         }
                     %>
                     <%=Checkboxes.getHtml("plids", values, options, "", "")%>    

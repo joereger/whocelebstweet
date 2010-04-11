@@ -3,6 +3,7 @@ package com.celebtwit.scheduledjobs;
 import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twit;
 import com.celebtwit.dao.hibernate.HibernateUtil;
+import com.celebtwit.helpers.TwitPlHelper;
 import com.celebtwit.systemprops.InstanceProperties;
 import com.celebtwit.systemprops.SystemProperty;
 import org.apache.log4j.Logger;
@@ -69,11 +70,13 @@ public class MakeFriends implements StatefulJob {
             logger.error("", ex);
         }
         //Go get celebs for this pl
+        //TwitplQuery
+        ArrayList<Integer> plidList = new ArrayList<Integer>();
+        plidList.add(pl.getPlid());
         List<Twit> celebs = HibernateUtil.getSession().createCriteria(Twit.class)
                                        .add(Restrictions.eq("isceleb", true))
                                        .addOrder(Order.desc("lastprocessed"))
-                                       .createCriteria("twitpls")
-                                       .add(Restrictions.eq("plid", pl.getPlid()))
+                                       .add(TwitPlHelper.getCrit(plidList))
                                        .setMaxResults(10)
                                        .setCacheable(true)
                                        .list();

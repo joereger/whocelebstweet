@@ -7,7 +7,6 @@ import com.celebtwit.dao.Twit;
 import com.celebtwit.dao.Twitpost;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.helpers.TwitpostAsHtml;
-import com.celebtwit.htmlui.Pagez;
 import com.celebtwit.util.Num;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -29,10 +28,12 @@ public class TwitterTweetlist implements CachedStuff, Serializable {
 
     private Twit twit;
     private int page;
+    private String adnetworkname;
 
-    public TwitterTweetlist(Twit twit, int page) {
+    public TwitterTweetlist(Twit twit, int page, String adnetworkname) {
         this.twit = twit;
         this.page = page;
+        this.adnetworkname = adnetworkname;
     }
 
     public String getKey() {
@@ -58,7 +59,7 @@ public class TwitterTweetlist implements CachedStuff, Serializable {
         for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
             Twitpost twitpost=tpIt.next();
             //Only insert ad if it's not the none adnetwork
-            if(!Pagez.getUserSession().getAdNetworkName().equals(AdNetworkNone.ADNETWORKNAME)){
+            if(!adnetworkname.equals(AdNetworkNone.ADNETWORKNAME)){
                 insertAdCount++;
                 if (insertAdCount>=randomAdInsertionPoint && adsInserted<maxAdsPerPage){
                     adsInserted++;

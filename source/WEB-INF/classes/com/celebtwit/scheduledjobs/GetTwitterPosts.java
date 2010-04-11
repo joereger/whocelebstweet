@@ -4,7 +4,7 @@ import com.celebtwit.cache.html.DbcacheexpirableCache;
 import com.celebtwit.dao.*;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.dao.hibernate.NumFromUniqueResult;
-import com.celebtwit.helpers.IsTwitACelebInThisPl;
+import com.celebtwit.helpers.TwitPlHelper;
 import com.celebtwit.systemprops.SystemProperty;
 import com.celebtwit.util.Num;
 import com.celebtwit.util.Time;
@@ -385,10 +385,12 @@ public class GetTwitterPosts implements StatefulJob {
                     twitToUpdate = newTwit;
                 }
                 //Create a record of the mention
-                for (Iterator<Twitpl> twitplIt=twitCeleb.getTwitpls().iterator(); twitplIt.hasNext();) {
-                    Twitpl twitpl=twitplIt.next();
+                ArrayList<Integer> plsTwitIsIn = TwitPlHelper.getPlidsTwitIsIn(twitCeleb);
+                for (Iterator iterator = plsTwitIsIn.iterator(); iterator.hasNext();) {
+                    Integer plid = (Integer) iterator.next();
+                    Pl pl = Pl.get(plid);
                     //Save a mention record for each pl that this celeb is part of
-                    saveMention(twitToUpdate, twitpost, twitpl);
+                    saveMention(twitToUpdate, twitpost, pl);
                 }
                 //Increment mentions counters
                 //twitToUpdate.setLastprocessed(new Date());
@@ -399,13 +401,13 @@ public class GetTwitterPosts implements StatefulJob {
         }
     }
 
-    public static void saveMention(Twit twitToUpdate, Twitpost twitpost, Twitpl twitpl){
+    public static void saveMention(Twit twitToUpdate, Twitpost twitpost, Pl pl){
         Logger logger = Logger.getLogger(GetTwitterPosts.class);
         try{
             //Make sure it's not a self tweet
             if (twitpost.getTwitid()!=twitToUpdate.getTwitid()){
                 //See if any exact mentions exist (other thread processing... something like that)
-                int numberOfSameMentions =NumFromUniqueResult.getInt("select count(*) from Mention where twitpostid='"+twitpost.getTwitpostid()+"' and twitidceleb='"+twitpost.getTwitid()+"' and twitidmentioned='"+twitToUpdate.getTwitid()+"' and plid='"+twitpl.getPlid()+"'");
+                int numberOfSameMentions =NumFromUniqueResult.getInt("select count(*) from Mention where twitpostid='"+twitpost.getTwitpostid()+"' and twitidceleb='"+twitpost.getTwitid()+"' and twitidmentioned='"+twitToUpdate.getTwitid()+"' and plid='"+pl.getPlid()+"'");
                 if (numberOfSameMentions==0){
                     //Only insert if there are no exactly similar mentions
                     Mention mention = new Mention();
@@ -413,10 +415,10 @@ public class GetTwitterPosts implements StatefulJob {
                     mention.setTwitidceleb(twitpost.getTwitid());
                     mention.setTwitidmentioned(twitToUpdate.getTwitid());
                     //mention.setIsmentionedaceleb(twitToUpdate.getIsceleb());  //But are they a celeb for this pl???
-                    mention.setIsmentionedaceleb(IsTwitACelebInThisPl.isTwitACelebInThisPl(twitToUpdate, Pl.get(twitpl.getPlid())));
+                    mention.setIsmentionedaceleb(TwitPlHelper.isTwitACelebInThisPl(twitToUpdate, Pl.get(pl.getPlid())));
                     mention.setCreated_at(twitpost.getCreated_at());
                     mention.setIsmentionedacelebverifiedon(Time.xYearsAgoStart(Calendar.getInstance(), 5).getTime()); // <-- set to a long time ago so it's verified w/in a couple hours
-                    mention.setPlid(twitpl.getPlid()); // <-- Setting plid of mention to the one of the plids of the celeb
+                    mention.setPlid(pl.getPlid()); // <-- Setting plid of mention to the one of the plids of the celeb
                     mention.save();
                 }
             }

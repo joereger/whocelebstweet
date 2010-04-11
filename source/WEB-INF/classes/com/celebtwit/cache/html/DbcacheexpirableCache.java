@@ -41,8 +41,10 @@ public class DbcacheexpirableCache {
                 Object obj = dbcache.getVal();
                 //If it's expired delete and deleteIfExpired=true then return null
                 if (deleteIfExpired && dbcache.getExpirationdate().before(Calendar.getInstance().getTime())){
-                    logger.debug("object expired and deleteIfExpired==true");
-                    dbcache.delete();
+                    //logger.debug("object expired and deleteIfExpired==true");
+                    //Return null because it's expired
+                    //Note that I'm no longer deleting... I'm letting the cleanup scheduled process do that
+                    //dbcache.delete();
                     return null;
                 }
                 return obj;

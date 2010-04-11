@@ -24,5 +24,20 @@
         <property name="created_at" type="timestamp">
             <column name="created_at" not-null="true" />
         </property>
+        <property name="pl01" type="int">
+            <column name="pl01" not-null="true" />
+        </property>
+        <property name="pl02" type="int">
+            <column name="pl02" not-null="true" />
+        </property>
+        <property name="pl03" type="int">
+            <column name="pl03" not-null="true" />
+        </property>
+        <property name="pl04" type="int">
+            <column name="pl04" not-null="true" />
+        </property>
+        <property name="pl05" type="int">
+            <column name="pl05" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>

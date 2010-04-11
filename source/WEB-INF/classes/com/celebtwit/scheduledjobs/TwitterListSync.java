@@ -3,9 +3,9 @@ package com.celebtwit.scheduledjobs;
 import com.celebtwit.cache.html.DbcacheexpirableCache;
 import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twit;
-import com.celebtwit.dao.Twitpl;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.helpers.ListimportblockHelper;
+import com.celebtwit.helpers.TwitPlHelper;
 import com.celebtwit.systemprops.InstanceProperties;
 import com.celebtwit.util.Time;
 import org.apache.log4j.Logger;
@@ -123,19 +123,12 @@ public class TwitterListSync implements StatefulJob {
                         //Make sure any already-mentions are marked as being about a celeb, now that this twit is one
                         HibernateUtil.getSession().createQuery("update Mention m set ismentionedaceleb=true where m.twitidmentioned='"+twit.getTwitid()+"'").executeUpdate();
                         //Does a pl relationship exist yet?
-                        boolean isTwitInPl = false;
-                        for (Iterator<Twitpl> tplIt=twit.getTwitpls().iterator(); tplIt.hasNext();) {
-                            Twitpl twitpl=tplIt.next();
-                            if (twitpl.getPlid()==pl.getPlid()){isTwitInPl=true;}
-                        }
+                        boolean isTwitInPl = TwitPlHelper.isTwitACelebInThisPl(twit, pl);
                         logger.debug("user.getScreenName()="+user.getScreenName()+" isTwitInPl"+isTwitInPl);
                         //If a pl relationship doesn't yet exist
                         if (!isTwitInPl){
                             //Create pl relationship
-                            Twitpl twitpl = new Twitpl();
-                            twitpl.setTwitid(twit.getTwitid());
-                            twitpl.setPlid(pl.getPlid());
-                            twit.getTwitpls().add(twitpl);
+                            TwitPlHelper.addToPl(twit, pl);
                             //Any edit to twit will force twitter api refresh
                             if (twit.getTwitid()>0){
                                 HibernateUtil.getSession().createQuery("delete Mention m where m.twitidceleb='"+twit.getTwitid()+"'").executeUpdate();
@@ -147,7 +140,7 @@ public class TwitterListSync implements StatefulJob {
                             }
                             //Set since_id to 1 so twitter api refreshes
                             twit.setSince_id("1");
-                            //Refresh the twit to pick up the Twitpl changes
+                            //Refresh the twit to pick up the changes
                             twit.save();
                             //Flush the right col list cache
                             DbcacheexpirableCache.flush("PublicRightcolListCelebs.java");

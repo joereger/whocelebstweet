@@ -10,11 +10,6 @@
             <generator class="native" />
         </id>
 
-        <set name="twitpls" inverse="true" cascade="all-delete-orphan">
-            <cache usage="transactional"/>
-            <key column="twitid"></key>
-            <one-to-many class="com.celebtwit.dao.Twitpl" not-found="ignore"></one-to-many>
-        </set>
 
         <property name="twitterusername" type="string">
             <column name="twitterusername" not-null="true" />
@@ -51,6 +46,21 @@
         </property>
         <property name="statuses_count" type="int">
             <column name="statuses_count" not-null="true" />
+        </property>
+        <property name="pl01" type="int">
+            <column name="pl01" not-null="true" />
+        </property>
+        <property name="pl02" type="int">
+            <column name="pl02" not-null="true" />
+        </property>
+        <property name="pl03" type="int">
+            <column name="pl03" not-null="true" />
+        </property>
+        <property name="pl04" type="int">
+            <column name="pl04" not-null="true" />
+        </property>
+        <property name="pl05" type="int">
+            <column name="pl05" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

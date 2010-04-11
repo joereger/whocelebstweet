@@ -2,6 +2,7 @@ package com.celebtwit.cachedstuff;
 
 import com.celebtwit.cache.html.DbcacheexpirableCache;
 import com.celebtwit.dao.Pl;
+import com.celebtwit.htmlui.Pagez;
 import com.celebtwit.util.DateDiff;
 import com.celebtwit.util.Time;
 import org.apache.log4j.Logger;
@@ -25,7 +26,7 @@ public class GetCachedStuff {
             logger.debug("get(key="+key+" group="+group+")");
             //Note third argument which tells cache to return object instead of null even if expired
             Object obj = DbcacheexpirableCache.get(key, group, false);
-            if (obj!=null && (obj instanceof CachedStuff)){
+            if (obj!=null && (obj instanceof CachedStuff) && !requestSaysForceRefresh()){
                 CachedStuff cachedCs = (CachedStuff)obj;
                 int minago = DateDiff.dateDiff("minute", Calendar.getInstance(), cachedCs.refreshedTimestamp());
                 logger.debug("get() not null minago="+minago+" cs.maxAgeInMinutes()="+cs.maxAgeInMinutes());
@@ -51,6 +52,22 @@ public class GetCachedStuff {
             logger.error("", ex);
         }
         return cs;
+    }
+
+    private static boolean requestSaysForceRefresh(){
+        Logger logger = Logger.getLogger(CachedStuff.class);
+        try{
+            if (Pagez.getRequest()!=null){
+                if (Pagez.getRequest().getParameter("refresh")!=null){
+                    if (Pagez.getRequest().getParameter("refresh").equals("1") || Pagez.getRequest().getParameter("refresh").equals("true")){
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception ex){
+            logger.debug("", ex);
+        }
+        return false;
     }
 
 

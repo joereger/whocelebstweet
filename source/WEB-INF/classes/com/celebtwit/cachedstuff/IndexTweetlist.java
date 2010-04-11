@@ -5,13 +5,13 @@ import com.celebtwit.ads.AdNetworkNone;
 import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twitpost;
 import com.celebtwit.dao.hibernate.HibernateUtil;
+import com.celebtwit.helpers.TwitPlHelper;
 import com.celebtwit.helpers.TwitpostAsHtml;
-import com.celebtwit.htmlui.Pagez;
 import com.celebtwit.util.Num;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -27,10 +27,11 @@ public class IndexTweetlist implements CachedStuff, Serializable {
     private String html;
 
     private int page;
+    private String adnetworkname;
 
-    public IndexTweetlist(int page) {
+    public IndexTweetlist(int page, String adnetworkname) {
         this.page = page;
-
+        this.adnetworkname = adnetworkname;
     }
 
     public String getKey() {
@@ -44,11 +45,12 @@ public class IndexTweetlist implements CachedStuff, Serializable {
         if (page<=1){ firstResult = 0; }
         int insertAdCount = 0;
         int randomAdInsertionPoint = 2 + Num.randomInt(4);
+        //TwitplQuery
+        ArrayList<Integer> plidList = new ArrayList<Integer>();
+        plidList.add(pl.getPlid());
         List<Twitpost> twitposts = HibernateUtil.getSession().createCriteria(Twitpost.class)
             .addOrder(Order.desc("created_at"))
-            .createCriteria("twit")
-            .createCriteria("twitpls")
-            .add(Restrictions.eq("plid", pl.getPlid()))
+            .add(TwitPlHelper.getCrit(plidList))
             .setMaxResults(perPage)
             .setFirstResult(firstResult)
             .setCacheable(true)
@@ -56,7 +58,7 @@ public class IndexTweetlist implements CachedStuff, Serializable {
         for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
             Twitpost twitpost=tpIt.next();
             //Only insert ad if it's not the none adnetwork
-            if(!Pagez.getUserSession().getAdNetworkName().equals(AdNetworkNone.ADNETWORKNAME)){
+            if(!adnetworkname.equals(AdNetworkNone.ADNETWORKNAME)){
                 insertAdCount++;
                 if (insertAdCount>=randomAdInsertionPoint){
                     //insertAdCount = 0;

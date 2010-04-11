@@ -1,18 +1,18 @@
 package com.celebtwit.htmluibeans;
 
+import com.celebtwit.cache.html.DbcacheexpirableCache;
 import com.celebtwit.dao.Pl;
-import com.celebtwit.dao.Twitpost;
 import com.celebtwit.dao.Twit;
 import com.celebtwit.dao.hibernate.HibernateUtil;
-import com.celebtwit.cache.html.DbcacheexpirableCache;
-import com.celebtwit.helpers.TwitpostAsHtml;
+import com.celebtwit.helpers.TwitPlHelper;
 import com.celebtwit.htmlui.Pagez;
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * User: Joe Reger Jr
@@ -37,14 +37,16 @@ public class PublicRightcolListCelebs {
         return out;
     }
 
-    private static String generateHtml(Pl pl){
+    public static String generateHtml(Pl pl){
         StringBuffer out = new StringBuffer();
+        //TwitplQuery
+        ArrayList<Integer> plidList = new ArrayList<Integer>();
+        plidList.add(pl.getPlid());
         List<Twit> celebs = HibernateUtil.getSession().createCriteria(Twit.class)
                                        .add(Restrictions.eq("isceleb", true))
                                        .addOrder(Order.asc("realname"))
-                                       .createCriteria("twitpls")
-                                       .add(Restrictions.eq("plid", pl.getPlid()))
-                                       .setMaxResults(1000)
+                                       .add(TwitPlHelper.getCrit(plidList))
+                                       .setMaxResults(5000)
                                        .setCacheable(true)
                                        .list();
         for (Iterator<Twit> iterator=celebs.iterator(); iterator.hasNext();) {

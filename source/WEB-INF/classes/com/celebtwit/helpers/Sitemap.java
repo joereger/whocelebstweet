@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -56,12 +57,13 @@ public class Sitemap extends HttpServlet {
         out.print("<priority>.7</priority>");
         out.print("</url>");
 
-
+        //TwitplQuery
+        ArrayList<Integer> plidList = new ArrayList<Integer>();
+        plidList.add(pl.getPlid());
         List<Twit> twits = HibernateUtil.getSession().createCriteria(Twit.class)
             .addOrder(Order.desc("twitid"))
             .add(Restrictions.eq("isceleb", true))
-            .createCriteria("twitpls")
-            .add(Restrictions.eq("plid", pl.getPlid()))
+            .add(TwitPlHelper.getCrit(plidList))
             .setCacheable(true)
             .list();
         for (Iterator<Twit> tpIt=twits.iterator(); tpIt.hasNext();) {

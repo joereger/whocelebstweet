@@ -4,7 +4,7 @@ import com.celebtwit.dao.Mention;
 import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twit;
 import com.celebtwit.dao.hibernate.HibernateUtil;
-import com.celebtwit.helpers.IsTwitACelebInThisPl;
+import com.celebtwit.helpers.TwitPlHelper;
 import com.celebtwit.systemprops.InstanceProperties;
 import com.celebtwit.util.Time;
 import org.apache.log4j.Logger;
@@ -56,7 +56,7 @@ public class FixIsmentionedaceleb implements Job {
             try{
                 Twit twit = Twit.get(mention.getTwitidmentioned());
                 Pl pl = Pl.get(mention.getPlid());
-                if (!IsTwitACelebInThisPl.isTwitACelebInThisPl(twit, pl)){
+                if (!TwitPlHelper.isTwitACelebInThisPl(twit, pl)){
                     mention.setIsmentionedaceleb(false);
                 }
                 mention.setIsmentionedacelebverifiedon(new Date());
