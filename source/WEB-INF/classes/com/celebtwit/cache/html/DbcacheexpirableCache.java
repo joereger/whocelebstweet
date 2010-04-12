@@ -72,7 +72,7 @@ public class DbcacheexpirableCache {
                     }
                 }
             } catch (Exception ex){
-                logger.error("", ex);
+                logger.error("Problem deleting dbcache.delete", ex);
             }
             //Save the value
             Dbcacheexpirable dbcacheNew = new Dbcacheexpirable();
@@ -83,7 +83,7 @@ public class DbcacheexpirableCache {
             dbcacheNew.setVal(obj);
             dbcacheNew.save();
         } catch (Exception ex){
-            logger.error("", ex);
+            logger.error("bottom of put()", ex);
         }
     }
 
