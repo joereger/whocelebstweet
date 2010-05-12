@@ -49,7 +49,7 @@ public class FixTwitpostsWithNoPl implements Job {
                                                .add(Restrictions.eq("pl04", 0))
                                                .add(Restrictions.eq("pl05", 0))
                                                .addOrder(Order.asc("twitpostid"))
-                                               .setMaxResults(10000)
+                                               .setMaxResults(25000)
                                                .setCacheable(true)
                                                .list();
         for (Iterator<Twitpost> it=twitposts.iterator(); it.hasNext();) {
