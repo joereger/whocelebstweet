@@ -339,6 +339,14 @@ public class GetTwitterPosts implements StatefulJob {
                 twitpost.setCreated_at(status.getCreated_at());
                 twitpost.setTwitterguid(String.valueOf(status.getId()));
                 twitpost.setPost(status.getText());
+                //Put this twitpost into proper plids
+                ArrayList<Integer> plsTwitIsIn = TwitPlHelper.getPlidsTwitIsIn(twit);
+                for (Iterator iterator = plsTwitIsIn.iterator(); iterator.hasNext();) {
+                    Integer plid = (Integer) iterator.next();
+                    Pl pl = Pl.get(plid);
+                    twitpost = TwitPlHelper.addTwitpostToPlDontSave(twitpost, pl);
+                }
+                //Save it
                 twitpost.save();
                 //Process it
                 processTwitpost(twitpost, twit);

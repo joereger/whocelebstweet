@@ -2,6 +2,7 @@ package com.celebtwit.helpers;
 
 import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twit;
+import com.celebtwit.dao.Twitpost;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.Criterion;
@@ -68,6 +69,26 @@ public class TwitPlHelper {
         }
     }
 
+    public static Twitpost addTwitpostToPlDontSave(Twitpost twitpost, Pl pl){
+        Logger logger = Logger.getLogger(TwitPlHelper.class);
+        if (!isTwitpostInThisPl(twitpost, pl)){
+            if (twitpost.getPl01()==0){
+                twitpost.setPl01(pl.getPlid());
+            } else if (twitpost.getPl02()==0){
+                twitpost.setPl02(pl.getPlid());
+            } else if (twitpost.getPl03()==0){
+                twitpost.setPl03(pl.getPlid());
+            } else if (twitpost.getPl04()==0){
+                twitpost.setPl04(pl.getPlid());
+            } else if (twitpost.getPl05()==0){
+                twitpost.setPl05(pl.getPlid());
+            } else {
+                logger.error("Twitpost("+twitpost.getTwitpostid()+") in too many pls");
+            }
+        }
+        return twitpost;
+    }
+
     public static void removeFromPl(Twit twit, Pl pl){
         Logger logger = Logger.getLogger(TwitPlHelper.class);
         if (isTwitACelebInThisPl(twit, pl)){
@@ -125,6 +146,21 @@ public class TwitPlHelper {
         } else if (twit.getPl04()==pl.getPlid()){
             return true;
         } else if (twit.getPl05()==pl.getPlid()){
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isTwitpostInThisPl(Twitpost twitpost, Pl pl){
+        if (twitpost.getPl01()==pl.getPlid()){
+            return true;
+        } else if (twitpost.getPl02()==pl.getPlid()){
+            return true;
+        } else if (twitpost.getPl03()==pl.getPlid()){
+            return true;
+        } else if (twitpost.getPl04()==pl.getPlid()){
+            return true;
+        } else if (twitpost.getPl05()==pl.getPlid()){
             return true;
         }
         return false;

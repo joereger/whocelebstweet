@@ -91,5 +91,13 @@ public class SysadminManuallyRunScheduledTask implements Serializable {
             task.execute(null);} catch (Exception ex){logger.error("",ex);}
         return "sysadminmanuallyrunscheduledtask";
     }
+    
+    public String runFixTwitpostsWithNoPl(){
+        Logger logger = Logger.getLogger(this.getClass().getName());
+        try{
+            FixTwitpostsWithNoPl task = new FixTwitpostsWithNoPl();
+            task.execute(null);} catch (Exception ex){logger.error("",ex);}
+        return "sysadminmanuallyrunscheduledtask";
+    }
 
 }
