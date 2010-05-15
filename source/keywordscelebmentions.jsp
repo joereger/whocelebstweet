@@ -81,7 +81,7 @@ String subnav_twitterusername = twitterusername;
 
                                         <font class="largefont"><%=pagetitle%></font>
                                         <br/><br/>
-                                        <font class="largefont">
+                                        <font class="mediumfont">
                                         <ul>
                                         <%
                                             ArrayList<Keyword> keywords = KeywordHelpers.getKeywordsACelebHasMentioned(twit);

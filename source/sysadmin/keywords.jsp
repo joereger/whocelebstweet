@@ -85,7 +85,7 @@ String acl = "sysadmin";
 %>
 <%@ include file="/template/header.jsp" %>
 
-
+    <a href="/sysadmin/keywords-upload.jsp">Upload Keywords</a><br/>
     <form action="/sysadmin/keywords.jsp" method="post">
         <input type="hidden" name="dpage" value="/sysadmin/keywords.jsp">
         <input type="hidden" name="action" value="save">

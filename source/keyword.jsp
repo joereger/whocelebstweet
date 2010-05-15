@@ -104,7 +104,7 @@ metaKeywords = keyword.getKeyword()+" "+Pagez.getUserSession().getPl().getCelebi
                                         <br/><br/>
 
 
-                                        <font class="largefont">
+                                        <font class="mediumfont">
                                         <ul>
                                         <%
                                             ArrayList<Twit> twits = KeywordHelpers.getCelebsWhoMentionKeyword(keyword, Pagez.getUserSession().getPl());
