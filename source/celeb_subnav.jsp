@@ -1,7 +1,7 @@
 <%@ page import="com.celebtwit.cachedstuff.*" %>
 
 
-<font class="largefont" style="font-size:60px;"> <%=subnav_title%> </font>
+<font class="largefont" style="font-size:60px;"> <a href="/twitter/<%=subnav_twitterusername%>/" style="color:#000000;"><%=subnav_title%></a> </font>
 <br/>
 <div class="celebsubnav normalfont">
     <a href="/twitter/<%=subnav_twitterusername%>/who/">Who @<%=subnav_twitterusername%> Tweets</a>

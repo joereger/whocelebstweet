@@ -107,7 +107,7 @@ metaKeywords = keyword.getKeyword()+" "+Pagez.getUserSession().getPl().getCelebi
                                         <font class="largefont">
                                         <ul>
                                         <%
-                                            ArrayList<Twit> twits = KeywordHelpers.getCelebsWhoMentionKeyword(keyword);
+                                            ArrayList<Twit> twits = KeywordHelpers.getCelebsWhoMentionKeyword(keyword, Pagez.getUserSession().getPl());
                                             for (Iterator<Twit> tIt = twits.iterator(); tIt.hasNext();) {
                                                 Twit twit = tIt.next();
                                                 %><li><a href="/twitter/<%=twit.getTwitterusername()%>/talksabout/<%=URLEncoder.encode(keyword.getKeyword(), "UTF-8")%>/"><%=twit.getRealname()%></a></li><%

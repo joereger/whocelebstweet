@@ -2,8 +2,10 @@ package com.celebtwit.keywords;
 
 import com.celebtwit.dao.Keyword;
 import com.celebtwit.dao.Keywordmention;
+import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twit;
 import com.celebtwit.dao.hibernate.HibernateUtil;
+import com.celebtwit.helpers.TwitPlHelper;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -81,7 +83,7 @@ public class KeywordHelpers {
         return out;
     }
 
-    public static ArrayList<Twit> getCelebsWhoMentionKeyword(Keyword keyword){
+    public static ArrayList<Twit> getCelebsWhoMentionKeyword(Keyword keyword, Pl pl){
         ArrayList<Twit> out = new java.util.ArrayList<Twit>();
         List<Keywordmention> kwms = HibernateUtil.getSession().createCriteria(Keywordmention.class)
                                        .add(Restrictions.eq("keywordid", keyword.getKeywordid()))
@@ -91,8 +93,10 @@ public class KeywordHelpers {
         for (Iterator<Keywordmention> tpIt=kwms.iterator(); tpIt.hasNext();) {
             Keywordmention keywordmention = tpIt.next();
             Twit twit = Twit.get(keywordmention.getTwitid());
-            if (!out.contains(twit)){
-                out.add(twit);
+            if (TwitPlHelper.isTwitACelebInThisPl(twit, pl)){
+                if (!out.contains(twit)){
+                    out.add(twit);
+                }
             }
         }
         return out;

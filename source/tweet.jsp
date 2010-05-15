@@ -88,84 +88,15 @@ String subnav_twitterusername = twitterusername;
 <table cellpadding="3" cellspacing="0" border="0" width="100%">
     <tr>
         <td valign="top" width="200">
-            <!-- Start Left Col -->
-            <div class="roundedBox" style="width:200px;">
-                <center>
-                <script language="javascript">
-                    function toggleLink() {
-                        var ele = document.getElementById("toggleLink");
-                        if(ele.style.display == "block") {
-                            ele.style.display = "none";
-                        } else {
-                            ele.style.display = "block";
-                        }
-                    }
-                    function toggleA() {
-                        var ele = document.getElementById("toggleTextA");
-                        if(ele.style.display == "block") {
-                            ele.style.display = "none";
-                        } else {
-                            ele.style.display = "block";
-                        }
-                    }
-                    function toggleB() {
-                        var ele = document.getElementById("toggleTextB");
-                        if(ele.style.display == "block") {
-                            ele.style.display = "none";
-                        } else {
-                            ele.style.display = "block";
-                        }
-                    }
-                </script>
-                <%
-                String tweetThisStatus = "check out " + "http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/tweet/"+twitpost.getTwitterguid()+"/";
-                tweetThisStatus = URLEncoder.encode(tweetThisStatus, "UTF-8");
-                %>
-                <font class="smallfont"><a href="javascript:toggleLink();" style="text-decoration: underline; color: #0000ff;">Link to this Page</a> | <a href="http://twitter.com/home?status=<%=tweetThisStatus%>" style="text-decoration: underline; color: #0000ff;" target="_blank">Tweet This</a></font>
-                <div id="toggleLink" style="display: none; text-align: left;">
-                    <textarea rows="1" cols="40" name="linkurl" id="linkurl" style="font-size:9px;" onclick="javascript:document.getElementById('linkurl').select();"><%=Str.cleanForHtml("http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/tweet/"+twitpost.getTwitterguid()+"/")%></textarea>
-                    <br/><font class="tinyfont">Copy and paste the above URL into your blog, email, im or website to link to this page.</font>
-                </div>
-                <%if (twit!=null && twit.getIsceleb()){%>
-                    <br/><br/><a href="/twitter/<%=twitterusername%>/picture/"><img src="<%=twitimageurl%>" width="190" style="border: 10px solid #ffffff;" alt="<%=twit.getRealname()%>"></a>
-                <%}%>
-                <br clear="all"/><br/>
-                <%--<%if (twit!=null && twit.getDescription().length()>0){%>--%>
-                    <%--<font class="normalfont" style="font-size:15px; color:#666666;"><%=twit.getDescription()%></font>--%>
-                    <%--<br/>--%>
-                <%--<%}%>--%>
-                <%--<%if (twit!=null && twit.getWebsite_url().length()>0){%>--%>
-                    <%--<font class="smallfont">--%>
-                    <%--<a href="<%=twit.getWebsite_url()%>" target="_blank"  style="text-decoration: underline; color: #0000ff;">Website</a>--%>
-                    <%--|--%>
-                    <%--<a href="http://www.twitter.com/<%=twitterusername%>/" target="_blank"  style="text-decoration: underline; color: #0000ff;">Twitter</a>--%>
-                    <%--</font>--%>
-                    <%--<br/>--%>
-                <%--<%} else { %>--%>
-                    <%--<font class="smallfont">--%>
-                    <%--<a href="http://www.twitter.com/<%=twitterusername%>/" target="_blank"  style="text-decoration: underline; color: #0000ff;">Twitter</a>--%>
-                    <%--</font>--%>
-                    <%--<br/>--%>
-                <%--<%}%>--%>
-                <%--<%if (twit!=null && twit.getFollowers_count()>0){%>--%>
-                    <%--<font class="smallfont"><%=twit.getFollowers_count()%> followers</font>--%>
-                    <%--<br/>--%>
-                <%--<%}%>--%>
-                <%--<%if (twit!=null && twit.getStatuses_count()>0){%>--%>
-                    <%--<font class="smallfont"><%=twit.getStatuses_count()%> updates</font>--%>
-                    <%--<br/>--%>
-                <%--<%}%>--%>
-                <%if (twit!=null && twit.getIsceleb()){%>
-                    <font class="normalfont" style="font-weight:bold;"><a href="/twitter/<%=twit.getTwitterusername()%>/">@<%=twitterusername%>'s Profile</a></font>
-                    <br/>
-                <%}%>
-                </center>
-                <br/><br/><br/>
-                <center>
-                <%=AdUtil.get160x600()%>
-                </center>
-            </div>
-            <!-- End Left Col -->
+
+            <%
+            String sidebar_twitterusername = twitterusername;
+            Twit sidebar_twit = twit;
+            String sidebar_twitimageurl = twitimageurl;
+            String sidebar_pageurl = "http://"+ Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/tweet/"+twitpost.getTwitterguid()+"/";
+            %>
+            <%@ include file="/celeb_sidebar.jsp" %>
+
         </td>
         <td valign="top" width="430">
             <!-- Start Middle Col -->
@@ -178,8 +109,6 @@ String subnav_twitterusername = twitterusername;
                             <td valign="top">
                                 <div class="roundedBoxNoRound" style="width:410px; overflow:hidden;">
                                         <%=tweet%>
-                                        <br/><br/>
-                                        <a href="/twitter/<%=twitterusername%>/"><font class="mediumfont">see all of @<%=twitterusername%>'s tweets</font></a>
                                 </div>
                             </td>
                         </tr>

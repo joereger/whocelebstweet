@@ -39,10 +39,10 @@ public class CelebsSidebarKeywordsList implements CachedStuff, Serializable {
         //Start Refresh
         ArrayList<Keyword> keywords = KeywordHelpers.getKeywordsACelebHasMentioned(twit);
         if (keywords!=null && keywords.size()>0){
+            out.append("<font class=\"nornamfont\" style=\"font-weight: bold; background: #e6e6e6; padding-left: 2px;\">@"+twit.getTwitterusername()+" Talks About</font><br/>");
             for (Iterator<Keyword> kwIt = keywords.iterator(); kwIt.hasNext();) {
                 Keyword keyword = kwIt.next();
                 try{
-                    out.append("<font class=\"nornamfont\" style=\"font-weight: bold; background: #e6e6e6; padding-left: 2px;\">@"+twit.getTwitterusername()+" Talks About</font><br/>");
                     out.append("<font class=\"normalfont\" style=\"padding-left: 10px;\"><a href=\"/twitter/"+twit.getTwitterusername()+"/talksabout/"+ URLEncoder.encode(keyword.getKeyword(), "UTF-8")+"/\">"+keyword.getKeyword()+"</a></font><br/>");
                 } catch (Exception ex){
                     logger.debug("", ex);

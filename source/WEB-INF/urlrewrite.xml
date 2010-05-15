@@ -51,8 +51,8 @@
     </rule>
 
 
-    <rule>
-        <from>/twitter/([a-zA-Z0-9\_]*)/talksabout/([a-zA-Z0-9\_]*)/</from>
+    <rule match-type="wildcard">
+        <from>/twitter/*/talksabout/*/</from>
         <to last="true">/celebmentionskeyword.jsp?twitterusername=$1&amp;keyword=$2</to>
     </rule>
 
@@ -69,8 +69,8 @@
 
 
 
-    <rule>
-        <from>/talksabout/([a-zA-Z0-9\_]*)/</from>
+    <rule match-type="wildcard">
+        <from>/talksabout/*/</from>
         <to last="true">/keyword.jsp?keyword=$1</to>
     </rule>
 

@@ -103,15 +103,15 @@ String subnav_twitterusername = twitterusername;
 
                                         <%
                                         ArrayList<Keywordmention> kwms = KeywordHelpers.getCelebMentionsOfKeyword(twit, keyword);
+                                            int maxAdsPerPage = 3;
+                                            int insertAdCount = 0;
+                                            int adsInserted = 0;
+                                            int randomAdInsertionPoint = 2 + Num.randomInt(4);
                                             for (Iterator<Keywordmention> kwmIt = kwms.iterator(); kwmIt.hasNext();) {
                                                 Keywordmention keywordmention = kwmIt.next();
                                                 Twitpost twitpost = Twitpost.get(keywordmention.getTwitpostid());
-                                                int maxAdsPerPage = 3;
-                                                int insertAdCount = 0;
-                                                int adsInserted = 0;
-                                                int randomAdInsertionPoint = 2 + Num.randomInt(4);
                                                 //Only insert ad if it's not the none adnetwork
-                                                if(!Pagez.getUserSession().getAdNetworkName().equals(AdNetworkNone.ADNETWORKNAME)){
+                                                if(Pagez.getUserSession().getAdNetworkName().indexOf(AdNetworkNone.ADNETWORKNAME)<=-1){
                                                     insertAdCount++;
                                                     if (insertAdCount>=randomAdInsertionPoint && adsInserted<maxAdsPerPage){
                                                         adsInserted++;
