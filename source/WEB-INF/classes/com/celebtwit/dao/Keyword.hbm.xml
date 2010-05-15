@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 17, 2006 3:45:28 PM by Hibernate Tools 3.1.0.beta4 -->
+<hibernate-mapping>
+    <class name="com.celebtwit.dao.Keyword" table="keyword">
+        <cache usage="transactional"/>
+        <id name="keywordid" type="int">
+            <column name="keywordid" />
+            <generator class="native" />
+        </id>
+
+
+        <property name="keyword" type="string">
+            <column name="keyword" not-null="true" />
+        </property>
+        <property name="islocation" type="boolean">
+            <column name="islocation" />
+        </property>
+        <property name="sincetwitpostid" type="int">
+            <column name="sincetwitpostid" not-null="true" />
+        </property>
+
+    </class>
+</hibernate-mapping>

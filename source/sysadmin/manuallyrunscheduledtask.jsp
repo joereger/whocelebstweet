@@ -37,6 +37,8 @@ SysadminManuallyRunScheduledTask sysadminManuallyRunScheduledTask = (SysadminMan
                     sysadminManuallyRunScheduledTask.runDbCachePurgeStaleItems();
                 } else if (request.getParameter("task").equals("FixTwitpostsWithNoPl")){
                     sysadminManuallyRunScheduledTask.runFixTwitpostsWithNoPl();
+                } else if (request.getParameter("task").equals("FindKeywordMentions")){
+                    sysadminManuallyRunScheduledTask.runFindKeywordMentions();
                 } else {
                     throw new ValidationException("task not found.");    
                 }
@@ -63,6 +65,6 @@ SysadminManuallyRunScheduledTask sysadminManuallyRunScheduledTask = (SysadminMan
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=FixIsmentionedaceleb"><font class="mediumfont">FixIsmentionedaceleb</font></a>
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=DbCachePurgeStaleItems"><font class="mediumfont">DbCachePurgeStaleItems</font></a>
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=FixTwitpostsWithNoPl"><font class="mediumfont">FixTwitpostsWithNoPl</font></a>
-
+<br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=FindKeywordMentions"><font class="mediumfont">FindKeywordMentions</font></a>
 
 <%@ include file="/template/footer.jsp" %>

@@ -10,11 +10,13 @@
         <mapping resource="com/celebtwit/dao/Emailme.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Error.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Pageperformance.hbm.xml" />
-        <mapping resource="com/celebtwit/dao/Systemprop.hbm.xml" />
+        <mapping resource="com/celebtwit/dao/Keyword.hbm.xml" />
+        <mapping resource="com/celebtwit/dao/Keywordmention.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Listimportblock.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Mention.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Pl.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Suggest.hbm.xml" />
+        <mapping resource="com/celebtwit/dao/Systemprop.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Twit.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Twitpost.hbm.xml" />
         <mapping resource="com/celebtwit/dao/User.hbm.xml" />

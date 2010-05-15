@@ -296,5 +296,28 @@
     </job>
 
 
+    <job>
+        <job-detail>
+          <name>findKeywordMentions</name>
+          <group>surveyJobs</group>
+          <job-class>com.celebtwit.scheduledjobs.FindKeywordMentions</job-class>
+          <volatility>false</volatility>
+          <durability>false</durability>
+          <recover>false</recover>
+        </job-detail>
+        <trigger>
+          <!-- Sample cron triggers: http://www.opensymphony.com/quartz/wikidocs/TutorialLesson6.html -->
+          <cron>
+            <name>findKeywordMentionsTrigger</name>
+            <group>surveyTriggers</group>
+            <job-name>findKeywordMentions</job-name>
+            <job-group>surveyJobs</job-group>
+            <!-- every 1 hours -->
+            <cron-expression>0 0 0/1 * * ?</cron-expression>
+          </cron>
+        </trigger>
+    </job>
+
+
 
 </quartz>

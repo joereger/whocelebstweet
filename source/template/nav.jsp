@@ -56,6 +56,7 @@
                 <a href="/sysadmin/pageperformance.jsp"><font class="subnavfont" style=" color: #000000;">Perf</font></a>
                 <a href="/sysadmin/celebs.jsp"><font class="subnavfont" style=" color: #000000;">Celebs</font></a>
                 <a href="/sysadmin/privatelabels.jsp"><font class="subnavfont" style=" color: #000000;">Pls</font></a>
+                <a href="/sysadmin/keywords.jsp"><font class="subnavfont" style=" color: #000000;">Keywords</font></a>
                 <a href="/sysadmin/suggests.jsp"><font class="subnavfont" style=" color: #000000;">Suggests</font></a>
             <%}%>
         <%}%>
