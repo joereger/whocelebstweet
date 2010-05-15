@@ -49,21 +49,20 @@ if (twit!=null && twit.getIsceleb()){
 
 
 
-<%if (twit!=null && twit.getIsceleb()){%>
-    <font class="largefont" style="font-size:60px;"> <%=twit.getRealname()%> </font>
-<%} else {%>
-    <font class="largefont" style="font-size:60px;"> @<%=twitterusername%> </font>
-<%}%>
-<%if (twit!=null && twit.getIsceleb()){%>
-    <br/>
-    <font class="normalfont" style="font-weight:bold;"><a href="/twitter/<%=twit.getTwitterusername()%>/">@<%=twitterusername%>'s Profile</a></font>
-    <br/>
-<%}%>
+<%
+String subnav_page = "tweets";
+String subnav_title = "@"+twitterusername;
+if (twit!=null && twit.getIsceleb()){subnav_title = twit.getRealname();}
+String subnav_twitterusername = twitterusername;
+%>
+<%@ include file="/celeb_subnav.jsp" %>
+
+
 <table cellpadding="3" cellspacing="0" border="0" width="100%">
     <tr>
-        <td valign="top" width="100%">
+        <td valign="top">
             <!-- Start Left Col -->
-            <%--<div class="roundedBox" style="width:200px;">--%>
+            <div class="roundedBox" style="width:630px;">
                 <center>
 
 
@@ -112,7 +111,7 @@ if (twit!=null && twit.getIsceleb()){
                 <%=AdUtil.get400x600()%>
                 <%=AdUtil.get336x280()%>
                 </center>
-            <%--</div>--%>
+            </div>
             <!-- End Left Col -->
         </td>
 

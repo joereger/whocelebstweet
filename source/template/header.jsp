@@ -1,4 +1,3 @@
-<%@ page import="com.celebtwit.dao.Pl" %>
 <%@ page import="com.celebtwit.privatelabel.*" %>
 <%@ page import="com.celebtwit.htmlui.*" %>
 <%

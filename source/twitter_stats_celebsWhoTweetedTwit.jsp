@@ -58,116 +58,14 @@ pagetitle = typeTitle+ ": Twitter Stats for "+titleTime+"";
 
 <%@ include file="/template/header.jsp" %>
 
-        <%if (twit!=null && twit.getIsceleb()){%>
-            <font class="largefont" style="font-size:60px;"> <%=twit.getRealname()%> </font>
-        <%} else {%>
-            <font class="largefont" style="font-size:60px;"> @<%=twitterusername%> </font>
-        <%}%>
-        <table cellpadding="3" cellspacing="0" border="0" width="100%">
-            <tr>
-                <td valign="top">
-                    <div class="roundedBox" style="width:630px;">
-                        <center>
-                            <table cellpadding="3" cellspacing="0" border="0" width="100%">
-                                <tr>
-                                    <td valign="top" width="*">
-                                            <center>
-                                            <script language="javascript">
-                                                function toggleLink() {
-                                                    var ele = document.getElementById("toggleLink");
-                                                    if(ele.style.display == "block") {
-                                                        ele.style.display = "none";
-                                                    } else {
-                                                        ele.style.display = "block";
-                                                    }
-                                                }
-                                                function toggleA() {
-                                                    var ele = document.getElementById("toggleTextA");
-                                                    if(ele.style.display == "block") {
-                                                        ele.style.display = "none";
-                                                    } else {
-                                                        ele.style.display = "block";
-                                                    }
-                                                }
-                                                function toggleB() {
-                                                    var ele = document.getElementById("toggleTextB");
-                                                    if(ele.style.display == "block") {
-                                                        ele.style.display = "none";
-                                                    } else {
-                                                        ele.style.display = "block";
-                                                    }
-                                                }
-                                            </script>
-                                            <%
-                                            String tweetThisStatus = "check out " + "http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/who/";
-                                            tweetThisStatus = URLEncoder.encode(tweetThisStatus, "UTF-8");
-                                            %>
-                                            <font class="smallfont"><a href="javascript:toggleLink();" style="text-decoration: underline; color: #0000ff;">Link to this Page</a> | <a href="http://twitter.com/home?status=<%=tweetThisStatus%>" style="text-decoration: underline; color: #0000ff;" target="_blank">Tweet This</a></font>
-                                            <div id="toggleLink" style="display: none; text-align: left;">
-                                                <textarea rows="1" cols="40" name="linkurl" id="linkurl" style="font-size:9px;" onclick="javascript:document.getElementById('linkurl').select();"><%=Str.cleanForHtml("http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/who/")%></textarea>
-                                                <br/><font class="tinyfont">Copy and paste the above URL into your blog, email, im or website to link to this page.</font>
-                                            </div>
-                                            <%if (twit!=null && twit.getIsceleb()){%>
-                                                <br/><br/><a href="/twitter/<%=twitterusername%>/picture/"><img src="<%=twitimageurl%>" width="48" height="48" style="border: 10px solid #ffffff;" alt="<%=twit.getRealname()%>"></a>
-                                            <%}%>
-                                            <br clear="all"/><br/>
-                                            <%--<%if (twit!=null && twit.getDescription().length()>0){%>--%>
-                                                <%--<font class="normalfont" style="font-size:15px; color:#666666;"><%=twit.getDescription()%></font>--%>
-                                                <%--<br/>--%>
-                                            <%--<%}%>--%>
-                                            <%--<%if (twit!=null && twit.getWebsite_url().length()>0){%>--%>
-                                                <%--<font class="smallfont">--%>
-                                                <%--<a href="<%=twit.getWebsite_url()%>" target="_blank"  style="text-decoration: underline; color: #0000ff;">Website</a>--%>
-                                                <%--|--%>
-                                                <%--<a href="http://www.twitter.com/<%=twitterusername%>/" target="_blank"  style="text-decoration: underline; color: #0000ff;">Twitter</a>--%>
-                                                <%--</font>--%>
-                                                <%--<br/>--%>
-                                            <%--<%} else { %>--%>
-                                                <%--<font class="smallfont">--%>
-                                                <%--<a href="http://www.twitter.com/<%=twitterusername%>/" target="_blank"  style="text-decoration: underline; color: #0000ff;">Twitter</a>--%>
-                                                <%--</font>--%>
-                                                <%--<br/>--%>
-                                            <%--<%}%>--%>
-                                            <%--<%if (twit!=null && twit.getFollowers_count()>0){%>--%>
-                                                <%--<font class="smallfont"><%=twit.getFollowers_count()%> followers</font>--%>
-                                                <%--<br/>--%>
-                                            <%--<%}%>--%>
-                                            <%--<%if (twit!=null && twit.getStatuses_count()>0){%>--%>
-                                                <%--<font class="smallfont"><%=twit.getStatuses_count()%> updates</font>--%>
-                                                <%--<br/>--%>
-                                            <%--<%}%>--%>
-                                            <%if (twit!=null && twit.getIsceleb()){%>
-                                                <font class="normalfont" style="font-weight:bold;"><a href="/twitter/<%=twit.getTwitterusername()%>/">@<%=twitterusername%>'s Profile</a></font>
-                                                <br/>
-                                            <%}%>
-                                            </center>
-                                    </td>
-                                    <td valign="top" width="150">
-                                        <%=JsCelebMentions.get(twit, twitterusername, Pagez.getUserSession().getPl())%>
-                                        <a href="javascript:toggleA();"><font class="tinyfont">+ embed in your blog/website</font></a>
-                                        <div id="toggleTextA" style="display: none">
-                                            <input type="text" name="embedB" value="<%=Str.cleanForHtml("<script src=\"http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/js/celebtweets/\"></script>")%>" size="25">
-                                            <br/><font class="smallfont">Copy and paste this code into your blog or website to display the box.</font>
-                                        </div>
-                                    </td>
-                                    <td valign="top" width="150">
-                                        <%=JsDifferentCelebs.get(twit, twitterusername, Pagez.getUserSession().getPl())%>
-                                        <a href="javascript:toggleB();"><font class="tinyfont">+ embed in your blog/website</font></a>
-                                        <div id="toggleTextB" style="display: none">
-                                            <input type="text" name="embedB" value="<%=Str.cleanForHtml("<script src=\"http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+twitterusername+"/js/differentcelebs/\"></script>")%>" size="25">
-                                            <br/><font class="smallfont">Copy and paste this code into your blog or website to display the box.</font>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </center>
-                    </div>
 
-                </td>
-                </tr>
-            </table>
-
-
+        <%
+        String subnav_page = "tweets";
+        String subnav_title = "@"+twitterusername;
+        if (twit!=null && twit.getIsceleb()){subnav_title = twit.getRealname();}
+        String subnav_twitterusername = twitterusername;
+        %>
+        <%@ include file="/celeb_subnav.jsp" %>
 
 
         <div class="roundedBox" style="width:630px;">
