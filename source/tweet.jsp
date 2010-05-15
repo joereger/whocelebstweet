@@ -123,7 +123,7 @@ if (twit!=null && twit.getIsceleb()){
                     <br/><font class="tinyfont">Copy and paste the above URL into your blog, email, im or website to link to this page.</font>
                 </div>
                 <%if (twit!=null && twit.getIsceleb()){%>
-                    <br/><br/><img src="<%=twitimageurl%>" width="190" border="0" alt="<%=twit.getRealname()%>">
+                    <br/><br/><a href="/twitter/<%=twitterusername%>/picture/"><img src="<%=twitimageurl%>" width="190" style="border: 10px solid #ffffff;" alt="<%=twit.getRealname()%>"></a>
                 <%}%>
                 <br clear="all"/><br/>
                 <%--<%if (twit!=null && twit.getDescription().length()>0){%>--%>

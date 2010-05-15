@@ -97,14 +97,14 @@ function toggleLink() {
     <table cellpadding="10" cellspacing="5" border="0" width="100%">
         <tr>
             <td valign="top" width="200" align="left">
-                <img src="<%=twit1imageurl%>" width="48" height="48" border="0" align="left">
+                <a href="/twitter/<%=twitterusername1%>/picture/"><img src="<%=twit1imageurl%>" width="48" height="48" style="border: 10px solid #ffffff;" align="left"></a>
                 <font class="mediumfont"> <a href="/twitter/<%=twitterusername1%>/">@<%=nameOnScreen1%></a></font>
             </td>
             <td valign="top" width="100" align="left">
                 <img src="/images/chatter-arrows.png" alt="" width="100" height="48" border="0">
             </td>
             <td valign="top" width="200" align="right">
-                <img src="<%=twit2imageurl%>" width="48" height="48" border="0" align="right">
+                <a href="/twitter/<%=twitterusername2%>/picture/"><img src="<%=twit2imageurl%>" width="48" height="48" style="border: 10px solid #ffffff;" align="right"></a>
                 <font class="mediumfont"><a href="/twitter/<%=twitterusername2%>/">@<%=nameOnScreen2%></a> </font>
             </td>
         </tr>
@@ -115,8 +115,8 @@ function toggleLink() {
     <tr>
         <td valign="top">
 
-            <div class="roundedBoxXXX" style="width:420px;">
-                <font class="mediumfont">what they're saying to each other</font>
+            <div class="roundedBoxXXX" style="width:100%;">
+                <center><font class="mediumfont">what they're saying to each other</font></center>
                 <br/><br/>
                 <%
                     String empty = "";
@@ -134,7 +134,11 @@ function toggleLink() {
                                                            .list();
                         for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
                             Twitpost twitpost=tpIt.next();
-                            %><%=TwitpostAsHtml.get(twitpost, 400)%><%
+                            String paddingLeft = "-250";
+                            if (twitpost.getTwit().getTwitterusername().trim().equalsIgnoreCase(twitterusername2.trim())){
+                                paddingLeft = "250";    
+                            }
+                            %><div style="margin-left: <%=paddingLeft%>px;"><%=TwitpostAsHtml.get(twitpost, 300)%></div><%
                         }
                     } else {
                         %><br/><font class="normalfont">No chatter between them!</font><%
@@ -142,10 +146,6 @@ function toggleLink() {
                 %>
             </div>
             
-        </td>
-        <td valign="top" width="160">
-            <img src="/images/clear.gif" alt="" width="1" height="90"><br/>
-            <%=AdUtil.get160x600()%>
         </td>
     </tr>
 </table>

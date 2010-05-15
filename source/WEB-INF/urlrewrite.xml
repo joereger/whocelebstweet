@@ -39,6 +39,16 @@
         <from>/twitter/([a-zA-Z0-9\_]*)/who</from>
         <to last="true">/who.jsp?twitterusername=$1</to>
     </rule>
+
+    <rule>
+        <from>/twitter/([a-zA-Z0-9\_]*)/picture/</from>
+        <to last="true">/profilepic.jsp?twitterusername=$1</to>
+    </rule>
+
+    <rule>
+        <from>/twitter/([a-zA-Z0-9\_]*)/picture</from>
+        <to last="true">/profilepic.jsp?twitterusername=$1</to>
+    </rule>
     
 
     <rule>

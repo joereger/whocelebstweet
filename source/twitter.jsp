@@ -111,7 +111,7 @@ if (twit!=null && twit.getIsceleb()){
 
                 <%if (twit!=null && twit.getIsceleb()){%>
                     <%--<center><br/><br/><img src="<%=twitimageurl%>" width="48" height="48" border="0" align="middle" alt="<%=twit.getRealname()%>"></center>--%>
-                    <center><br/><br/><img src="<%=twitimageurl%>" width="190" border="0" align="middle" alt="<%=twit.getRealname()%>"></center>
+                    <center><br/><br/><a href="/twitter/<%=twitterusername%>/picture/"><img src="<%=twitimageurl%>" width="190"  style="border: 10px solid #ffffff;" align="middle" alt="<%=twit.getRealname()%>"></center></a>
                 <%}%>
 
 
