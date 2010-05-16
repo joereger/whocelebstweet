@@ -43,7 +43,7 @@ public class KeywordPage implements CachedStuff, Serializable {
             ArrayList<Twit> twits = KeywordHelpers.getCelebsWhoMentionKeyword(keyword, Pagez.getUserSession().getPl());
             for (Iterator<Twit> tIt = twits.iterator(); tIt.hasNext();) {
                 Twit twit = tIt.next();
-                out.append("<li><a href=\"/twitter/"+twit.getTwitterusername()+"/talksabout/"+ URLEncoder.encode(keyword.getKeyword(), "UTF -8")+"/\">"+twit.getRealname()+"</a></li>");
+                out.append("<li><a href=\"/twitter/"+twit.getTwitterusername()+"/talksabout/"+ URLEncoder.encode(keyword.getKeyword(), "UTF-8")+"/\">"+twit.getRealname()+"</a></li>");
             }
             out.append("</ul>");
         } catch (Exception ex){

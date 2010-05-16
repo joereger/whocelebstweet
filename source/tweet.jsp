@@ -52,6 +52,16 @@ if (twit!=null){
 }
 %>
 <%
+if (twitpost==null && twit!=null){
+    Pagez.sendRedirect("/twitter/"+twit.getTwitterusername()+"/");
+    return;
+}
+if (twitpost==null){
+    Pagez.sendRedirect("/");
+    return;
+}
+%>
+<%
 pagetitle = pagetitleName + "'s Twitter Tweets on "+Pagez.getUserSession().getPl().getName()+"!  Always up-to-date!";
 if (Pagez.getUserSession().isSisterPl()){
     pagetitle = pagetitleName + "'s Twitter Tweets on "+Pagez.getUserSession().getPl().getSistername()+"! Always up-to-date!";
