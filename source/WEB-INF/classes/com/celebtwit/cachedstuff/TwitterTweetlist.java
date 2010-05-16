@@ -59,7 +59,7 @@ public class TwitterTweetlist implements CachedStuff, Serializable {
         for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
             Twitpost twitpost=tpIt.next();
             //Only insert ad if it's not the none adnetwork
-            if(!adnetworkname.equals(AdNetworkNone.ADNETWORKNAME)){
+            if(!adnetworkname.equalsIgnoreCase(AdNetworkNone.ADNETWORKNAME)){
                 insertAdCount++;
                 if (insertAdCount>=randomAdInsertionPoint && adsInserted<maxAdsPerPage){
                     adsInserted++;

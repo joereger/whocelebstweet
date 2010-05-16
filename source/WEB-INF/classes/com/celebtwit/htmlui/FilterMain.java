@@ -74,11 +74,14 @@ public class FilterMain implements Filter {
                     logger.debug("no userSession in cache so creating new UserSession()");
                     UserSession userSession = new UserSession();
                     userSession.setPl(pl);
-                    Pagez.setUserSessionAndUpdateCache(userSession);
+                    //Pagez.setUserSessionAndUpdateCache(userSession);
+                    Pagez.setUserSession(userSession);
                     //Make sure the pl is set properly before AssignAdNetwork
                     Pagez.getUserSession().setPl(pl);
                     //Set adnetwork to display... done on session creation so user sees same ads throughout session experience
                     AssignAdNetwork.assign(httpServletRequest);
+                    //Save to cache
+                    Pagez.setUserSessionAndUpdateCache(userSession);
                 }
 
                 if (request.getParameter("ads")!=null || request.getParameter("safe")!=null){
@@ -147,7 +150,7 @@ public class FilterMain implements Filter {
                                             Pagez.setUserSessionAndUpdateCache(newUserSession);
                                             wasAutoLoggedIn = true;
                                             //Notify via XMPP
-                                            SendXMPPMessage xmpp = new SendXMPPMessage(SendXMPPMessage.GROUP_SALES, "dNeero User Auto-Login: "+ user.getFirstname() + " " + user.getLastname() + " ("+user.getEmail()+")");
+                                            SendXMPPMessage xmpp = new SendXMPPMessage(SendXMPPMessage.GROUP_SALES, "WCT User Auto-Login: "+ user.getFirstname() + " " + user.getLastname() + " ("+user.getEmail()+")");
                                             xmpp.send();
                                             break;
                                         }

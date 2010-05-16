@@ -1,7 +1,10 @@
 package com.celebtwit.cachedstuff;
 
+import com.celebtwit.ads.AssignAdNetwork;
 import com.celebtwit.cache.html.DbcacheexpirableCache;
 import com.celebtwit.dao.Pl;
+import com.celebtwit.htmlui.Pagez;
+import com.celebtwit.htmlui.UserSession;
 import com.celebtwit.threadpool.ThreadPool;
 import com.celebtwit.util.Time;
 import org.apache.log4j.Logger;
@@ -36,6 +39,15 @@ public class GetCachedStuffRefreshThread  implements Runnable, Serializable  {
         Logger logger = Logger.getLogger(CachedStuff.class);
         logger.debug("run() called for key="+key+" group="+group);
         try{
+            //Important to make sure Pagez.userSession is set with the pl because running refresh this way means that there's no threadlocal with usersession already set up
+            if (Pagez.getUserSession()==null){
+                logger.debug("Pagez.getUserSession()==null so creating one");
+                UserSession userSession = new UserSession();
+                userSession.setPl(pl);
+                Pagez.setUserSession(userSession);
+                AssignAdNetwork.assign(Pagez.getRequest());
+            }
+            //Call the refresh
             cs.refresh(pl);
             Date expirationdate = Time.xMinutesAgoEnd(Calendar.getInstance(), (-1)*cs.maxAgeInMinutes()).getTime();
             DbcacheexpirableCache.put(key, group, cs, expirationdate);

@@ -8,6 +8,7 @@ import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.helpers.TwitPlHelper;
 import com.celebtwit.helpers.TwitpostAsHtml;
 import com.celebtwit.util.Num;
+import org.apache.log4j.Logger;
 import org.hibernate.criterion.Order;
 
 import java.io.Serializable;
@@ -39,6 +40,8 @@ public class IndexTweetlist implements CachedStuff, Serializable {
     }
 
     public void refresh(Pl pl) {
+        Logger logger = Logger.getLogger(this.getClass().getName());
+        logger.debug("refresh() called");
         StringBuffer out = new StringBuffer();
         int perPage = 25;
         int firstResult = page * perPage;
@@ -58,7 +61,7 @@ public class IndexTweetlist implements CachedStuff, Serializable {
         for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
             Twitpost twitpost=tpIt.next();
             //Only insert ad if it's not the none adnetwork
-            if(!adnetworkname.equals(AdNetworkNone.ADNETWORKNAME)){
+            if(!adnetworkname.equalsIgnoreCase(AdNetworkNone.ADNETWORKNAME)){
                 insertAdCount++;
                 if (insertAdCount>=randomAdInsertionPoint){
                     //insertAdCount = 0;

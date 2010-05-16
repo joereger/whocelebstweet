@@ -2,6 +2,7 @@ package com.celebtwit.ads;
 
 import com.celebtwit.dao.Pl;
 import com.celebtwit.htmlui.Pagez;
+import com.celebtwit.htmlui.UserSession;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,30 +19,35 @@ public class AssignAdNetwork {
 
     public static void assign(HttpServletRequest request){
         Logger logger = Logger.getLogger(AssignAdNetwork.class);
+        if (Pagez.getUserSession()==null){
+            logger.debug("Pagez.getUserSession()==null so creating one");
+            UserSession userSession = new UserSession();
+            Pagez.setUserSession(userSession);
+        }
         //Set to default
-        logger.debug("assign() setting to Default at start of process----------------------");
+        logger.debug("assign() setting to Default at start of process--");
         Pagez.getUserSession().setAdNetworkName(AdNetworkFactory.getDefaultAdNetwork().getAdNetworkName());
         //Only allow anything outside of the default if this is coming from google referer
-        if (request.getHeader("referer")!=null && request.getHeader("referer").indexOf("google")>-1){
+        //if (request.getHeader("referer")!=null && request.getHeader("referer").indexOf("google")>-1){
             //Set by pl
             setByPl(request);
             //If referrer should be safe
             safeReferers(request);
-        }
+        //}
         //If GoogleBot
-        if (request.getHeader("user-agent")!=null){
-            if (request.getHeader("user-agent").indexOf("googlebot")>-1){
-                logger.debug("assign() setting to AdSense because Googlebot");
-                Pagez.getUserSession().setAdNetworkName(AdNetworkNone.ADNETWORKNAME);
-            }
-        }
+        //if (request.getHeader("user-agent")!=null){
+        //    if (request.getHeader("user-agent").indexOf("googlebot")>-1){
+        //        logger.debug("assign() setting to AdSense because Googlebot");
+        //        Pagez.getUserSession().setAdNetworkName(AdNetworkNone.ADNETWORKNAME);
+        //    }
+        //}
         //Override with url param = safe=1
-        if (request.getParameter("safe")!=null && request.getParameter("safe").equals("1")){
+        if (request!=null && request.getParameter("safe")!=null && request.getParameter("safe").equals("1")){
             logger.debug("assign() setting to None because request.getParameter('safe')");
             Pagez.getUserSession().setAdNetworkName(AdNetworkNone.ADNETWORKNAME);
         }
         //If manual set in url
-        if (request.getParameter("ads")!=null){
+        if (request!=null && request.getParameter("ads")!=null){
             AdNetwork adNetwork = AdNetworkFactory.getByName(request.getParameter("ads"));
             if (adNetwork!=null){
                 logger.debug("assign() setting to "+adNetwork.getAdNetworkName()+" in URL because request.getParameter('ads')");
@@ -49,7 +55,7 @@ public class AssignAdNetwork {
             }
         }
         //Set None as master override
-        if (Pagez.getUserSession().getPl().getCommasepadnetworks().toLowerCase().trim().indexOf(AdNetworkNone.ADNETWORKNAME.toLowerCase().trim())>-1){
+        if (Pagez.getUserSession().getPl()!=null && Pagez.getUserSession().getPl().getCommasepadnetworks().toLowerCase().trim().indexOf(AdNetworkNone.ADNETWORKNAME.toLowerCase().trim())>-1){
             logger.debug("assign() setting to None because Pagez.getUserSession().getPl().getCommasepadnetworks().toLowerCase().trim().indexOf(AdNetworkNone.ADNETWORKNAME.toLowerCase().trim())>-1");
             Pagez.getUserSession().setAdNetworkName(AdNetworkNone.ADNETWORKNAME);
         }
@@ -64,6 +70,12 @@ public class AssignAdNetwork {
             if (pl.getCommasepadnetworks().toLowerCase().trim().indexOf(AdNetworkNone.ADNETWORKNAME.toLowerCase())>-1){
                 logger.debug("setByPl() setting to None because pl.getCommasepadnetworks().toLowerCase().trim().indexOf(AdNetworkNone.ADNETWORKNAME.toLowerCase())>-1");
                 Pagez.getUserSession().setAdNetworkName(AdNetworkNone.ADNETWORKNAME);
+                return;
+            }
+            //If there's no comma just assign by the name
+            if (pl.getCommasepadnetworks().indexOf(",")<=-1){
+                logger.debug("setByPl() setting to "+pl.getCommasepadnetworks()+" because no commas in DB pl.getCommasepadnetworks().indexOf(\",\")<=-1");
+                Pagez.getUserSession().setAdNetworkName(pl.getCommasepadnetworks().trim());
                 return;
             }
             //Choose a random ad network from those in the list of acceptable pl ads
@@ -94,7 +106,7 @@ public class AssignAdNetwork {
 
     private static void safeReferers(HttpServletRequest request){
         Logger logger = Logger.getLogger(AssignAdNetwork.class);
-        if (request.getHeader("referer")!=null){
+        if (request!=null && request.getHeader("referer")!=null){
             boolean isFromRefererWhoShouldBeSafe = false;
             ArrayList<String> urlsThatShouldBeSafe = new ArrayList<String>();
             urlsThatShouldBeSafe.add("joereger.com");

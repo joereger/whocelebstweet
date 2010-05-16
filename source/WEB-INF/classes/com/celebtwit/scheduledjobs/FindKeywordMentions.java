@@ -58,10 +58,10 @@ public class FindKeywordMentions implements Job {
             HashMap<Integer, Integer> twitidNumberoftwitposts = new HashMap<Integer, Integer>();
             //Note that this is a native sql query
             //This query requires a FULLTEXT index in MySQL on the post column of twitpost
-            List twitposts = HibernateUtil.getSession().createSQLQuery("SELECT * FROM twitpost WHERE MATCH(post) AGAINST('"+keyword.getKeyword()+"') AND twitpostid>"+keyword.getSincetwitpostid()+" AND twitpostid<"+maxTwitpostid+""+emptyStr).addEntity(Twitpost.class).list();
+            List twitposts = HibernateUtil.getSession().createSQLQuery("SELECT * FROM twitpost WHERE MATCH(post) AGAINST('\""+keyword.getKeyword()+"\"' IN BOOLEAN MODE) AND twitpostid>"+keyword.getSincetwitpostid()+" AND twitpostid<"+maxTwitpostid+""+emptyStr).addEntity(Twitpost.class).list();
             for (Iterator iterator=twitposts.iterator(); iterator.hasNext();) {
                 Twitpost twitpost = (Twitpost)iterator.next();
-                logger.debug("found twitpostid="+twitpost.getTwitpostid()+" which uses '"+keyword.getKeyword()+"' post="+twitpost.getPost());
+                //logger.debug("found twitpostid="+twitpost.getTwitpostid()+" which uses '"+keyword.getKeyword()+"' post="+twitpost.getPost());
                 twitidNumberoftwitposts = addAMention(twitidNumberoftwitposts, twitpost.getTwitid());
             }
             //Save Keywordtwit records

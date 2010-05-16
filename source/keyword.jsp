@@ -1,14 +1,11 @@
+<%@ page import="com.celebtwit.cachedstuff.CachedStuff" %>
+<%@ page import="com.celebtwit.cachedstuff.GetCachedStuff" %>
+<%@ page import="com.celebtwit.cachedstuff.KeywordPage" %>
 <%@ page import="com.celebtwit.dao.Keyword" %>
-<%@ page import="com.celebtwit.dao.Twitpost" %>
-<%@ page import="com.celebtwit.helpers.FindTwitFromTwitterusername" %>
-<%@ page import="com.celebtwit.helpers.TwitpostAsHtml" %>
 <%@ page import="com.celebtwit.keywords.KeywordHelpers" %>
 <%@ page import="com.celebtwit.util.Str" %>
 <%@ page import="org.apache.log4j.Logger" %>
 <%@ page import="java.net.URLEncoder" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="com.celebtwit.ads.AdNetworkNone" %>
-<%@ page import="com.celebtwit.util.Num" %>
 
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
@@ -104,15 +101,12 @@ metaKeywords = keyword.getKeyword()+" "+Pagez.getUserSession().getPl().getCelebi
 
 
                                         <font class="mediumfont">
-                                        <ul>
                                         <%
-                                            ArrayList<Twit> twits = KeywordHelpers.getCelebsWhoMentionKeyword(keyword, Pagez.getUserSession().getPl());
-                                            for (Iterator<Twit> tIt = twits.iterator(); tIt.hasNext();) {
-                                                Twit twit = tIt.next();
-                                                %><li><a href="/twitter/<%=twit.getTwitterusername()%>/talksabout/<%=URLEncoder.encode(keyword.getKeyword(), "UTF-8")%>/"><%=twit.getRealname()%></a></li><%
-                                            }
+                                        CachedStuff cs = new KeywordPage(keyword);
+                                        KeywordPage obj = (KeywordPage) GetCachedStuff.get(cs, Pagez.getUserSession().getPl());
+                                        String keywordpage = obj.getHtml();
+                                        %><%=keywordpage%><%
                                         %>
-                                        </ul>
                                         </font>
 
 

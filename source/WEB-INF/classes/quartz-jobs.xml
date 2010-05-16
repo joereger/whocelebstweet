@@ -312,8 +312,8 @@
             <group>surveyTriggers</group>
             <job-name>findKeywordMentions</job-name>
             <job-group>surveyJobs</job-group>
-            <!-- every 1 hours -->
-            <cron-expression>0 0 0/1 * * ?</cron-expression>
+            <!-- every 8 hours -->
+            <cron-expression>0 0 0/8 * * ?</cron-expression>
           </cron>
         </trigger>
     </job>
