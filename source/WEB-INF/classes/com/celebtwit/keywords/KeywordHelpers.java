@@ -69,7 +69,7 @@ public class KeywordHelpers {
     public static ArrayList<Twitpost> getCelebMentionsOfKeyword(Twit twit, Keyword keyword){
         Logger logger = Logger.getLogger(KeywordHelpers.class);
         ArrayList<Twitpost> out = new ArrayList<Twitpost>();
-        List twitposts = HibernateUtil.getSession().createSQLQuery("SELECT * FROM twitpost WHERE MATCH(post) AGAINST('\""+keyword.getKeyword()+"\"' IN BOOLEAN MODE) AND twitid='"+twit.getTwitid()+"'").addEntity(Twitpost.class).list();
+        List twitposts = HibernateUtil.getSession().createSQLQuery("SELECT * FROM twitpost WHERE MATCH(post) AGAINST('"+keyword.getKeyword()+"') AND twitid='"+twit.getTwitid()+"'").addEntity(Twitpost.class).list();
         for (Iterator iterator=twitposts.iterator(); iterator.hasNext();) {
             Twitpost twitpost = (Twitpost)iterator.next();
             out.add(twitpost);
