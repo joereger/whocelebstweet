@@ -56,7 +56,7 @@ String acl = "sysadmin";
             keyword.setIslocation(islocation);
             if (wasEdited){
                 keyword.setSincetwitpostid(0);
-                HibernateUtil.getSession().createQuery("delete Keywordmention m where m.keywordid='"+ keyword.getKeywordid()+"'").executeUpdate();
+                HibernateUtil.getSession().createQuery("delete Keywordtwit m where m.keywordid='"+ keyword.getKeywordid()+"'").executeUpdate();
             }
             keyword.save();
             //Msg and then redir
@@ -72,7 +72,7 @@ String acl = "sysadmin";
     if (request.getParameter("action") != null && request.getParameter("action").equals("delete")) {
         try {
             //Make sure any already-mentions are *not* marked as being about a celeb, now that this keyword is no longer one
-            HibernateUtil.getSession().createQuery("delete Keywordmention m where m.keywordid='"+ keyword.getKeywordid()+"'").executeUpdate();
+            HibernateUtil.getSession().createQuery("delete Keywordtwit m where m.keywordid='"+ keyword.getKeywordid()+"'").executeUpdate();
             keyword.delete();
             Pagez.getUserSession().setMessage("Keyword Deleted!");
             Pagez.sendRedirect("/sysadmin/keywords.jsp");

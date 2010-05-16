@@ -1,11 +1,9 @@
 package com.celebtwit.keywords;
 
-import com.celebtwit.dao.Keyword;
-import com.celebtwit.dao.Keywordmention;
-import com.celebtwit.dao.Pl;
-import com.celebtwit.dao.Twit;
+import com.celebtwit.dao.*;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.helpers.TwitPlHelper;
+import org.apache.log4j.Logger;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -39,15 +37,15 @@ public class KeywordHelpers {
 
     private static ArrayList<Integer> getKeywordidsACelebHasMentioned(Twit twit){
         ArrayList<Integer> keywordids = new java.util.ArrayList<Integer>();
-        List<Keywordmention> keywordmentions = HibernateUtil.getSession().createCriteria(Keywordmention.class)
+        List<Keywordtwit> keywordtwits = HibernateUtil.getSession().createCriteria(Keywordtwit.class)
                                        .add(Restrictions.eq("twitid", twit.getTwitid()))
-                                       .addOrder(Order.asc("keywordid"))
+                                       .addOrder(Order.desc("numberoftwitposts"))
                                        .setCacheable(true)
                                        .list();
-        for (Iterator<Keywordmention> tpIt=keywordmentions.iterator(); tpIt.hasNext();) {
-            Keywordmention keywordmention = tpIt.next();
-            if (!keywordids.contains(keywordmention.getKeywordid())){
-                keywordids.add(keywordmention.getKeywordid());
+        for (Iterator<Keywordtwit> tpIt=keywordtwits.iterator(); tpIt.hasNext();) {
+            Keywordtwit keywordtwit = tpIt.next();
+            if (!keywordids.contains(keywordtwit.getKeywordid())){
+                keywordids.add(keywordtwit.getKeywordid());
             }
         }
         return keywordids;
@@ -68,31 +66,27 @@ public class KeywordHelpers {
         return getKeywordidsACelebHasMentioned(twit).size();
     }
 
-    public static ArrayList<Keywordmention> getCelebMentionsOfKeyword(Twit twit, Keyword keyword){
-        ArrayList<Keywordmention> out = new java.util.ArrayList<Keywordmention>();
-        List<Keywordmention> kwms = HibernateUtil.getSession().createCriteria(Keywordmention.class)
-                                       .add(Restrictions.eq("twitid", twit.getTwitid()))
-                                       .add(Restrictions.eq("keywordid", keyword.getKeywordid()))
-                                       .addOrder(Order.desc("twitpostid"))
-                                       .setCacheable(true)
-                                       .list();
-        for (Iterator<Keywordmention> tpIt=kwms.iterator(); tpIt.hasNext();) {
-            Keywordmention keywordmention = tpIt.next();
-            out.add(keywordmention);
+    public static ArrayList<Twitpost> getCelebMentionsOfKeyword(Twit twit, Keyword keyword){
+        Logger logger = Logger.getLogger(KeywordHelpers.class);
+        ArrayList<Twitpost> out = new ArrayList<Twitpost>();
+        List twitposts = HibernateUtil.getSession().createSQLQuery("SELECT * FROM twitpost WHERE MATCH(post) AGAINST('\""+keyword.getKeyword()+"\"' IN BOOLEAN MODE) AND twitid='"+twit.getTwitid()+"'").addEntity(Twitpost.class).list();
+        for (Iterator iterator=twitposts.iterator(); iterator.hasNext();) {
+            Twitpost twitpost = (Twitpost)iterator.next();
+            out.add(twitpost);
         }
         return out;
     }
 
     public static ArrayList<Twit> getCelebsWhoMentionKeyword(Keyword keyword, Pl pl){
         ArrayList<Twit> out = new java.util.ArrayList<Twit>();
-        List<Keywordmention> kwms = HibernateUtil.getSession().createCriteria(Keywordmention.class)
+        List<Keywordtwit> kwms = HibernateUtil.getSession().createCriteria(Keywordtwit.class)
                                        .add(Restrictions.eq("keywordid", keyword.getKeywordid()))
-                                       .addOrder(Order.desc("twitpostid"))
+                                       .addOrder(Order.desc("numberoftwitposts"))
                                        .setCacheable(true)
                                        .list();
-        for (Iterator<Keywordmention> tpIt=kwms.iterator(); tpIt.hasNext();) {
-            Keywordmention keywordmention = tpIt.next();
-            Twit twit = Twit.get(keywordmention.getTwitid());
+        for (Iterator<Keywordtwit> tpIt=kwms.iterator(); tpIt.hasNext();) {
+            Keywordtwit keywordtwit = tpIt.next();
+            Twit twit = Twit.get(keywordtwit.getTwitid());
             if (TwitPlHelper.isTwitACelebInThisPl(twit, pl)){
                 if (!out.contains(twit)){
                     out.add(twit);

@@ -11,7 +11,7 @@
         <mapping resource="com/celebtwit/dao/Error.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Pageperformance.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Keyword.hbm.xml" />
-        <mapping resource="com/celebtwit/dao/Keywordmention.hbm.xml" />
+        <mapping resource="com/celebtwit/dao/Keywordtwit.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Listimportblock.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Mention.hbm.xml" />
         <mapping resource="com/celebtwit/dao/Pl.hbm.xml" />

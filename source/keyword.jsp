@@ -1,5 +1,4 @@
 <%@ page import="com.celebtwit.dao.Keyword" %>
-<%@ page import="com.celebtwit.dao.Keywordmention" %>
 <%@ page import="com.celebtwit.dao.Twitpost" %>
 <%@ page import="com.celebtwit.helpers.FindTwitFromTwitterusername" %>
 <%@ page import="com.celebtwit.helpers.TwitpostAsHtml" %>

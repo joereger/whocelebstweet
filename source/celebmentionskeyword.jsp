@@ -1,5 +1,4 @@
 <%@ page import="com.celebtwit.dao.Keyword" %>
-<%@ page import="com.celebtwit.dao.Keywordmention" %>
 <%@ page import="com.celebtwit.dao.Twitpost" %>
 <%@ page import="com.celebtwit.helpers.FindTwitFromTwitterusername" %>
 <%@ page import="com.celebtwit.helpers.TwitpostAsHtml" %>
@@ -102,27 +101,12 @@ String subnav_twitterusername = twitterusername;
 
 
                                         <%
-                                        ArrayList<Keywordmention> kwms = KeywordHelpers.getCelebMentionsOfKeyword(twit, keyword);
-                                            int maxAdsPerPage = 3;
-                                            int insertAdCount = 0;
-                                            int adsInserted = 0;
-                                            int randomAdInsertionPoint = 2 + Num.randomInt(4);
-                                            for (Iterator<Keywordmention> kwmIt = kwms.iterator(); kwmIt.hasNext();) {
-                                                Keywordmention keywordmention = kwmIt.next();
-                                                Twitpost twitpost = Twitpost.get(keywordmention.getTwitpostid());
-                                                //Only insert ad if it's not the none adnetwork
-                                                if(Pagez.getUserSession().getAdNetworkName().indexOf(AdNetworkNone.ADNETWORKNAME)<=-1){
-                                                    insertAdCount++;
-                                                    if (insertAdCount>=randomAdInsertionPoint && adsInserted<maxAdsPerPage){
-                                                        adsInserted++;
-                                                        insertAdCount = 0;
-                                                        randomAdInsertionPoint = 2 + Num.randomInt(4);
-                                                        //randomAdInsertionPoint = 10000;
-                                                        %><%=TwitpostAsHtml.getAdsenseAsTwitpost(380)%><%
-                                                    }
-                                                }
-                                                %><%=TwitpostAsHtml.get(twitpost, 380)%><%
-                                            }
+                                        if (twit!=null){
+                                            CachedStuff cs = new CelebMentionsKeyword(twit, keyword);
+                                            CelebMentionsKeyword obj = (CelebMentionsKeyword) GetCachedStuff.get(cs, Pagez.getUserSession().getPl());
+                                            String celebmentionskeyword = obj.getHtml();
+                                            %><%=celebmentionskeyword%><%
+                                        }
                                         %>
 
                                 </div>

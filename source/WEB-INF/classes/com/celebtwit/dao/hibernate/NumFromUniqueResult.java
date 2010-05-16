@@ -31,6 +31,27 @@ public class NumFromUniqueResult {
         return 0;
     }
 
+    public static int getIntFromNativeSQLQuery(String query){
+        Logger logger = Logger.getLogger(NumFromUniqueResult.class.getName());
+        Object obj = HibernateUtil.getSession().createSQLQuery(query).uniqueResult();
+        if (obj!=null && obj instanceof Long){
+            try{
+                Long lng =  (Long)obj;
+                if (Num.isinteger(String.valueOf(lng))){
+                    int i = lng.intValue();
+                    return i;
+                }
+            }catch(Exception ex){logger.error("",ex); return 0;}
+        }
+        if (obj!=null && obj instanceof Integer){
+            try{
+                Integer integer =  (Integer)obj;
+                return integer;
+            }catch(Exception ex){logger.error("",ex); return 0;}
+        }
+        return 0;
+    }
+
     public static double getDouble(String query){
         Logger logger = Logger.getLogger(NumFromUniqueResult.class.getName());
         Object obj = HibernateUtil.getSession().createQuery(query).uniqueResult();
