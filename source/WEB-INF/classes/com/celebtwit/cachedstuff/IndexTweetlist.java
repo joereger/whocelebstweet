@@ -69,6 +69,8 @@ public class IndexTweetlist implements CachedStuff, Serializable {
                     randomAdInsertionPoint = 10000;
                     out.append(TwitpostAsHtml.getAdsenseAsTwitpost(410));
                 }
+            } else {
+                logger.debug("adnetworkname.equalsIgnoreCase(AdNetworkNone.ADNETWORKNAME) so not displaying ad");
             }
             out.append(TwitpostAsHtml.get(twitpost, 410));
         }

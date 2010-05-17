@@ -1,7 +1,9 @@
 package com.celebtwit.dao.hibernate;
 
-import org.apache.log4j.Logger;
 import com.celebtwit.util.Num;
+import org.apache.log4j.Logger;
+
+import java.util.Date;
 
 /**
  * User: Joe Reger Jr
@@ -64,6 +66,18 @@ public class NumFromUniqueResult {
             }catch(Exception ex){logger.error("",ex); return 0;}
         }
         return new Double(0);
+    }
+
+    public static Date getDate(String query){
+        Logger logger = Logger.getLogger(NumFromUniqueResult.class.getName());
+        Object obj = HibernateUtil.getSession().createQuery(query).uniqueResult();
+        if (obj!=null && obj instanceof Date){
+            try{
+                Date dbl =  (Date)obj;
+                return dbl;
+            }catch(Exception ex){logger.error("",ex); return null;}
+        }
+        return null;
     }
 
 

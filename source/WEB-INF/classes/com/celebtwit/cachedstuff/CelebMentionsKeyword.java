@@ -2,7 +2,10 @@ package com.celebtwit.cachedstuff;
 
 
 import com.celebtwit.ads.AdNetworkNone;
-import com.celebtwit.dao.*;
+import com.celebtwit.dao.Keyword;
+import com.celebtwit.dao.Pl;
+import com.celebtwit.dao.Twit;
+import com.celebtwit.dao.Twitpost;
 import com.celebtwit.helpers.TwitpostAsHtml;
 import com.celebtwit.htmlui.Pagez;
 import com.celebtwit.keywords.KeywordHelpers;
@@ -38,12 +41,15 @@ public class CelebMentionsKeyword implements CachedStuff, Serializable {
     public void refresh(Pl pl) {
         StringBuffer out = new StringBuffer();
         //Start Refresh
-        if (KeywordHelpers.getNumberOfKeywordsACelebHasMentioned(twit)>0){
-            ArrayList<Twitpost> kwms = KeywordHelpers.getCelebMentionsOfKeyword(twit, keyword);
+        ArrayList<Twitpost> kwms = KeywordHelpers.getCelebMentionsOfKeyword(twit, keyword);
+        if (kwms!=null && kwms.size()>0){
+            //Vars for list of twitposts
+            StringBuffer listOfTwitposts = new StringBuffer();
             int maxAdsPerPage = 3;
             int insertAdCount = 0;
             int adsInserted = 0;
             int randomAdInsertionPoint = 2 + Num.randomInt(4);
+            //Loopamungous (not really)
             for (Iterator<Twitpost> kwmIt = kwms.iterator(); kwmIt.hasNext();) {
                 Twitpost twitpost = kwmIt.next();
                 //Only insert ad if it's not the none adnetwork
@@ -54,11 +60,13 @@ public class CelebMentionsKeyword implements CachedStuff, Serializable {
                         insertAdCount = 0;
                         randomAdInsertionPoint = 2 + Num.randomInt(4);
                         //randomAdInsertionPoint = 10000;
-                        out.append(TwitpostAsHtml.getAdsenseAsTwitpost(380));
+                        listOfTwitposts.append(TwitpostAsHtml.getAdsenseAsTwitpost(380));
                     }
                 }
-                out.append(TwitpostAsHtml.get(twitpost, 380));
+                listOfTwitposts.append(TwitpostAsHtml.get(twitpost, 380));
             }
+            //Append the list of twitposts
+            out.append(listOfTwitposts);
         }
         //End Refresh
         html = out.toString();

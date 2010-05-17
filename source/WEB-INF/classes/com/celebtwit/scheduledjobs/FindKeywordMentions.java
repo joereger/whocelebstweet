@@ -34,7 +34,7 @@ public class FindKeywordMentions implements Job {
                 int maxTwitpostid = NumFromUniqueResult.getInt("select max(twitpostid) from Twitpost");
 
                 List<Keyword> keywords = HibernateUtil.getSession().createCriteria(Keyword.class)
-                                       .addOrder(Order.asc("keywordid"))
+                                       .addOrder(Order.asc("sincetwitpostid"))
                                        .setCacheable(true)
                                        .list();
                 for (Iterator<Keyword> iterator=keywords.iterator(); iterator.hasNext();) {

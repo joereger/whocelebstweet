@@ -49,14 +49,24 @@ if (keyword==null){
 }
 %>
 <%
+//Get keyword stats for use in description
+String celebmentionskeywordstats = "";
+if (twit!=null){
+    CachedStuff cs = new CelebMentionsKeywordStats(twit, keyword);
+    CelebMentionsKeywordStats obj = (CelebMentionsKeywordStats) GetCachedStuff.get(cs, Pagez.getUserSession().getPl());
+    celebmentionskeywordstats = obj.getHtml();
+}
+%>
+<%
 pagetitle = ""+pagetitleName+" Talks About "+keyword.getKeyword()+" on Twitter";
 %>
 <%
-metaDescription = "A list of tweets where "+pagetitleName+" talks about "+keyword.getKeyword()+" on Twitter.";
+metaDescription = celebmentionskeywordstats + " A list of tweets where "+pagetitleName+" talks about "+keyword.getKeyword()+" on Twitter.";
 %>
 <%
 metaKeywords = keyword.getKeyword()+" "+pagetitleName+" twitter discusses talks mentions";
 %>
+
 <%@ include file="/template/header.jsp" %>
 
 
@@ -99,6 +109,12 @@ String subnav_twitterusername = twitterusername;
                                         <font class="normalfont" style="font-weight:bold;"><a href="/talksabout/<%=URLEncoder.encode(keyword.getKeyword(), "UTF-8")%>/">Other <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s Who Talk About <%=keyword.getKeyword()%></a></font>
                                         <br/><br/><br/>
 
+                                        <center>
+                                        <div class="mediumfont" style="color: #999999; background: #f9f9f9; padding: 15px; width: 400;">
+                                            <%=celebmentionskeywordstats%>
+                                        </div>
+                                        </center>
+                                        <br/><br/>
 
                                         <%
                                         if (twit!=null){

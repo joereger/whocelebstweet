@@ -43,10 +43,12 @@ public class CelebsSidebarKeywordsList implements CachedStuff, Serializable {
             for (Iterator<Keyword> kwIt = keywords.iterator(); kwIt.hasNext();) {
                 Keyword keyword = kwIt.next();
                 try{
-                    out.append("<font class=\"tinyfont\" style=\"padding-left: 10px;\"><a href=\"/twitter/"+twit.getTwitterusername()+"/talksabout/"+ URLEncoder.encode(keyword.getKeyword(), "UTF-8")+"/\">"+keyword.getKeyword()+"</a></font><br/>");
+                    out.append("<a href=\"/twitter/"+twit.getTwitterusername()+"/talksabout/"+ URLEncoder.encode(keyword.getKeyword(), "UTF-8")+"/\"><div style=\"padding-left: 11px; font-family:arial,sans-serif; font-size:11px; line-height:13px; color:#0000FF; font-weight:normal; text-decoration:underline;\">"+keyword.getKeyword()+"</div></a>");
                 } catch (Exception ex){
                     logger.debug("", ex);
                 }
+
+
             }
         }
         //End Refresh

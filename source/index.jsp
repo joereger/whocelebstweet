@@ -78,6 +78,7 @@ String acl = "public";
                         if (Num.isinteger(request.getParameter("tweetsPage"))){ tweetsPage = Integer.parseInt(request.getParameter("tweetsPage")); }
                     %>
                     <%
+                    logger.debug("Pagez.getUserSession().getAdNetworkName()="+Pagez.getUserSession().getAdNetworkName());
                     CachedStuff cs = new IndexTweetlist(tweetsPage, Pagez.getUserSession().getAdNetworkName());
                     IndexTweetlist obj = (IndexTweetlist) GetCachedStuff.get(cs, Pagez.getUserSession().getPl());
                     String tweetlist = obj.getHtml();

@@ -19,23 +19,24 @@ public class AdUtil {
         Logger logger = Logger.getLogger(AdUtil.class);
         //This is only in case there's no UserSession... normally there is
         if (Pagez.getUserSession()==null){
-            logger.error("Pagez.getUserSession()==null so will look to create one");
+            logger.debug("Pagez.getUserSession()==null so will look to create one");
             //UserSession is null so need to do some of the work normally done in FilterMail
             //Sometimes, somehow, on live site (probably spiders) get no ad network set, this is saved to cache and real users don't see ads
             if (Pagez.getRequest()!=null){
-                logger.error("Pagez.getRequest()!=null so will create new UserSession");
+                logger.debug("Pagez.getRequest()!=null so will create new UserSession");
                 Pl pl = PlFinder.find(Pagez.getRequest());
                 UserSession userSession = new UserSession();
                 userSession.setPl(pl);
                 Pagez.setUserSession(userSession);
                 AssignAdNetwork.assign(Pagez.getRequest());
             } else {
-                logger.error("Pagez.getRequest()==null");
+                logger.debug("Pagez.getRequest()==null");
             }
         }
         //By now we should have a userSession
         if (Pagez.getUserSession()!=null){
             if (Pagez.getUserSession().getAdNetworkName()!=null && Pagez.getUserSession().getAdNetworkName().length()>0){
+                logger.debug("returning adnetworkname="+Pagez.getUserSession().getAdNetworkName()+" from Pagez.getUserSession().getAdNetworkName()");
                 return Pagez.getUserSession().getAdNetworkName();
             }
         } else {
