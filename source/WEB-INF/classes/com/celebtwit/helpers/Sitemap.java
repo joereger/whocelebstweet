@@ -1,5 +1,6 @@
 package com.celebtwit.helpers;
 
+import com.celebtwit.dao.Keyword;
 import com.celebtwit.dao.Pl;
 import com.celebtwit.dao.Twit;
 import com.celebtwit.dao.hibernate.HibernateUtil;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -70,15 +72,28 @@ public class Sitemap extends HttpServlet {
             Twit twit=tpIt.next();
 
             out.print("<url>");
-            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/"+"</loc>");
-            out.print("<changefreq>hourly</changefreq>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/who/"+"</loc>");
+            out.print("<changefreq>daily</changefreq>");
             out.print("<priority>.9</priority>");
             out.print("</url>");
 
             out.print("<url>");
-            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/who/"+"</loc>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/talksabout/"+"</loc>");
             out.print("<changefreq>daily</changefreq>");
             out.print("<priority>.9</priority>");
+            out.print("</url>");
+
+            out.print("<url>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/"+"</loc>");
+            out.print("<changefreq>hourly</changefreq>");
+            out.print("<priority>.8</priority>");
+            out.print("</url>");
+
+
+            out.print("<url>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/picture/"+"</loc>");
+            out.print("<changefreq>daily</changefreq>");
+            out.print("<priority>.6</priority>");
             out.print("</url>");
 
 
@@ -86,19 +101,19 @@ public class Sitemap extends HttpServlet {
             //Weekly big long list of who pages
 
             out.print("<url>");
-            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/nonCelebsTweetedMostByTwit/"+twit.getTwitterusername()+"/when/thisweek/"+"</loc>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitterstats/nonCelebsTweetedMostByTwit/"+twit.getTwitterusername()+"/when/thisweek/"+"</loc>");
             out.print("<changefreq>weekly</changefreq>");
             out.print("<priority>.7</priority>");
             out.print("</url>");
 
             out.print("<url>");
-            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/celebsTweetedMostByTwit/"+twit.getTwitterusername()+"/when/thisweek/"+"</loc>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitterstats/celebsTweetedMostByTwit/"+twit.getTwitterusername()+"/when/thisweek/"+"</loc>");
             out.print("<changefreq>weekly</changefreq>");
             out.print("<priority>.7</priority>");
             out.print("</url>");
 
             out.print("<url>");
-            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/celebsWhoTweetedTwit/"+twit.getTwitterusername()+"/when/thisweek/"+"</loc>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitterstats/celebsWhoTweetedTwit/"+twit.getTwitterusername()+"/when/thisweek/"+"</loc>");
             out.print("<changefreq>weekly</changefreq>");
             out.print("<priority>.7</priority>");
             out.print("</url>");
@@ -107,19 +122,19 @@ public class Sitemap extends HttpServlet {
             //Monthly big long list of who pages
 
             out.print("<url>");
-            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/nonCelebsTweetedMostByTwit/"+twit.getTwitterusername()+"/when/alltime/"+"</loc>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitterstats/nonCelebsTweetedMostByTwit/"+twit.getTwitterusername()+"/when/alltime/"+"</loc>");
             out.print("<changefreq>monthly</changefreq>");
             out.print("<priority>.6</priority>");
             out.print("</url>");
 
             out.print("<url>");
-            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/celebsTweetedMostByTwit/"+twit.getTwitterusername()+"/when/alltime/"+"</loc>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitterstats/celebsTweetedMostByTwit/"+twit.getTwitterusername()+"/when/alltime/"+"</loc>");
             out.print("<changefreq>monthly</changefreq>");
             out.print("<priority>.6</priority>");
             out.print("</url>");
 
             out.print("<url>");
-            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/celebsWhoTweetedTwit/"+twit.getTwitterusername()+"/when/alltime/"+"</loc>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitterstats/celebsWhoTweetedTwit/"+twit.getTwitterusername()+"/when/alltime/"+"</loc>");
             out.print("<changefreq>monthly</changefreq>");
             out.print("<priority>.6</priority>");
             out.print("</url>");
@@ -127,33 +142,47 @@ public class Sitemap extends HttpServlet {
 
 
 
-
-
-
-
-
-            out.print("<url>");
-            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/when/yesterday/"+"</loc>");
-            out.print("<changefreq>daily</changefreq>");
-            out.print("<priority>.4</priority>");
-            out.print("</url>");
-
-
-            out.print("<url>");
-            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/when/thisweek/"+"</loc>");
-            out.print("<changefreq>weekly</changefreq>");
-            out.print("<priority>.3</priority>");
-            out.print("</url>");
-
-
-
-            out.print("<url>");
-            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/when/today/"+"</loc>");
-            out.print("<changefreq>daily</changefreq>");
-            out.print("<priority>.2</priority>");
-            out.print("</url>");
+//            out.print("<url>");
+//            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/when/yesterday/"+"</loc>");
+//            out.print("<changefreq>daily</changefreq>");
+//            out.print("<priority>.4</priority>");
+//            out.print("</url>");
+//
+//
+//            out.print("<url>");
+//            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/when/thisweek/"+"</loc>");
+//            out.print("<changefreq>weekly</changefreq>");
+//            out.print("<priority>.3</priority>");
+//            out.print("</url>");
+//
+//
+//
+//            out.print("<url>");
+//            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/twitter/"+twit.getTwitterusername()+"/when/today/"+"</loc>");
+//            out.print("<changefreq>daily</changefreq>");
+//            out.print("<priority>.2</priority>");
+//            out.print("</url>");
  
         }
+
+
+        List<Keyword> keywords = HibernateUtil.getSession().createCriteria(Keyword.class)
+                                           .addOrder(Order.asc("keyword"))
+                                           .setCacheable(true)
+                                           .list();
+        for (Iterator<Keyword> tpIt=keywords.iterator(); tpIt.hasNext();) {
+            Keyword keyword=tpIt.next();
+
+            out.print("<url>");
+            out.print("<loc>"+"http://"+pl.getCustomdomain1()+"/talksabout/"+ URLEncoder.encode(keyword.getKeyword(), "UTF-8")+"/"+"</loc>");
+            out.print("<changefreq>monthly</changefreq>");
+            out.print("<priority>.8</priority>");
+            out.print("</url>");
+
+        }
+
+
+
 
 
         out.print("</urlset>");
