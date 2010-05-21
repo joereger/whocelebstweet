@@ -289,8 +289,8 @@
             <group>surveyTriggers</group>
             <job-name>fixTwitpostsWithNoPl</job-name>
             <job-group>surveyJobs</job-group>
-            <!-- every 1 hours -->
-            <cron-expression>0 0 0/1 * * ?</cron-expression>
+            <!-- every Fire at 3:15am on the 15th day of every month  -->
+            <cron-expression>0 15 3 15 * ?</cron-expression>
           </cron>
         </trigger>
     </job>
