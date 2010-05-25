@@ -24,8 +24,7 @@
 </head>
 <body LEFTMARGIN="0" TOPMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0"><center>
 
-<%=AdUtil.getCornerPeel()%>
-<%=AdUtil.getFloaterBanner()%>
+
 
     <%@ include file="message.jsp" %>
     <%@ include file="nav.jsp" %>
@@ -46,7 +45,7 @@
                     </a>
                 </td>
                 <td>
-                    <%=AdUtil.get100percentX200()%>
+
                 </td>
             </tr>
          </table>

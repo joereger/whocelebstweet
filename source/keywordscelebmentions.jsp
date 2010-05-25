@@ -98,10 +98,7 @@ String subnav_twitterusername = twitterusername;
                     </table>
                 <%}%>
             <%}%>
-            <br/><br/><br/><br/>
-            <center>
-            <%=AdUtil.get400x600()%>
-            </center>
+            <br/><br/>
             <!-- End Middle Col -->
         </td>
     </tr>

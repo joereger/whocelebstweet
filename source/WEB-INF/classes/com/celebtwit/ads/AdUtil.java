@@ -69,22 +69,7 @@ public class AdUtil {
 
 
     
-    public static String getCornerPeel(){
-        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).getCornerPeel();
-    }
-
-    public static String getFloaterBanner() {
-        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).getFloaterBanner();
-    }
-
-    public static String get100percentX200() {
-        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get100percentX200();
-    }
-    
-    public static String get400x600(){
-        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get400x600();
-    }
-
+   
 
 
 

@@ -48,28 +48,5 @@ public class AdNetworkPassionDotCom implements AdNetwork {
         return out.toString();
     }
 
-    public String getCornerPeel() {
-        StringBuffer out = new StringBuffer();
-        //out.append("<script type=\"text/javascript\" src=\"http://banners.passion.com/go/page/js_peel_ads?lang=english&plain_text=1&pid=g1200428-pct&ad_id=CRN_0010170012207510432&ed=l&blayer=top\"></script>");
-        return out.toString();
-    }
 
-
-    public String getFloaterBanner() {
-        StringBuffer out = new StringBuffer();
-        //out.append("<script src=\"http://banners.adultfriendfinder.com/go/page/js_shea_banner?plain_text=1&no_click=1&pid=g1200428-pct&delay=3\"></script>");
-        return out.toString();
-    }
-
-    public String get100percentX200() {
-        StringBuffer out = new StringBuffer();
-        //out.append("<iframe width=\"100%\" scrolling=\"no\" frameborder=\"0\" src=\"http://banners.passion.com/piclist?background_color=transparent&border_color=transparent&link_color=%230000FF&models=0&movie=0&pic_border_color=%23000000&pic_border_width=0&pid=g1200428-pct&race=0&rollover_header_color=%23FFF6CE&rows=1&show_join_link=0&site=ffadult&size=3&text_color=%23000000&thumb=bigthumb&title_color=%23000000&spcpromo_creative=July-spc&iframe=1\" style=\"vertical-align: middle;\" height=\"218\" allowtransparency=\"true\"></iframe>");
-        return out.toString();
-    }
-
-    public String get400x600() {
-        StringBuffer out = new StringBuffer();
-        //out.append("<iframe src=\"http://banners.passion.com/p/flash_banner.cgi?pid=g1200428-pct&no_click=1&sSiteName=passion&Banner_ID=11\" align=\"MIDDLE\" frameborder=\"No\" width=420 height=620></iframe>");
-        return out.toString();
-    }
 }

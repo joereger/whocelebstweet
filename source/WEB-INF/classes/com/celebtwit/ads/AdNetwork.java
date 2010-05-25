@@ -15,9 +15,5 @@ public interface AdNetwork {
     public String get160x90();
     public String get234x60();
     public String get300x250();
-    public String getCornerPeel();
-    public String getFloaterBanner();
-    public String get100percentX200();
-    public String get400x600();
 
 }

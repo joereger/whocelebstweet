@@ -127,7 +127,6 @@ String subnav_twitterusername = twitterusername;
             <%}%>
             <br/><br/>
             <center>
-            <%=AdUtil.get400x600()%>
             <%=AdUtil.get336x280()%>
             </center>
             <!-- End Middle Col -->

@@ -99,28 +99,4 @@ public class AdNetworkGoogleAdsense implements AdNetwork {
     }
 
 
-    public String getCornerPeel() {
-        StringBuffer out = new StringBuffer();
-        out.append("");
-        return out.toString();
-    }
-
-    public String getFloaterBanner() {
-        StringBuffer out = new StringBuffer();
-        out.append("");
-        return out.toString();
-    }
-
-    public String get100percentX200() {
-        StringBuffer out = new StringBuffer();
-        out.append("");
-        return out.toString();
-    }
-
-    public String get400x600() {
-        StringBuffer out = new StringBuffer();
-        out.append("");
-        return out.toString();
-    }
-
 }

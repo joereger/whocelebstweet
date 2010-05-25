@@ -108,7 +108,6 @@ String subnav_twitterusername = twitterusername;
                     <br/><font class="tinyfont">Copy and paste the above URL into your blog, email, im or website to link to this page.</font>
                 </div>
                 <br/><br/>
-                <%=AdUtil.get400x600()%>
                 <%=AdUtil.get336x280()%>
                 </center>
             </div>

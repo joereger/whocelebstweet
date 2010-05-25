@@ -116,10 +116,7 @@ metaKeywords = keyword.getKeyword()+" "+Pagez.getUserSession().getPl().getCelebi
                         </tr>
                     </table>
 
-            <br/><br/><br/><br/>
-            <center>
-            <%=AdUtil.get400x600()%>
-            </center>
+            <br/><br/>
             <!-- End Middle Col -->
         </td>
     </tr>
