@@ -30,15 +30,23 @@
 <tr>
     <td>
     <div style="text-align: left;">
-    <a href="/">
-    <%if (!Pagez.getUserSession().isSisterPl()){%>
-        <img src="/images/logoAtlantaTechpundits.gif" alt="<%=Pagez.getUserSession().getPl().getName()%>" width="478" height="132" border="0">
-    <%} else {%>
-        <img src="/images/logoAtlantaTechpunditsSister.gif" alt="<%=Pagez.getUserSession().getPl().getSistername()%>" width="478" height="132" border="0">
-    <%}%>
-    </a>   
-
-    <br/><br/><br/>
+        <table width="100%" cellspacing="0" border="0" cellpadding="5">
+            <tr>
+                <td width="480">
+                    <a href="/">
+                    <%if (!Pagez.getUserSession().isSisterPl()){%>
+                        <img src="/images/logoAtlantaTechpundits.gif" alt="<%=Pagez.getUserSession().getPl().getName()%>" width="478" height="132" border="0">
+                    <%} else {%>
+                        <img src="/images/logoAtlantaTechpunditsSister.gif" alt="<%=Pagez.getUserSession().getPl().getSistername()%>" width="478" height="132" border="0">
+                    <%}%>
+                    </a>
+                </td>
+                <td align="right">
+                    <%=AdUtil.getSEARCH()%>
+                </td>
+            </tr>
+         </table>
+        <br/>
 
 <!-- Start Body -->
 <table cellpadding="0" cellspacing="5" border="0">

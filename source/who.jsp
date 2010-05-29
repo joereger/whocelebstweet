@@ -151,7 +151,7 @@ String subnav_twitterusername = twitterusername;
 
 
                                 <%--<td valign="top">--%>
-                                    <%--<%=AdUtil.get160x600()%>--%>
+                                    <%--<%=AdUtil.get160x600STATS()%>--%>
                                 <%--</td>--%>
 
                             <%--</tr>--%>

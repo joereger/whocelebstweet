@@ -47,12 +47,12 @@ public class PublicTwitterWhoPanel {
         StartDateEndDate sted = new StartDateEndDate(requestParamTime);
         if (requestParamTime==null){ requestParamTime="alltime"; }
 
-        out.append("<table cellpadding=\"0\" cellspacing=\"10\" border=\"0\">\n");
+        out.append("<table cellpadding=\"0\" cellspacing=\"10\" border=\"0\" width=\"100%\">\n");
 
         if (twit.getIsceleb()){
 
             out.append("            <tr>\n");
-            out.append("                <td valign=\"top\" width=\"50%\">\n");
+            out.append("                <td valign=\"top\" width=\"336\">\n");
 
             if (twit!=null && twit.getIsceleb()){
                 out.append("<font class=\"mediumfont\">non-"+pl.getCelebiscalled()+"s tweeted by "+twit.getRealname()+"</font>");
@@ -95,9 +95,9 @@ public class PublicTwitterWhoPanel {
         out.append("                </td>\n");
         out.append("            </tr>\n");
         out.append("            <tr>\n");
-        out.append("                <td valign=\"top\" width=\"50%\" rowspan=\"2\">\n");
+        out.append("                <td valign=\"top\" width=\"336\" rowspan=\"2\">\n");
 
-        out.append(AdUtil.get300x250());
+        out.append(AdUtil.get336x280PUBTWITWHOPANEL());
 
         out.append("                </td>\n");
         out.append("                <td valign=\"top\" height=\"40\">\n");

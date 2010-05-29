@@ -46,30 +46,51 @@ public class AdUtil {
         return AdNetworkNone.ADNETWORKNAME;
     }
 
-    public static String get160x600(){
-        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get160x600();
+
+    //New Ones
+    public static String get120x240SIDEBAR() {
+        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get120x240SIDEBAR();
     }
 
-    public static String get336x280(){
-        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get336x280();
+    public static String get160x600INDEX() {
+        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get160x600INDEX();
     }
 
-    public static String get160x90(){
-        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get160x90();
+    public static String get336x280PROFILEPIC() {
+        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get336x280PROFILEPIC();
     }
 
-    public static String get234x60(){
-        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get234x60();
+    public static String get160x600STATS() {
+        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get160x600STATS();
     }
 
-
-    public static String get300x250(){
-        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get300x250();
+    public static String get336x280TWEET() {
+        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get336x280TWEET();
     }
 
+    public static String get160x600TWITTERSTATS() {
+        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get160x600TWITTERSTATS();
+    }
 
+    public static String get234x60TWITPOSTASHTML() {
+        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get234x60TWITPOSTASHTML();
+    }
+
+    public static String get336x280PUBTWITWHOPANEL() {
+        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get336x280PUBTWITWHOPANEL();
+    }
+
+    public static String get336x280KEYWORD() {
+        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get336x280KEYWORD();
+    }
     
-   
+    public static String get160x600TALKSABOUT() {
+        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get160x600TALKSABOUT();
+    }
+
+    public static String getSEARCH() {
+        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).getSEARCH();
+    }
 
 
 

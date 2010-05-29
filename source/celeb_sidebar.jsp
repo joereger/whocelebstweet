@@ -86,7 +86,7 @@
 
 
                                 <br/><br/>
-                                <%=AdUtil.get160x90()%>
+                                <%=AdUtil.get120x240SIDEBAR()%>
 
                                 <br/><br/>
                                 <%

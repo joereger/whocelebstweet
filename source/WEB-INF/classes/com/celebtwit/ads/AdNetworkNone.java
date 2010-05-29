@@ -15,31 +15,67 @@ public class AdNetworkNone implements AdNetwork {
         return ADNETWORKNAME;
     }
 
-    public String get160x600() {
+    public String get120x240SIDEBAR() {
         StringBuffer out = new StringBuffer();
         out.append("");
         return out.toString();
     }
 
-    public String get336x280() {
+    public String get160x600INDEX() {
         StringBuffer out = new StringBuffer();
         out.append("");
         return out.toString();
     }
 
-    public String get160x90() {
+    public String get336x280PROFILEPIC() {
         StringBuffer out = new StringBuffer();
         out.append("");
         return out.toString();
     }
 
-    public String get234x60() {
+    public String get160x600STATS() {
         StringBuffer out = new StringBuffer();
         out.append("");
         return out.toString();
     }
 
-    public String get300x250() {
+    public String get336x280TWEET() {
+        StringBuffer out = new StringBuffer();
+        out.append("");
+        return out.toString();
+    }
+
+    public String get160x600TWITTERSTATS() {
+        StringBuffer out = new StringBuffer();
+        out.append("");
+        return out.toString();
+    }
+
+    public String get234x60TWITPOSTASHTML() {
+        StringBuffer out = new StringBuffer();
+        out.append("");
+        return out.toString();
+    }
+
+    public String get336x280PUBTWITWHOPANEL() {
+        StringBuffer out = new StringBuffer();
+        out.append("");
+        return out.toString();
+    }
+
+    public String get336x280KEYWORD() {
+        StringBuffer out = new StringBuffer();
+        out.append("");
+        return out.toString();
+    }
+
+    public String get160x600TALKSABOUT() {
+        StringBuffer out = new StringBuffer();
+        out.append("");
+        return out.toString();
+    }
+
+    public String getSEARCH() {
         StringBuffer out = new StringBuffer();
         out.append("");
         return out.toString();

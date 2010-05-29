@@ -81,17 +81,29 @@ String subnav_twitterusername = twitterusername;
 
                                         <font class="largefont"><%=pagetitle%></font>
                                         <br/><br/>
-                                        <font class="mediumfont">
-                                        <ul>
-                                        <%
-                                            ArrayList<Keyword> keywords = KeywordHelpers.getKeywordsACelebHasMentioned(twit);
-                                            for (Iterator<Keyword> keywordIterator = keywords.iterator(); keywordIterator.hasNext();) {
-                                                Keyword keyword = keywordIterator.next();
-                                                %><li><a href="/twitter/<%=twitterusername%>/talksabout/<%=URLEncoder.encode(keyword.getKeyword(), "UTF-8")%>/"><%=keyword.getKeyword()%></a></li><%
-                                            }
-                                        %>
-                                        </ul>
-                                        </font>
+
+
+                                        <table cellpadding="3" cellspacing="0" border="0" width="100%">
+                                            <tr>
+                                                <td valign="top" width="240">
+                                                    <font class="mediumfont">
+                                                    <ul>
+                                                    <%
+                                                        ArrayList<Keyword> keywords = KeywordHelpers.getKeywordsACelebHasMentioned(twit);
+                                                        for (Iterator<Keyword> keywordIterator = keywords.iterator(); keywordIterator.hasNext();) {
+                                                            Keyword keyword = keywordIterator.next();
+                                                            %><li><a href="/twitter/<%=twitterusername%>/talksabout/<%=URLEncoder.encode(keyword.getKeyword(), "UTF-8")%>/"><%=keyword.getKeyword()%></a></li><%
+                                                        }
+                                                    %>
+                                                    </ul>
+                                                    </font>
+                                                </td>
+                                                <td valign="top" width="170">
+                                                    <%=AdUtil.get160x600TALKSABOUT()%>
+                                                </td>
+                                            </tr>
+                                        </table> 
+
                                 </div>
                             </td>
                         </tr>

@@ -10,10 +10,21 @@ package com.celebtwit.ads;
 public interface AdNetwork {
 
     public String getAdNetworkName();
-    public String get160x600();
-    public String get336x280();
-    public String get160x90();
-    public String get234x60();
-    public String get300x250();
+
+
+    //New ones
+    public String get120x240SIDEBAR();
+    public String get160x600INDEX();
+    public String get336x280PROFILEPIC();
+    public String get160x600STATS();
+    public String get336x280TWEET();
+    public String get160x600TWITTERSTATS();
+    public String get234x60TWITPOSTASHTML();
+    public String get336x280PUBTWITWHOPANEL();
+    public String get336x280KEYWORD();
+    public String get160x600TALKSABOUT();
+    public String getSEARCH();
+    
+
 
 }

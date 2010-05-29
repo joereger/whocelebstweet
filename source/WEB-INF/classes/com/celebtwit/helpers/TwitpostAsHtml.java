@@ -166,7 +166,7 @@ public class TwitpostAsHtml {
         out.append("        <img src=\""+imgUrl+"\" width=\"48\" height=\"48\" border=\"0\"\">");
         out.append("        </td>");        
         out.append("        <td>");
-        out.append(AdUtil.get234x60());
+        out.append(AdUtil.get234x60TWITPOSTASHTML());
         out.append("        </td>");
         out.append("    </tr>");
         out.append("</table>");

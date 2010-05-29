@@ -89,7 +89,7 @@ pagetitle = typeTitle+ ": Twitter Stats for "+titleTime+"";
                         </td>
                         <td valign="top">
                             <img src="/images/clear.gif" alt="" width="1" height="85"/><br/>
-                            <%=AdUtil.get160x600()%>
+                            <%=AdUtil.get160x600STATS()%>
                         </td>
                     </tr>
                 </table>

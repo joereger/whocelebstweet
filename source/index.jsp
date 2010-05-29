@@ -93,7 +93,7 @@ String acl = "public";
             <%if (!Pagez.getUserSession().isSisterPl()){%>
                 <!--<img src="/images/clear.gif" alt="" width="1" height="70"><br/>-->
             <%}%>
-            <%=AdUtil.get160x600()%>
+            <%=AdUtil.get160x600INDEX()%>
         </td>
     </tr>
 </table>

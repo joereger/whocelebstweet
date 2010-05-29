@@ -23,7 +23,6 @@ public class AdNetworkFactory {
         ArrayList<AdNetwork> out = new ArrayList<AdNetwork>();
         out.add(new AdNetworkGoogleAdsense());
         //out.add(new AdNetworkPassionDotCom());
-        //out.add(new AdNetworkAdultFriendFinder());
         //Adnetworknone must always be last
         out.add(new AdNetworkNone());
         return out;

@@ -44,8 +44,8 @@
                     <%}%>
                     </a>
                 </td>
-                <td>
-
+                <td align="right">
+                    <%=AdUtil.getSEARCH()%>
                 </td>
             </tr>
          </table>
