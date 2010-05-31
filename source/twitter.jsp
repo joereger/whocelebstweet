@@ -43,9 +43,9 @@ if (Pagez.getUserSession().isSisterPl()){
 %>
 <%
 if (twit!=null && twit.getIsceleb()){
-    metaDescription = "Twitter updates by "+twit.getRealname()+". "+twit.getDescription();
+    metaDescription = "Twitter updates by "+twit.getRealname()+".  See Tweets, profile pictures and statistics of who they Tweet. "+twit.getDescription();
 } else {
-    metaDescription = "Twitter updates by " + twitterusername+".";
+    metaDescription = "Twitter updates by " + twitterusername+".  We track and create Twitter statistics.";
 }
 %>
 <%

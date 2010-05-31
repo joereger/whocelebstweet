@@ -60,7 +60,7 @@ if (twit2!=null){
 pagetitle = pagetitleName1 + " and "+pagetitleName2+"'s Twitter Chatter Back-and-Forth on "+Pagez.getUserSession().getPl().getName()+"!";
 %>
 <%
-metaDescription = "Twitter chatter between "+pagetitleName1+" and "+pagetitleName2+". ";
+metaDescription = "Twitter chatter between "+pagetitleName1+" and "+pagetitleName2+". See what they say to each other, one on each side of the screen for easy viewing.";
 %>
 <%
 metaKeywords = pagetitleName1 + " " + pagetitleName2 + " " + nameOnScreen1 + " " + nameOnScreen2;

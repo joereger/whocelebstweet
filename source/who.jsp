@@ -47,16 +47,18 @@ if (1==1){
     if (time.equals("last7days")){titleTime="Last 7 Days";}
     if (time.equals("yesterday")){titleTime="Yesterday";}
     if (time.equals("today")){titleTime="Today";}
+    //Done to prevent duplicate page titles
+    if (request.getParameter("time")==null || request.getParameter("time").equals("")){titleTime = "";}
 }
 %>
 <%
-pagetitle = "Who "+pagetitleName + " Tweets (Twitter Stats for "+titleTime+")";
+pagetitle = "Who "+pagetitleName + " Tweets (Twitter Stats "+titleTime+")";
 %>
 <%
 if (twit!=null && twit.getIsceleb()){
-    metaDescription = "Twitter updates by "+twit.getRealname()+". "+twit.getDescription();
+    metaDescription = "Who "+twit.getRealname()+" Tweets on Twitter "+titleTime+". We track Twitter statistics.  "+twit.getDescription();
 } else {
-    metaDescription = "Twitter updates by " + twitterusername+".";
+    metaDescription = "Who " + twitterusername+" Tweets on Twitter "+titleTime+".  We track Twitter statistics.";
 }
 %>
 <%
