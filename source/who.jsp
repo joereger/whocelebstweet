@@ -123,6 +123,12 @@ String subnav_twitterusername = twitterusername;
                         <br/>
                         <%=PublicTwitterWhoPanel.getHtml(twit, twitterusername, Pagez.getUserSession().getPl(), time, request.getParameter("refresh"))%>
                     </div>
+                <%} else {%>
+                    <font class="mediumfont">@<%=twitterusername%> hasn't been tweeted by any <%=Pagez.getUserSession().getPl().getCelebiscalled()%>s.  Get a <%=Pagez.getUserSession().getPl().getCelebiscalled()%> to mention @<%=twitterusername%> in a tweet so that @<%=twitterusername%>'s score increases.</font>
+                    <br/><br/>
+                    <center>
+                        <%=AdUtil.get336x280TWITNOTCELEB()%>
+                    </center>
                 <%}%>
             <%}%>
 

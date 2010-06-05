@@ -175,6 +175,48 @@ public class TwitpostAsHtml {
         return out.toString();
     }
 
+    public static String getAdsenseAsTwitpostBig(int widthinpixels){
+        StringBuffer out = new StringBuffer();
+        out.append("<div class=\"notRoundedBox\" style=\"width:"+widthinpixels+"px; padding:3px;\">");
+//        out.append("<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">");
+//        out.append("    <tr>");
+//        out.append("        <td width=\"55\">");
+//        String imgUrl = "/images/placeholder_icon.jpg";
+//        out.append("        <img src=\""+imgUrl+"\" width=\"48\" height=\"48\" border=\"0\"\">");
+//        out.append("        </td>");
+//        out.append("        <td>");
+        out.append("            <center>");
+        out.append(AdUtil.get336x280TWITPOSTASHTML());
+        out.append("            </center>");
+//        out.append("        </td>");
+//        out.append("    </tr>");
+//        out.append("</table>");
+        out.append("</div>");
+        out.append("<img src=\"/images/clear.gif\" width=\"1\" height=\"3\"><br/>");
+        return out.toString();
+    }
+
+    public static String getAdsenseAsTwitpostBigForMentions(int widthinpixels){
+        StringBuffer out = new StringBuffer();
+        out.append("<div class=\"notRoundedBox\" style=\"width:"+widthinpixels+"px; padding:3px;\">");
+//        out.append("<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">");
+//        out.append("    <tr>");
+//        out.append("        <td width=\"55\">");
+//        String imgUrl = "/images/placeholder_icon.jpg";
+//        out.append("        <img src=\""+imgUrl+"\" width=\"48\" height=\"48\" border=\"0\"\">");
+//        out.append("        </td>");
+//        out.append("        <td>");
+        out.append("            <center>");
+        out.append(AdUtil.get336x280MENTIONSKEYWORD());
+        out.append("            </center>");
+//        out.append("        </td>");
+//        out.append("    </tr>");
+//        out.append("</table>");
+        out.append("</div>");
+        out.append("<img src=\"/images/clear.gif\" width=\"1\" height=\"3\"><br/>");
+        return out.toString();
+    }
+
 
 
 

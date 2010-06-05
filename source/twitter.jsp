@@ -117,6 +117,11 @@ String subnav_twitterusername = twitterusername;
                         <td valign="top">
                             <div class="roundedBoxNoRound" style="width:410px; overflow:hidden;">
                                 <font class="mediumfont">@<%=twitterusername%> isn't listed as a tracked <%=Pagez.getUserSession().getPl().getCelebiscalled()%> so we don't have their tweets but you can still see <a href="/twitter/<%=twitterusername%>/who/" style="text-decoration: underline; color: #0000ff;">who's tweeted them</a>!</font>
+                                <br/><br/>
+                                <center>
+                                    <%=AdUtil.get336x280TWITNOTCELEB()%>
+                                </center>
+
                             </div>
                         </td>
                     </tr>

@@ -36,7 +36,7 @@ public class IndexTweetlist implements CachedStuff, Serializable {
     }
 
     public String getKey() {
-        return "IndexTweetlist-page"+page;
+        return "IndexTweetlist-page"+page+"-adnetworkname"+adnetworkname;
     }
 
     public void refresh(Pl pl) {

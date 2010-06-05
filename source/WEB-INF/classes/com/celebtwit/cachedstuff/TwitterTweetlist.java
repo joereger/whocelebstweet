@@ -8,6 +8,7 @@ import com.celebtwit.dao.Twitpost;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.helpers.TwitpostAsHtml;
 import com.celebtwit.util.Num;
+import org.apache.log4j.Logger;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -37,18 +38,25 @@ public class TwitterTweetlist implements CachedStuff, Serializable {
     }
 
     public String getKey() {
-        return "TwitterTweetlist-twitid"+twit.getTwitid()+"-page"+page;
+        return "TwitterTweetlist-twitid"+twit.getTwitid()+"-page"+page+"-adnetworkname"+adnetworkname;
     }
 
     public void refresh(Pl pl) {
+        Logger logger = Logger.getLogger(this.getClass().getName());
         StringBuffer out = new StringBuffer();
         int perPage = 20;
-        int maxAdsPerPage = 3;
         int firstResult = page * perPage;
         if (page<=1){ firstResult = 0; }
+        //Small Ads
+        int maxAdsPerPage = 2;
         int insertAdCount = 0;
         int adsInserted = 0;
-        int randomAdInsertionPoint = 2 + Num.randomInt(4);
+        int randomAdInsertionPoint = 8 + Num.randomInt(4);
+        //Big Ads
+        int maxAdsPerPageBig = 1;
+        int insertAdCountBig = 0;
+        int adsInsertedBig = 0;
+        int randomAdInsertionPointBig = 3 + Num.randomInt(2);
         List<Twitpost> twitposts = HibernateUtil.getSession().createCriteria(Twitpost.class)
                                        .add(Restrictions.eq("twitid", twit.getTwitid()))
                                        .addOrder(Order.desc("created_at"))
@@ -61,14 +69,25 @@ public class TwitterTweetlist implements CachedStuff, Serializable {
             //Only insert ad if it's not the none adnetwork
             if(!adnetworkname.equalsIgnoreCase(AdNetworkNone.ADNETWORKNAME)){
                 insertAdCount++;
+                insertAdCountBig++;
+                //Small Ads
                 if (insertAdCount>=randomAdInsertionPoint && adsInserted<maxAdsPerPage){
                     adsInserted++;
                     insertAdCount = 0;
                     randomAdInsertionPoint = 2 + Num.randomInt(4);
-                    //randomAdInsertionPoint = 10000;
                     out.append(TwitpostAsHtml.getAdsenseAsTwitpost(380));
+                    //logger.debug("just added small Ad to TweetList");
+                }
+                //Big Ads
+                if (insertAdCountBig>=randomAdInsertionPointBig && adsInsertedBig<maxAdsPerPageBig){
+                    adsInsertedBig++;
+                    insertAdCountBig = 0;
+                    randomAdInsertionPointBig = 2 + Num.randomInt(4);
+                    out.append(TwitpostAsHtml.getAdsenseAsTwitpostBig(380));
+                    //logger.debug("just added big Ad to TweetList");
                 }
             }
+            //The tweet!
             out.append(TwitpostAsHtml.get(twitpost, 380));
         }
         //End Refresh

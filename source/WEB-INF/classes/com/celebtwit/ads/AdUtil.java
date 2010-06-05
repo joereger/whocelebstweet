@@ -76,12 +76,24 @@ public class AdUtil {
         return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get234x60TWITPOSTASHTML();
     }
 
+    public static String get336x280TWITPOSTASHTML() {
+        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get336x280TWITPOSTASHTML();
+    }
+
     public static String get336x280PUBTWITWHOPANEL() {
         return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get336x280PUBTWITWHOPANEL();
     }
 
     public static String get336x280KEYWORD() {
         return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get336x280KEYWORD();
+    }
+
+    public static String get336x280MENTIONSKEYWORD() {
+        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get336x280MENTIONSKEYWORD();
+    }
+    
+    public static String get336x280TWITNOTCELEB() {
+        return AdNetworkFactory.getByName(AdUtil.getAdNetworkNameFromSession()).get336x280TWITNOTCELEB();
     }
     
     public static String get160x600TALKSABOUT() {

@@ -133,6 +133,22 @@ public class AdNetworkGoogleAdsense implements AdNetwork {
         return out.toString();
     }
 
+    public String get336x280TWITPOSTASHTML() {
+        StringBuffer out = new StringBuffer();
+        out.append("<script type=\"text/javascript\"><!--\n" +
+                "google_ad_client = \"pub-9883617370563969\";\n" +
+                "/* WCT_336x280_TWITPOSTASHTML */\n" +
+                "google_ad_slot = \"1367373968\";\n" +
+                "google_ad_width = 336;\n" +
+                "google_ad_height = 280;\n" +
+                "//-->\n" +
+                "</script>\n" +
+                "<script type=\"text/javascript\"\n" +
+                "src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">\n" +
+                "</script>");
+        return out.toString();
+    }
+
     public String get336x280PUBTWITWHOPANEL() {
         StringBuffer out = new StringBuffer();
         out.append("<script type=\"text/javascript\"><!--\n" +
@@ -155,6 +171,38 @@ public class AdNetworkGoogleAdsense implements AdNetwork {
                 "google_ad_client = \"pub-9883617370563969\";\n" +
                 "/* WCT_336x280_KEYWORD */\n" +
                 "google_ad_slot = \"0515480042\";\n" +
+                "google_ad_width = 336;\n" +
+                "google_ad_height = 280;\n" +
+                "//-->\n" +
+                "</script>\n" +
+                "<script type=\"text/javascript\"\n" +
+                "src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">\n" +
+                "</script>");
+        return out.toString();
+    }
+
+    public String get336x280MENTIONSKEYWORD() {
+        StringBuffer out = new StringBuffer();
+        out.append("<script type=\"text/javascript\"><!--\n" +
+                "google_ad_client = \"pub-9883617370563969\";\n" +
+                "/* WCT_336x280_MENTIONSKEYWORD */\n" +
+                "google_ad_slot = \"8314765979\";\n" +
+                "google_ad_width = 336;\n" +
+                "google_ad_height = 280;\n" +
+                "//-->\n" +
+                "</script>\n" +
+                "<script type=\"text/javascript\"\n" +
+                "src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">\n" +
+                "</script>");
+        return out.toString();
+    }
+
+    public String get336x280TWITNOTCELEB() {
+        StringBuffer out = new StringBuffer();
+        out.append("<script type=\"text/javascript\"><!--\n" +
+                "google_ad_client = \"pub-9883617370563969\";\n" +
+                "/* WCT_336x280_TWITNOTCELEB */\n" +
+                "google_ad_slot = \"0763679672\";\n" +
                 "google_ad_width = 336;\n" +
                 "google_ad_height = 280;\n" +
                 "//-->\n" +

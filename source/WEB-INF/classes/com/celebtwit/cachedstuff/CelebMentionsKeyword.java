@@ -45,25 +45,44 @@ public class CelebMentionsKeyword implements CachedStuff, Serializable {
         if (kwms!=null && kwms.size()>0){
             //Vars for list of twitposts
             StringBuffer listOfTwitposts = new StringBuffer();
-            int maxAdsPerPage = 3;
+            //Small Ads
+            int maxAdsPerPage = 1;
             int insertAdCount = 0;
             int adsInserted = 0;
-            int randomAdInsertionPoint = 2 + Num.randomInt(4);
+            int randomAdInsertionPoint = 8 + Num.randomInt(4);
+            //Big Ads
+            int maxAdsPerPageBig = 1;
+            int insertAdCountBig = 0;
+            int adsInsertedBig = 0;
+            int randomAdInsertionPointBig = 2 + Num.randomInt(2);
             //Loopamungous (not really)
             for (Iterator<Twitpost> kwmIt = kwms.iterator(); kwmIt.hasNext();) {
                 Twitpost twitpost = kwmIt.next();
                 //Only insert ad if it's not the none adnetwork
                 if(Pagez.getUserSession().getAdNetworkName().indexOf(AdNetworkNone.ADNETWORKNAME)<=-1){
                     insertAdCount++;
+                    insertAdCountBig++;
+                    //Small Ads
                     if (insertAdCount>=randomAdInsertionPoint && adsInserted<maxAdsPerPage){
                         adsInserted++;
                         insertAdCount = 0;
                         randomAdInsertionPoint = 2 + Num.randomInt(4);
-                        //randomAdInsertionPoint = 10000;
                         listOfTwitposts.append(TwitpostAsHtml.getAdsenseAsTwitpost(380));
                     }
+                    //Big Ads
+                    if (insertAdCountBig>=randomAdInsertionPointBig && adsInsertedBig<maxAdsPerPageBig){
+                        adsInsertedBig++;
+                        insertAdCountBig = 0;
+                        randomAdInsertionPointBig = 2 + Num.randomInt(4);
+                        listOfTwitposts.append(TwitpostAsHtml.getAdsenseAsTwitpostBigForMentions(380));
+                    }
                 }
+                //Teh Tweet
                 listOfTwitposts.append(TwitpostAsHtml.get(twitpost, 380));
+            }
+            //If there hasn't been a big ad yet
+            if (adsInsertedBig==0){
+                listOfTwitposts.append(TwitpostAsHtml.getAdsenseAsTwitpostBigForMentions(380));
             }
             //Append the list of twitposts
             out.append(listOfTwitposts);

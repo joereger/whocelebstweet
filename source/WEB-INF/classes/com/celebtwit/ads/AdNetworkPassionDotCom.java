@@ -61,6 +61,12 @@ public class AdNetworkPassionDotCom implements AdNetwork {
         return out.toString();
     }
 
+    public String get336x280TWITPOSTASHTML() {
+        StringBuffer out = new StringBuffer();
+        out.append("");
+        return out.toString();
+    }
+
     public String get336x280PUBTWITWHOPANEL() {
         StringBuffer out = new StringBuffer();
         out.append("");
@@ -68,6 +74,18 @@ public class AdNetworkPassionDotCom implements AdNetwork {
     }
 
     public String get336x280KEYWORD() {
+        StringBuffer out = new StringBuffer();
+        out.append("");
+        return out.toString();
+    }
+
+    public String get336x280TWITNOTCELEB() {
+        StringBuffer out = new StringBuffer();
+        out.append("");
+        return out.toString();
+    }
+
+    public String get336x280MENTIONSKEYWORD() {
         StringBuffer out = new StringBuffer();
         out.append("");
         return out.toString();

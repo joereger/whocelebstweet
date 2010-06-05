@@ -1,16 +1,14 @@
-<%@ page import="org.apache.log4j.Logger" %>
-<%@ page import="com.celebtwit.htmluibeans.PublicIndex" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="com.celebtwit.helpers.*" %>
-<%@ page import="com.celebtwit.systemprops.SystemProperty" %>
-<%@ page import="com.celebtwit.dao.Twitpost" %>
-<%@ page import="com.celebtwit.util.Str" %>
-<%@ page import="com.celebtwit.util.Time" %>
-<%@ page import="com.celebtwit.ads.AdUtil" %>
-<%@ page import="com.celebtwit.embed.JsCelebMentions" %>
-<%@ page import="com.celebtwit.embed.JsDifferentCelebs" %>
+<%@ page import="com.celebtwit.cachedstuff.CachedStuff" %>
+<%@ page import="com.celebtwit.cachedstuff.Chatter" %>
+<%@ page import="com.celebtwit.cachedstuff.GetCachedStuff" %>
 <%@ page import="com.celebtwit.dao.Mention" %>
+<%@ page import="com.celebtwit.dao.Twitpost" %>
+<%@ page import="com.celebtwit.helpers.FindTwitFromTwitterusername" %>
+<%@ page import="com.celebtwit.helpers.TwitpostAsHtml" %>
+<%@ page import="com.celebtwit.util.Str" %>
+<%@ page import="org.apache.log4j.Logger" %>
 <%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.util.ArrayList" %>
 
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
@@ -119,31 +117,11 @@ function toggleLink() {
                 <center><font class="mediumfont">what they're saying to each other</font></center>
                 <br/><br/>
                 <%
-                    String empty = "";
-                    List<Mention> mentions = HibernateUtil.getSession().createQuery(empty + "from Mention where (twitidceleb='"+twitid1+"' and twitidmentioned='"+twitid2+"') or (twitidceleb='"+twitid2+"' and twitidmentioned='"+twitid1+"')").setMaxResults(200).list();
-                    ArrayList<Integer> twitpostids = new ArrayList<Integer>();
-                    for (Iterator<Mention> menIt=mentions.iterator(); menIt.hasNext();) {
-                        Mention mention=menIt.next();
-                        twitpostids.add(mention.getTwitpostid());
-                    }
-                    if (twitpostids.size()>0){
-                        List<Twitpost> twitposts = HibernateUtil.getSession().createCriteria(Twitpost.class)
-                                                           .add(Restrictions.in("twitpostid", twitpostids))
-                                                           .addOrder(Order.desc("twitterguid"))
-                                                           .setCacheable(true)
-                                                           .list();
-                        for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
-                            Twitpost twitpost=tpIt.next();
-                            String paddingLeft = "-250";
-                            if (twitpost.getTwit().getTwitterusername().trim().equalsIgnoreCase(twitterusername2.trim())){
-                                paddingLeft = "250";    
-                            }
-                            %><div style="margin-left: <%=paddingLeft%>px;"><%=TwitpostAsHtml.get(twitpost, 300)%></div><%
-                        }
-                    } else {
-                        %><br/><font class="normalfont">No chatter between them!</font><%
-                    }
+                CachedStuff cs = new Chatter(twitid1, twitid2, Pagez.getUserSession().getAdNetworkName());
+                Chatter obj = (Chatter) GetCachedStuff.get(cs, Pagez.getUserSession().getPl());
+                String chatterHtml = obj.getHtml();
                 %>
+                <%=chatterHtml%>
             </div>
             
         </td>

@@ -20,8 +20,11 @@ public interface AdNetwork {
     public String get336x280TWEET();
     public String get160x600TWITTERSTATS();
     public String get234x60TWITPOSTASHTML();
+    public String get336x280TWITPOSTASHTML();
     public String get336x280PUBTWITWHOPANEL();
     public String get336x280KEYWORD();
+    public String get336x280MENTIONSKEYWORD();
+    public String get336x280TWITNOTCELEB();
     public String get160x600TALKSABOUT();
     public String getSEARCH();
     
