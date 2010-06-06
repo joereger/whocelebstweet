@@ -6,8 +6,8 @@ if (twit!=null && twit.getIsceleb()){
     response.sendRedirect("/twitter/"+request.getParameter("twitterusername")+"/");
     return;
 } else {
-    //Send to the who page which makes a little more sense for non-celebs
-    response.sendRedirect("/twitter/"+request.getParameter("twitterusername")+"/who/");
+    //Send to the who page which makes a little more sense for non-celebs (well, same page)
+    response.sendRedirect("/twitter/"+request.getParameter("twitterusername")+"/");
     return;
 }
 %>

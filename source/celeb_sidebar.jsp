@@ -3,11 +3,20 @@
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="com.celebtwit.embed.*" %>
 <!-- Start Celeb_Sidebar -->
+
+
+<%
+boolean sidebar_isceleb = false;
+if (sidebar_twit!=null && sidebar_twit.getIsceleb()){
+    sidebar_isceleb = true;
+}
+%>
+
             <div class="roundedBox" style="width:200px;">
 
 
 
-                <%if (twit!=null && sidebar_twit.getIsceleb()){%>
+                <%if (sidebar_isceleb){%>
                     <%--<center><br/><br/><img src="<%=twitimageurl%>" width="48" height="48" border="0" align="middle" alt="<%=sidebar_twit.getRealname()%>"></center>--%>
                     <center><a href="/twitter/<%=sidebar_twitterusername%>/picture/"><img src="<%=twitimageurl%>" width="190"  style="border: 10px solid #ffffff;" align="middle" alt="<%=sidebar_twit.getRealname()%>"></a></center>
                 <%}%>
@@ -52,74 +61,81 @@
 
                 <br/>
                 <br clear="all">
+
                     <table cellpadding="10" cellspacing="5" border="0">
                         <tr>
-                            <td valign="top">
-                                <%if (sidebar_twit!=null && sidebar_twit.getDescription().length()>0){%>
-                                    <font class="normalfont" style="font-size:15px; color:#666666;"><%=sidebar_twit.getDescription()%></font>
-                                    <br/>
-                                <%}%>
-                                <%--<div style="margin-left:3px; width: 160px; background:#e6e6e6;"><font class="smallfont" style="font-size:11px; text-decoration: underline;">More Information</font></div>--%>
-                                <div style="margin-left:0px; width:190px;">
-                                <%if (sidebar_twit!=null && sidebar_twit.getWebsite_url().length()>0){%>
-                                    <font class="smallfont">
-                                    <a href="<%=sidebar_twit.getWebsite_url()%>" target="_blank"  style="text-decoration: underline; color: #0000ff;">Website</a>
-                                    |
-                                    <a href="http://www.twitter.com/<%=sidebar_twitterusername%>/" target="_blank"  style="text-decoration: underline; color: #0000ff;">Twitter</a>
-                                    </font>
-                                    <br/>
-                                <%} else { %>
-                                    <font class="smallfont">
-                                    <a href="http://www.twitter.com/<%=sidebar_twitterusername%>/" target="_blank"  style="text-decoration: underline; color: #0000ff;">Twitter</a>
-                                    </font>
-                                    <br/>
-                                <%}%>
-                                <%if (sidebar_twit!=null && sidebar_twit.getFollowers_count()>0){%>
-                                    <font class="smallfont"><%=sidebar_twit.getFollowers_count()%> followers</font>
-                                    <br/>
-                                <%}%>
-                                <%if (sidebar_twit!=null && sidebar_twit.getStatuses_count()>0){%>
-                                    <font class="smallfont"><%=sidebar_twit.getStatuses_count()%> updates</font>
-                                    <br/>
-                                <%}%>
-                                </div>
+                            <%if (sidebar_isceleb){%>
+                                <td valign="top">
+                                    <%if (sidebar_twit!=null && sidebar_twit.getDescription().length()>0){%>
+                                        <font class="normalfont" style="font-size:15px; color:#666666;"><%=sidebar_twit.getDescription()%></font>
+                                        <br/>
+                                    <%}%>
+                                    <%--<div style="margin-left:3px; width: 160px; background:#e6e6e6;"><font class="smallfont" style="font-size:11px; text-decoration: underline;">More Information</font></div>--%>
+                                    <div style="margin-left:0px; width:190px;">
+                                    <%if (sidebar_twit!=null && sidebar_twit.getWebsite_url().length()>0){%>
+                                        <font class="smallfont">
+                                        <a href="<%=sidebar_twit.getWebsite_url()%>" target="_blank"  style="text-decoration: underline; color: #0000ff;">Website</a>
+                                        |
+                                        <a href="http://www.twitter.com/<%=sidebar_twitterusername%>/" target="_blank"  style="text-decoration: underline; color: #0000ff;">Twitter</a>
+                                        </font>
+                                        <br/>
+                                    <%} else { %>
+                                        <font class="smallfont">
+                                        <a href="http://www.twitter.com/<%=sidebar_twitterusername%>/" target="_blank"  style="text-decoration: underline; color: #0000ff;">Twitter</a>
+                                        </font>
+                                        <br/>
+                                    <%}%>
+                                    <%if (sidebar_twit!=null && sidebar_twit.getFollowers_count()>0){%>
+                                        <font class="smallfont"><%=sidebar_twit.getFollowers_count()%> followers</font>
+                                        <br/>
+                                    <%}%>
+                                    <%if (sidebar_twit!=null && sidebar_twit.getStatuses_count()>0){%>
+                                        <font class="smallfont"><%=sidebar_twit.getStatuses_count()%> updates</font>
+                                        <br/>
+                                    <%}%>
+                                    </div>
 
 
-                                <br/><br/>
-                                <%=AdUtil.get120x240SIDEBAR()%>
+                                    <br/><br/>
+                                    <%=AdUtil.get120x240SIDEBAR()%>
 
-                                <br/><br/>
-                                <%
-                                if (twit!=null){
-                                    CachedStuff cs = new CelebsSidebarKeywordsList(twit);
-                                    CelebsSidebarKeywordsList obj = (CelebsSidebarKeywordsList) GetCachedStuff.get(cs, Pagez.getUserSession().getPl());
-                                    String sidebar_keywordslist = obj.getHtml();
-                                    %><%=sidebar_keywordslist%><%
-                                }
-                                %>
+                                    <br/><br/>
+                                    <%
+                                    if (twit!=null){
+                                        CachedStuff cs = new CelebsSidebarKeywordsList(twit);
+                                        CelebsSidebarKeywordsList obj = (CelebsSidebarKeywordsList) GetCachedStuff.get(cs, Pagez.getUserSession().getPl());
+                                        String sidebar_keywordslist = obj.getHtml();
+                                        %><%=sidebar_keywordslist%><%
+                                    }
+                                    %>
 
 
 
-                            </td>
+                                </td>
+                            <%} %>
                         </tr>
                         <tr>
                             <td valign="top" width="175">
+                                <center>
                                 <%=JsCelebMentions.get(twit, sidebar_twitterusername, Pagez.getUserSession().getPl())%>
                                 <a href="javascript:toggleA();"><font class="tinyfont">+ embed in your blog/website</font></a>
                                 <div id="toggleTextA" style="display: none">
                                     <input type="text" name="embedB" value="<%=Str.cleanForHtml("<script src=\"http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+sidebar_twitterusername+"/js/celebtweets/\"></script>")%>" size="25">
                                     <br/><font class="smallfont">Copy and paste this code into your blog or website to display the box.</font>
                                 </div>
+                                </center>
                             </td>
                         </tr>
                         <tr>
                             <td valign="top" width="175">
+                                <center>
                                 <%=JsDifferentCelebs.get(twit, sidebar_twitterusername, Pagez.getUserSession().getPl())%>
                                 <a href="javascript:toggleB();"><font class="tinyfont">+ embed in your blog/website</font></a>
                                 <div id="toggleTextB" style="display: none">
                                     <input type="text" name="embedB" value="<%=Str.cleanForHtml("<script src=\"http://"+Pagez.getUserSession().getPl().getCustomdomain1()+"/twitter/"+sidebar_twitterusername+"/js/differentcelebs/\"></script>")%>" size="25">
                                     <br/><font class="smallfont">Copy and paste this code into your blog or website to display the box.</font>
                                 </div>
+                                </center>
                             </td>
                         </tr>
                     </table>

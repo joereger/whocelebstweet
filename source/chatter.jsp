@@ -26,6 +26,7 @@ String twitterusername1 =FindTwitFromTwitterusername.cleanTwitterusername(reques
 String nameOnScreen1 = twitterusername1;
 String twit1imageurl = "/images/clear.gif";
 int twitid1 = 0;
+boolean twit1isceleb = false;
 String pagetitleName1 = twitterusername1;
 if (twit1!=null){
     twitterusername1 = twit1.getTwitterusername();
@@ -34,6 +35,7 @@ if (twit1!=null){
     if (twit1.getIsceleb()){
         pagetitleName1 = twit1.getRealname();
         nameOnScreen1 = twit1.getRealname();
+        twit1isceleb = true;
     }
 }
 %>
@@ -43,6 +45,7 @@ String twitterusername2 =FindTwitFromTwitterusername.cleanTwitterusername(reques
 String nameOnScreen2 = twitterusername2;
 String twit2imageurl = "/images/clear.gif";
 int twitid2 = 0;
+boolean twit2isceleb = false;
 String pagetitleName2 = twitterusername2;
 if (twit2!=null){
     twitterusername2 = twit2.getTwitterusername();
@@ -51,6 +54,7 @@ if (twit2!=null){
     if (twit2.getIsceleb()){
         pagetitleName2 = twit2.getRealname();
         nameOnScreen2 = twit2.getRealname();
+        twit2isceleb = true;
     }
 }
 %>
@@ -97,6 +101,9 @@ function toggleLink() {
             <td valign="top" width="200" align="left">
                 <a href="/twitter/<%=twitterusername1%>/picture/"><img src="<%=twit1imageurl%>" width="48" height="48" style="border: 10px solid #ffffff;" align="left"></a>
                 <font class="mediumfont"> <a href="/twitter/<%=twitterusername1%>/">@<%=nameOnScreen1%></a></font>
+                <%if (!twit1isceleb){%>
+                    <br/><font class="smallfont">note: @<%=twitterusername1%> is not a <%=Pagez.getUserSession().getPl().getCelebiscalled()%> so we can't show their tweets</font>
+                <%} %>
             </td>
             <td valign="top" width="100" align="left">
                 <img src="/images/chatter-arrows.png" alt="" width="100" height="48" border="0">
@@ -104,6 +111,9 @@ function toggleLink() {
             <td valign="top" width="200" align="right">
                 <a href="/twitter/<%=twitterusername2%>/picture/"><img src="<%=twit2imageurl%>" width="48" height="48" style="border: 10px solid #ffffff;" align="right"></a>
                 <font class="mediumfont"><a href="/twitter/<%=twitterusername2%>/">@<%=nameOnScreen2%></a> </font>
+                <%if (!twit2isceleb){%>
+                    <br/><font class="smallfont">note: @<%=twitterusername2%> is not a <%=Pagez.getUserSession().getPl().getCelebiscalled()%> so we can't show their tweets</font>
+                <%} %>
             </td>
         </tr>
     </table>

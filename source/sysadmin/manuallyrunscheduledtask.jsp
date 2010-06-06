@@ -39,6 +39,8 @@ SysadminManuallyRunScheduledTask sysadminManuallyRunScheduledTask = (SysadminMan
                     sysadminManuallyRunScheduledTask.runFixTwitpostsWithNoPl();
                 } else if (request.getParameter("task").equals("FindKeywordMentions")){
                     sysadminManuallyRunScheduledTask.runFindKeywordMentions();
+                } else if (request.getParameter("task").equals("StatsTweetNonceleb")){
+                    sysadminManuallyRunScheduledTask.runStatsTweetNonceleb();
                 } else {
                     throw new ValidationException("task not found.");    
                 }
@@ -60,6 +62,7 @@ SysadminManuallyRunScheduledTask sysadminManuallyRunScheduledTask = (SysadminMan
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=PagePerformanceRecordAndFlush"><font class="mediumfont">PagePerformanceRecordAndFlush</font></a>
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=MakeFriends"><font class="mediumfont">MakeFriends</font></a>
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=StatsTweet"><font class="mediumfont">StatsTweet</font></a>
+<br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=StatsTweetNonceleb"><font class="mediumfont">StatsTweetNonceleb</font></a>
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=GetTwitterPosts"><font class="mediumfont">GetTwitterPosts</font></a>
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=TwitterListSync"><font class="mediumfont">TwitterListSync</font></a>
 <br/><a href="/sysadmin/manuallyrunscheduledtask.jsp?action=run&task=FixIsmentionedaceleb"><font class="mediumfont">FixIsmentionedaceleb</font></a>

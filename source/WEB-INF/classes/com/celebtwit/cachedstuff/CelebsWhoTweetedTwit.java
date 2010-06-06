@@ -38,21 +38,31 @@ public class CelebsWhoTweetedTwit implements CachedStuff, Serializable {
     }
 
     public String getKey() {
-        return "CelebsWhoTweetedTwit-"+requestParamTime+"-numbertoget-"+numbertoget+"-twit-"+twit.getTwitid()+"-twitterusername-"+twitterusername+"-includerankingnumbers-"+includerankingnumbers;
+        String twitidStr = "";
+        if (twit!=null){
+            twitidStr = String.valueOf(twit.getTwitid());
+        }
+        return "CelebsWhoTweetedTwit-"+requestParamTime+"-numbertoget-"+numbertoget+"-twit-"+twitidStr+"-twitterusername-"+twitterusername+"-includerankingnumbers-"+includerankingnumbers;
     }
 
     public void refresh(Pl pl) {
         StringBuffer out = new StringBuffer();
         //Start Refresh
-        StartDateEndDate sted = new StartDateEndDate(requestParamTime);
-        int count = 0;
-        ArrayList<TwitCelebWhoMentioned> twitUniques = GetCelebsWhoMentioned.get(sted.getStartDate(), sted.getEndDate(), twit.getTwitid(), numbertoget, Pagez.getUserSession().getPl().getPlid());
-        for (Iterator<TwitCelebWhoMentioned> iterator=twitUniques.iterator(); iterator.hasNext();) {
-            TwitCelebWhoMentioned twitCelebWhoMentioned = iterator.next();
-            count++;
-            String countStr = "";
-            if (includerankingnumbers){ countStr = count+". "; }
-            out.append("<font class=\"normalfont\" style=\"font-weight:bold;\">"+Util.countStr(count, includerankingnumbers)+"<a href=\"/chatter/"+twit.getTwitterusername()+"/"+twitCelebWhoMentioned.getTwit().getTwitterusername()+"/\">@"+twitCelebWhoMentioned.getTwit().getRealname()+"</a></font><font class=\"tinyfont\"> "+twitCelebWhoMentioned.getMentions()+" tweets</font><br/>");
+        if (twit!=null){
+            //Twit is a celeb or has been tweeted by a celeb
+            StartDateEndDate sted = new StartDateEndDate(requestParamTime);
+            int count = 0;
+            ArrayList<TwitCelebWhoMentioned> twitUniques = GetCelebsWhoMentioned.get(sted.getStartDate(), sted.getEndDate(), twit.getTwitid(), numbertoget, Pagez.getUserSession().getPl().getPlid());
+            for (Iterator<TwitCelebWhoMentioned> iterator=twitUniques.iterator(); iterator.hasNext();) {
+                TwitCelebWhoMentioned twitCelebWhoMentioned = iterator.next();
+                count++;
+                String countStr = "";
+                if (includerankingnumbers){ countStr = count+". "; }
+                out.append("<font class=\"normalfont\" style=\"font-weight:bold;\">"+Util.countStr(count, includerankingnumbers)+"<a href=\"/chatter/"+twit.getTwitterusername()+"/"+twitCelebWhoMentioned.getTwit().getTwitterusername()+"/\">@"+twitCelebWhoMentioned.getTwit().getRealname()+"</a></font><font class=\"tinyfont\"> "+twitCelebWhoMentioned.getMentions()+" tweets</font><br/>");
+            }
+        } else {
+            //Twit has not been tweeted by a celeb
+            out.append("<font class=\"normalfont\" style=\"\"><b>None.</b>  Sorry... @"+twitterusername+" has not been tweeted.</font><br/>");
         }
         //End Refresh
         html = out.toString();

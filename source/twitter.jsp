@@ -1,14 +1,11 @@
 <%@ page import="com.celebtwit.cachedstuff.CachedStuff" %>
 <%@ page import="com.celebtwit.cachedstuff.GetCachedStuff" %>
 <%@ page import="com.celebtwit.cachedstuff.TwitterTweetlist" %>
-<%@ page import="com.celebtwit.embed.JsCelebMentions" %>
-<%@ page import="com.celebtwit.embed.JsDifferentCelebs" %>
 <%@ page import="com.celebtwit.helpers.FindTwitFromTwitterusername" %>
-<%@ page import="com.celebtwit.htmluibeans.PublicTwitterWhoPanelVertical" %>
+<%@ page import="com.celebtwit.helpers.StatsOutputCached" %>
 <%@ page import="com.celebtwit.util.Num" %>
-<%@ page import="com.celebtwit.util.Str" %>
+<%@ page import="com.celebtwit.util.Util" %>
 <%@ page import="org.apache.log4j.Logger" %>
-<%@ page import="java.net.URLEncoder" %>
 
 <%
 Logger logger = Logger.getLogger(this.getClass().getName());
@@ -115,18 +112,71 @@ String subnav_twitterusername = twitterusername;
                 <table cellpadding="3" cellspacing="0" border="0" width="100%">
                     <tr>
                         <td valign="top">
-                            <div class="roundedBoxNoRound" style="width:410px; overflow:hidden;">
-                                <font class="mediumfont">@<%=twitterusername%> isn't listed as a tracked <%=Pagez.getUserSession().getPl().getCelebiscalled()%> so we don't have their tweets but you can still see <a href="/twitter/<%=twitterusername%>/who/" style="text-decoration: underline; color: #0000ff;">who's tweeted them</a>!</font>
-                                <br/><br/>
-                                <center>
-                                    <%=AdUtil.get336x280TWITNOTCELEB()%>
-                                </center>
+                            <div class="roundedBox" style="width:360px; overflow:hidden;">
+                                <%--<font class="mediumfont">@<%=twitterusername%> isn't listed as a tracked <%=Pagez.getUserSession().getPl().getCelebiscalled()%> so we don't have their tweets but you can still see <a href="/twitter/<%=twitterusername%>/who/" style="text-decoration: underline; color: #0000ff;">who's tweeted them</a>!</font>--%>
+                                <%--<br/><br/>--%>
+                                <%--<center>--%>
+                                    <%--<%=AdUtil.get336x280TWITNOTCELEB()%>--%>
+                                <%--</center>--%>
 
+                                <%--  START NON-CELEB MAIN PAGE  --%>
+                                <%
+                                String filename = "celebsWhoTweetedTwit";
+                                String typeTitle = "@"+pagetitleName+" has been tweeted by these "+Pagez.getUserSession().getPl().getCelebiscalled()+"s";
+                                %>
+                                <table cellpadding="3" cellspacing="0" border="0" width="100%">
+                                    <tr>
+                                        <td valign="top">
+                                            <div>
+                                                <font class="tinyfont">
+                                                    <%String qs = "";%>
+                                                    <%String time = request.getParameter("time");%>
+                                                    <%if (time==null || time.equals("") || time.equals("null")){time="alltime";}%>
+                                                    <%String addToStyle = "";%>
+                                                    <%String boldStyle = "font-weight:bold; background:#ffffff;";%>
+                                                    <%if (time.equals("alltime")){addToStyle=boldStyle;}else{addToStyle="";}%>
+                                                    <a href="/twitterstats/<%=filename%>/<%=twitterusername%>/when/alltime/<%=qs%>" style="<%=addToStyle%>">all time</a> |
+                                                    <%if (time.equals("thismonth")){addToStyle=boldStyle;}else{addToStyle="";}%>
+                                                    <a href="/twitterstats/<%=filename%>/<%=twitterusername%>/when/thismonth/<%=qs%>" style="<%=addToStyle%>">this month</a> |
+                                                    <%if (time.equals("last31days")){addToStyle=boldStyle;}else{addToStyle="";}%>
+                                                    <a href="/twitterstats/<%=filename%>/<%=twitterusername%>/when/last31days/<%=qs%>" style="<%=addToStyle%>">last 31 days</a> |
+                                                    <%if (time.equals("thisweek")){addToStyle=boldStyle;}else{addToStyle="";}%>
+                                                    <a href="/twitterstats/<%=filename%>/<%=twitterusername%>/when/thisweek/<%=qs%>" style="<%=addToStyle%>">this week</a> |
+                                                    <%if (time.equals("last7days")){addToStyle=boldStyle;}else{addToStyle="";}%>
+                                                    <a href="/twitterstats/<%=filename%>/<%=twitterusername%>/when/last7days/<%=qs%>" style="<%=addToStyle%>">last 7 days</a> |
+                                                    <%if (time.equals("yesterday")){addToStyle=boldStyle;}else{addToStyle="";}%>
+                                                    <a href="/twitterstats/<%=filename%>/<%=twitterusername%>/when/yesterday/<%=qs%>" style="<%=addToStyle%>">yesterday</a> |
+                                                    <%if (time.equals("today")){addToStyle=boldStyle;}else{addToStyle="";}%>
+                                                    <a href="/twitterstats/<%=filename%>/<%=twitterusername%>/when/today/<%=qs%>" style="<%=addToStyle%>">today</a>
+                                                </font>
+                                            </div>
+                                            <%String statsTime = "";%>
+                                            <%if (time.equals("alltime")){statsTime="all time";}%>
+                                            <%if (time.equals("thismonth")){statsTime="this month";}%>
+                                            <%if (time.equals("last31days")){statsTime="last 31 days";}%>
+                                            <%if (time.equals("thisweek")){statsTime="this week";}%>
+                                            <%if (time.equals("last7days")){statsTime="last 7 days";}%>
+                                            <%if (time.equals("yesterday")){statsTime="yesterday";}%>
+                                            <%if (time.equals("today")){statsTime="today";}%>
+                                            <font class="largefont" style="font-size:20px; color:#666666;">stats <%=statsTime%></font>
+                                            <br clear="all"/><br/><br/><font class="largefont" style="font-size:30px;"><%=typeTitle%></font>
+                                            <br clear="all"/><br/><br/>
+                                            <%=StatsOutputCached.celebsWhoTweetedTwit(twit, twitterusername, Pagez.getUserSession().getPl(), request.getParameter("time"), 500, Util.booleanFromString(request.getParameter("refresh")), true)%>
+                                            <br clear="all"/><br/><br/>
+                                            <%=AdUtil.get336x280TWITNOTCELEB()%>
+                                        </td>
+                                        <%--<td valign="top">--%>
+                                            <%--<img src="/images/clear.gif" alt="" width="1" height="85"/><br/>--%>
+                                            <%--<%=AdUtil.get160x600TWITTERSTATS()%>--%>
+                                        <%--</td>--%>
+                                    </tr>
+                                </table>
+
+                                <%--  END NON-CELEB MAIN PAGE  --%>
                             </div>
                         </td>
                     </tr>
                 </table>
-
             <%}%>
             <!-- End Middle Col -->
         </td>

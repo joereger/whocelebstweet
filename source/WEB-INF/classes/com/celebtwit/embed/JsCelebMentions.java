@@ -40,7 +40,7 @@ public class JsCelebMentions {
         }
 
         StringBuffer o = new StringBuffer();
-        o.append("<div style=\"width:150px; background-color:#ffffff; overflow:hidden; text-align:center;  padding: 5px;  border: 2px #cccccc solid;\">");
+        o.append("<div style=\"width:150px; background-color:#ffffff; overflow:hidden; text-align:center;  padding: 5px;  border: 2px #cccccc solid; -moz-border-radius: 5px; -webkit-border-radius: 5px;\">");
         o.append("<center>");
         o.append("<a href=\"http://"+pl.getCustomdomain1()+"/twitter/"+twitterusername+"/\">");
         if (twit!=null && twit.getIsceleb()){
