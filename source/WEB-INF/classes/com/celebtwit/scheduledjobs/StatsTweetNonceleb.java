@@ -36,7 +36,9 @@ public class StatsTweetNonceleb implements StatefulJob {
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         Logger logger = Logger.getLogger(this.getClass().getName());
         if (InstanceProperties.getRunScheduledTasksOnThisInstance()){
-            logger.debug("execute() StatsTweet called");
+            //Turned off for now, stupid rules
+            if (1==2){
+                logger.debug("execute() StatsTweetNonceleb called");
 
                 //List pls
                 List<Pl> pls = HibernateUtil.getSession().createCriteria(Pl.class)
@@ -48,6 +50,7 @@ public class StatsTweetNonceleb implements StatefulJob {
                     Pl pl=iterator.next();
                     processPl(pl);
                 }
+            }
         } else {
             logger.debug("InstanceProperties.getRunScheduledTasksOnThisInstance() is FALSE for this instance so this task is not being executed.");
         }
