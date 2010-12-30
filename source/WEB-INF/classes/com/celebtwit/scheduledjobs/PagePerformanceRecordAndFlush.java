@@ -4,7 +4,6 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.apache.log4j.Logger;
-import com.celebtwit.cache.html.HtmlCache;
 import com.celebtwit.pageperformance.PagePerformanceUtil;
 
 /**
