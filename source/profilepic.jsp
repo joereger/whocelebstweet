@@ -58,6 +58,7 @@ String subnav_twitterusername = twitterusername;
 <%@ include file="/celeb_subnav.jsp" %>
 
 
+
 <table cellpadding="3" cellspacing="0" border="0" width="100%">
     <tr>
         <td valign="top">
