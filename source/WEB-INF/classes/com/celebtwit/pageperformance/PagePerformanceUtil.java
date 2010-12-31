@@ -20,6 +20,10 @@ public class PagePerformanceUtil {
     private static Map<String,PagePerformance> pagePerformances = Collections.synchronizedMap(new TreeMap<String,PagePerformance>());
 
     public static void add(String pageid, String servername, long pageloadtime){
+        //Hack for now, turning off for performance
+        if (true){return;};
+
+        //If null, initialize
         if (pagePerformances==null){
             pagePerformances = Collections.synchronizedMap(new TreeMap<String,PagePerformance>());
         }

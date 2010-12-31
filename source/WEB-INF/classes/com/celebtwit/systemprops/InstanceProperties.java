@@ -34,6 +34,7 @@ public class InstanceProperties {
     private static String terracottahost01;
     private static String terracottahost02;
     private static String terracottahost03;
+    private static String hibernateshowsql;
 
 
 
@@ -108,6 +109,7 @@ public class InstanceProperties {
             terracottahost01 = properties.getProperty("terracottahost01", "");
             terracottahost02 = properties.getProperty("terracottahost02", "");
             terracottahost03 = properties.getProperty("terracottahost03", "");
+            hibernateshowsql = properties.getProperty("hibernateshowsql", "0");
 
             haveAttemptedToLoadDefaultPropsFile = true;
             haveNewConfigToTest = true;
@@ -177,6 +179,9 @@ public class InstanceProperties {
             }
             if (terracottahost03!=null){
                 properties.setProperty("terracottahost03", terracottahost03);
+            }
+            if (hibernateshowsql!=null){
+                properties.setProperty("hibernateshowsql", hibernateshowsql);
             }
 
             if (testConfig()){
@@ -447,5 +452,21 @@ public class InstanceProperties {
 
     public static void setTerracottahost03(String terracottahost03) {
         InstanceProperties.terracottahost03 = terracottahost03;
+    }
+
+    public static boolean getHibernateshowsql(){
+        load();
+        if (hibernateshowsql!=null && hibernateshowsql.equals("1")){
+            return true;
+        }
+        return false;
+    }
+
+    public static void setHibernateshowsql(boolean hibernateshowsql){
+        if (hibernateshowsql){
+            InstanceProperties.hibernateshowsql = "1";
+        } else {
+            InstanceProperties.hibernateshowsql = "0";
+        }
     }
 }
