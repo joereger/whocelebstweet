@@ -37,6 +37,8 @@ public class StatsTweet implements StatefulJob {
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         Logger logger = Logger.getLogger(this.getClass().getName());
+        //Hack to turn off
+        if (true){return;}
         if (InstanceProperties.getRunScheduledTasksOnThisInstance()){
             logger.debug("execute() StatsTweet called");
                 //Set week ago

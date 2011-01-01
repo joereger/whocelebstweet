@@ -49,7 +49,11 @@ public class HibernateUtil {
 
                     //Misc
                     //conf.setProperty("hibernate.current_session_context_class", "thread");
-                    conf.setProperty("hibernate.show_sql", "false");
+                    if (InstanceProperties.getHibernateshowsql()){
+                        conf.setProperty("hibernate.show_sql", "true");
+                    } else {
+                        conf.setProperty("hibernate.show_sql", "false");
+                    }
                     conf.setProperty("hibernate.generate_statistics", "true");                    
 
                     //Connection pool
