@@ -1,0 +1,26 @@
+User-agent: Slurp 
+Crawl-delay: 200
+
+User-agent: Mozilla/5.0 (compatible; Yahoo! Slurp China; http://misc.yahoo.com.cn/help.html)
+Crawl-delay: 200
+
+User-agent: baidu
+Crawl-delay: 200
+
+User-agent: BaiDuSpider
+Crawl-delay: 200
+
+User-agent: Baiduspider+(+http://help.baidu.jp/system/05.html)
+Crawl-delay: 200
+
+User-agent: Baiduspider+(+http://www.baidu.com/search/spider.htm)
+Crawl-delay: 200
+
+User-agent: Baiduspider+(+http://www.baidu.com/search/spider_jp.html)
+Crawl-delay: 200
+
+
+
+
+
+
