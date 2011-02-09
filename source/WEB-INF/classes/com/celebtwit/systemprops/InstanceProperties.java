@@ -43,7 +43,7 @@ public class InstanceProperties {
     private static boolean haveValidConfig = false;
     private static boolean haveNewConfigToTest = false;
     private static boolean haveAttemptedToLoadDefaultPropsFile = false;
-    private static String dbPropsInternalFilename = WebAppRootDir.getWebAppRootPath() + "conf\\instance.props";
+    private static String dbPropsInternalFilename = WebAppRootDir.getWebAppRootPath() + "conf"+File.separatorChar+"instance.props";
     private static String dbPropsExternalFilename = "CelebTwit-"+WebAppRootDir.getUniqueContextId()+"-dbconfig.txt";
 
     public static void load(){
