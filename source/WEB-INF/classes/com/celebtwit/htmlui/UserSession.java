@@ -6,7 +6,7 @@ import com.celebtwit.dao.User;
 import com.celebtwit.dao.Userrole;
 import org.apache.log4j.Logger;
 import twitter4j.Twitter;
-import twitter4j.http.RequestToken;
+import twitter4j.auth.RequestToken;
 
 import java.io.Serializable;
 import java.util.Calendar;

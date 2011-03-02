@@ -15,7 +15,7 @@ import org.quartz.StatefulJob;
 import twitter4j.IDs;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
-import twitter4j.http.AccessToken;
+import twitter4j.auth.AccessToken;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -52,17 +52,17 @@ public class MakeFriends implements StatefulJob {
         if (pl.getTwitteraccesstoken().length()==0 || pl.getTwitteraccesstokensecret().length()==0){
             return;
         }
-        List<Integer> twitterUsersFollowing = new ArrayList<Integer>();
+        List<Long> twitterUsersFollowing = new ArrayList<Long>();
         try{
             TwitterFactory twitterFactory = new TwitterFactory();
             Twitter twitter = twitterFactory.getInstance();
             AccessToken accessToken = new AccessToken(pl.getTwitteraccesstoken(), pl.getTwitteraccesstokensecret());
             twitter.setOAuthAccessToken(accessToken);
 
-            IDs ids = twitter.getFriendsIDs();
+            IDs ids = twitter.getFriendsIDs(1);
             if (ids!=null && ids.getIDs()!=null){
                 for (int i = 0; i < ids.getIDs().length; i++) {
-                    int id = ids.getIDs()[i];
+                    long id = ids.getIDs()[i];
                     twitterUsersFollowing.add(id);
                 }
             }
@@ -84,8 +84,8 @@ public class MakeFriends implements StatefulJob {
             Twit twit=iterator.next();
             //Use the list of friends for this pl to see if this user is a friend
             boolean followingThisUser = false;
-            for (Iterator<Integer> userIterator=twitterUsersFollowing.iterator(); userIterator.hasNext();) {
-                Integer userid = userIterator.next();
+            for (Iterator<Long> userIterator=twitterUsersFollowing.iterator(); userIterator.hasNext();) {
+                Long userid = userIterator.next();
                 String useridStr = String.valueOf(userid);
                 if (useridStr.equals(twit.getTwitteruserid())){
                     followingThisUser = true;

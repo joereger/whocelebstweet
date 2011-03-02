@@ -5,8 +5,8 @@ import com.celebtwit.htmlui.Pagez;
 import com.celebtwit.systemprops.SystemProperty;
 import org.apache.log4j.Logger;
 import twitter4j.Twitter;
-import twitter4j.http.AccessToken;
-import twitter4j.http.RequestToken;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.RequestToken;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,6 +37,7 @@ public class CallbackServletSysprop extends HttpServlet {
         Twitter twitter = Pagez.getUserSession().getTwitter();
         RequestToken requestToken = Pagez.getUserSession().getTwitterRequestToken();
         String verifier = request.getParameter("oauth_verifier");
+        logger.debug("request.getParameter(\"oauth_verifier\")="+request.getParameter("oauth_verifier"));
         try {
             AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, verifier);
             Pagez.getUserSession().setTwitterRequestToken(null);

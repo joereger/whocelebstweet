@@ -6,7 +6,7 @@ import com.celebtwit.util.Num;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
-import twitter4j.http.RequestToken;
+import twitter4j.auth.RequestToken;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
