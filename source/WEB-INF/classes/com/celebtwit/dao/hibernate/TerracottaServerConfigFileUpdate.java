@@ -107,7 +107,9 @@ public class TerracottaServerConfigFileUpdate {
             transformer.transform(source, result);
 
             String xmlString = result.getWriter().toString();
-            //System.out.println(xmlString);
+            System.out.println(xmlString);
+            logger.debug("------------"+filename+"-------");
+            logger.debug(xmlString);
 
             Io.writeTextToFile(new File(filename), xmlString);
 

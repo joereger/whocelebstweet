@@ -33,6 +33,7 @@ public class EhcacheProvider implements CacheProvider {
 
     private static void setupCache(){
         Logger logger = Logger.getLogger(EhcacheProvider.class);
+        logger.debug("setupCache() called");
         //Initialize the groupKeyRelationships
         groupKeyRelationships = new ArrayList<KeyGroupRelationship>();
 
@@ -48,6 +49,7 @@ public class EhcacheProvider implements CacheProvider {
         cacheConfig.eternal(true);
         cacheConfig.memoryStoreEvictionPolicy("LRU");
         if (isTerracottaClustered()){
+            logger.debug("isTerracottaClustered()=true");
             cacheConfig.terracotta(new TerracottaConfiguration());
         }
 
@@ -100,9 +102,28 @@ public class EhcacheProvider implements CacheProvider {
         return "EhcacheProvider";
     }
 
-    public Object get(String key, String group) {
+     public Object get(String key, String group) {
         try {
-            return getCache().get("/"+group+"/"+key).getValue();
+            logger.debug("get(key="+key+", group="+group+")");
+
+            if (key==null || key.equals("")){
+                if (group==null || group.equals("")){
+                    logger.debug("Empty key and group requested");
+                    return null;
+                }
+            }
+
+            Cache cache = getCache();
+            if (cache!=null){
+                Element element = getCache().get("/"+group+"/"+key);
+                if (element!=null){
+                    return element.getValue();
+                } else {
+                    logger.debug("Element is null");
+                }
+            } else {
+                logger.error("CACHE IS NULL");
+            }
         }  catch (Exception e){
             logger.error("Error getting from cacheManager", e);
         }
