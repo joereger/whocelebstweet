@@ -59,7 +59,7 @@ public class KeywordPage implements CachedStuff, Serializable {
     }
 
     public int maxAgeInMinutes() {
-        return 60*24;
+        return 60*24*7;
     }
 
     public String getHtml() {
