@@ -43,7 +43,7 @@ public class EhcacheProvider implements CacheProvider {
         //logger.debug("creating new Ehcache CacheManager by loading ehcache-objects.xml");
 
         //Configure the cache
-        CacheConfiguration cacheConfig = new CacheConfiguration(CACHENAME, 15000);
+        CacheConfiguration cacheConfig = new CacheConfiguration(CACHENAME, 100000);
         cacheConfig.timeToIdleSeconds(0);
         cacheConfig.timeToLiveSeconds(0);
         cacheConfig.eternal(true);
@@ -58,7 +58,7 @@ public class EhcacheProvider implements CacheProvider {
         if (isTerracottaClustered()){
             managerConfig.terracotta(new TerracottaClientConfiguration().url(InstanceProperties.getTerracottahost01()+":9510"));
         }
-        CacheConfiguration defaultCacheConfig = new CacheConfiguration("default", 15000);
+        CacheConfiguration defaultCacheConfig = new CacheConfiguration("default", 100000);
         defaultCacheConfig.timeToIdleSeconds(0);
         defaultCacheConfig.timeToLiveSeconds(0);
         defaultCacheConfig.eternal(true);
@@ -117,7 +117,7 @@ public class EhcacheProvider implements CacheProvider {
             if (cache!=null){
                 Element element = getCache().get("/"+group+"/"+key);
                 if (element!=null){
-                    return element.getValue();
+                    return element.getObjectValue();
                 } else {
                     logger.debug("Element is null");
                 }
