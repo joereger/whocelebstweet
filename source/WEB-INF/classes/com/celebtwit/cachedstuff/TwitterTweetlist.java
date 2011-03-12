@@ -71,7 +71,7 @@ public class TwitterTweetlist implements CachedStuff, Serializable {
                 insertAdCount++;
                 insertAdCountBig++;
                 //Small Ads
-                if (insertAdCount>=randomAdInsertionPoint && adsInserted<maxAdsPerPage){
+                if (1==2 && insertAdCount>=randomAdInsertionPoint && adsInserted<maxAdsPerPage){
                     adsInserted++;
                     insertAdCount = 0;
                     randomAdInsertionPoint = 2 + Num.randomInt(4);
@@ -79,7 +79,7 @@ public class TwitterTweetlist implements CachedStuff, Serializable {
                     //logger.debug("just added small Ad to TweetList");
                 }
                 //Big Ads
-                if (insertAdCountBig>=randomAdInsertionPointBig && adsInsertedBig<maxAdsPerPageBig){
+                if (1==2 && insertAdCountBig>=randomAdInsertionPointBig && adsInsertedBig<maxAdsPerPageBig){
                     adsInsertedBig++;
                     insertAdCountBig = 0;
                     randomAdInsertionPointBig = 2 + Num.randomInt(4);

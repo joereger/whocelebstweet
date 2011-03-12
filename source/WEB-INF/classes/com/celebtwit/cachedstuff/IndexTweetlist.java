@@ -61,9 +61,9 @@ public class IndexTweetlist implements CachedStuff, Serializable {
         for (Iterator<Twitpost> tpIt=twitposts.iterator(); tpIt.hasNext();) {
             Twitpost twitpost=tpIt.next();
             //Only insert ad if it's not the none adnetwork
-            if(!adnetworkname.equalsIgnoreCase(AdNetworkNone.ADNETWORKNAME)){
+            if(1==2 && !adnetworkname.equalsIgnoreCase(AdNetworkNone.ADNETWORKNAME)){
                 insertAdCount++;
-                if (insertAdCount>=randomAdInsertionPoint){
+                if (1==2 && insertAdCount>=randomAdInsertionPoint){
                     //insertAdCount = 0;
                     //randomAdInsertionPoint = Num.randomInt(10);
                     randomAdInsertionPoint = 10000;
