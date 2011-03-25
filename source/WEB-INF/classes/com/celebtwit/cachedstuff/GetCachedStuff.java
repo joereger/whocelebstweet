@@ -38,6 +38,7 @@ public class GetCachedStuff {
                 }
                 //Immediately return most recently refreshed
                 logger.debug("get() returning cachedCs");
+                //CacheLogger.log("CachedStuff", group, key, "immediately returning most recent", true);
                 return cachedCs;
             } else {
                 logger.debug("get() obj=null so refreshing before returning");
@@ -46,11 +47,13 @@ public class GetCachedStuff {
                 Date expirationdate = Time.xMinutesAgoEnd(Calendar.getInstance(), (-1)*cs.maxAgeInMinutes()).getTime();
                 DbcacheexpirableCache.put(key, group, cs, expirationdate);
                 logger.debug("get() returning cs (new/refreshed)");
+                //CacheLogger.log("CachedStuff", group, key, "returning refreshed", true);
                 return cs;
             }
         } catch (Exception ex){
             logger.error("", ex);
         }
+        //CacheLogger.log("CachedStuff", group, key, "returning from bottom", true);
         return cs;
     }
 

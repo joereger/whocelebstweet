@@ -5,6 +5,7 @@ import com.celebtwit.dao.*;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.dao.hibernate.NumFromUniqueResult;
 import com.celebtwit.helpers.TwitPlHelper;
+import com.celebtwit.systemprops.InstanceProperties;
 import com.celebtwit.systemprops.SystemProperty;
 import com.celebtwit.util.Num;
 import com.celebtwit.util.Time;
@@ -44,7 +45,7 @@ public class GetTwitterPosts implements StatefulJob {
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         Logger logger = Logger.getLogger(this.getClass().getName());
-        //if (InstanceProperties.getRunScheduledTasksOnThisInstance()){
+        if (InstanceProperties.getRunScheduledTasksOnThisInstance()){
             logger.debug("execute() GetTwitterPosts called");
             //If another trigger is running, don't run
 //            if (processRunning){
@@ -78,9 +79,9 @@ public class GetTwitterPosts implements StatefulJob {
                     logger.debug("skipping("+twit.getTwitterusername()+") because isProcessing()=true");
                 }
             }
-        //} else {
-        //    logger.debug("InstanceProperties.getRunScheduledTasksOnThisInstance() is FALSE for this instance so this task is not being executed.");
-        //}
+        } else {
+            logger.debug("InstanceProperties.getRunScheduledTasksOnThisInstance() is FALSE for this instance so this task is not being executed.");
+        }
         //Reset the processRunning thing so that others can run too
         //processRunning = false;
     }

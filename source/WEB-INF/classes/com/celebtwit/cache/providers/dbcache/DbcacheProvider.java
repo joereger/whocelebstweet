@@ -2,6 +2,7 @@ package com.celebtwit.cache.providers.dbcache;
 
 
 import com.celebtwit.cache.providers.CacheProvider;
+import com.celebtwit.cachedstuff.CacheLogger;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.dao.Dbcache;
 
@@ -40,11 +41,13 @@ public class DbcacheProvider implements CacheProvider {
                 dbcache.setAccesscount(dbcache.getAccesscount()+1);
                 //@todo performance: implement something like IAOC to cache these updates so that I don't have to call .save() on every request
                 dbcache.save();
+                CacheLogger.log("Dbcache", group, key, "", true);
                 return dbcache.getVal();
             }
         } catch (Exception ex){
             logger.error("", ex);
         }
+        CacheLogger.log("Dbcache", group, key, "returning null by default", false);
         return null;
     }
 

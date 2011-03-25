@@ -1,5 +1,6 @@
 package com.celebtwit.cache.html;
 
+import com.celebtwit.cachedstuff.CacheLogger;
 import com.celebtwit.dao.Dbcacheexpirable;
 import com.celebtwit.dao.hibernate.HibernateUtil;
 import com.celebtwit.util.Time;
@@ -45,13 +46,16 @@ public class DbcacheexpirableCache {
                     //Return null because it's expired
                     //Note that I'm no longer deleting... I'm letting the cleanup scheduled process do that
                     //dbcache.delete();
+                    CacheLogger.log("Dbcacheexpirable", group, key, "expired", false);
                     return null;
                 }
+                CacheLogger.log("Dbcacheexpirable", group, key, "", true);
                 return obj;
             }
         } catch (Exception ex){
             logger.error("", ex);
         }
+        CacheLogger.log("Dbcacheexpirable", group, key, "returning null by default", false);
         return null;
     }
 

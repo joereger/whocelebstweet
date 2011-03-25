@@ -2,6 +2,7 @@ package com.celebtwit.cache.providers.ehcache;
 
 import com.celebtwit.cache.providers.CacheProvider;
 import com.celebtwit.cache.providers.ehcache.KeyGroupRelationship;
+import com.celebtwit.cachedstuff.CacheLogger;
 import com.celebtwit.systemprops.InstanceProperties;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
@@ -109,6 +110,7 @@ public class EhcacheProvider implements CacheProvider {
             if (key==null || key.equals("")){
                 if (group==null || group.equals("")){
                     logger.debug("Empty key and group requested");
+                    CacheLogger.log("Ehcache", group, key, "empty key and group", false);
                     return null;
                 }
             }
@@ -117,16 +119,21 @@ public class EhcacheProvider implements CacheProvider {
             if (cache!=null){
                 Element element = getCache().get("/"+group+"/"+key);
                 if (element!=null){
+                    CacheLogger.log("Ehcache", group, key, "", true);
                     return element.getObjectValue();
                 } else {
+                    CacheLogger.log("Ehcache", group, key, "element is null from ehcache", false);
                     logger.debug("Element is null");
                 }
             } else {
+                CacheLogger.log("Ehcache", group, key, "cache is null", false);
                 logger.error("CACHE IS NULL");
             }
         }  catch (Exception e){
+            CacheLogger.log("Ehcache", group, key, "error getting from cacheManager", false);
             logger.error("Error getting from cacheManager", e);
         }
+        CacheLogger.log("Ehcache", group, key, "null by default", false);
         return null;
     }
 
