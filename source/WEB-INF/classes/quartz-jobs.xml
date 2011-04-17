@@ -339,7 +339,9 @@
             <job-name>findKeywordMentions</job-name>
             <job-group>surveyJobs</job-group>
             <!-- every 8 hours -->
-            <cron-expression>0 0 0/8 * * ?</cron-expression>
+            <!-- <cron-expression>0 0 0/8 * * ?</cron-expression> -->
+            <!-- every Fire at 6:15am on the 13th day of every month  -->
+            <cron-expression>0 13 6 15 * ?</cron-expression>
           </cron>
         </trigger>
     </job>
