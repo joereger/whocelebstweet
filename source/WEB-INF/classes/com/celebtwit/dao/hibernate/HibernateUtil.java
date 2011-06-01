@@ -14,8 +14,7 @@ import java.io.Serializable;
 import com.celebtwit.systemprops.InstanceProperties;
 import com.celebtwit.systemprops.WebAppRootDir;
 import com.celebtwit.startup.ApplicationStartup;
-
-import javax.naming.NamingException;
+import org.infinispan.manager.DefaultCacheManager;
 
 public class HibernateUtil {
 
@@ -62,20 +61,31 @@ public class HibernateUtil {
                     conf.setProperty("hibernate.c3p0.timeout", String.valueOf(InstanceProperties.getDbMaxWait()));
                     conf.setProperty("hibernate.c3p0.max_statements", "50");
 
-
-                    //Second level cache
+                    //Infinispan Second Level Cache
                     conf.setProperty("hibernate.cache.use_second_level_cache", "true");
                     conf.setProperty("hibernate.cache.use_query_cache", "true");
-                    conf.setProperty("hibernate.cache.region.factory_class", "net.sf.ehcache.hibernate.EhCacheRegionFactory");
-                    String ehcacheHibernateConfigFile = "/ehcache-hibernate.xml";
-                    String ehcacheHibernateConfigFilePlusPath = WebAppRootDir.getWebAppRootPath() + "WEB-INF/classes"+ehcacheHibernateConfigFile;
-                    TerracottaServerConfigFileUpdate.updateFile(ehcacheHibernateConfigFilePlusPath);
-                    //String previousValue = System.setProperty("tcserver01", "localhost"); //set host to ${tcserver01} to have it replaced with this value
-                    conf.setProperty("net.sf.ehcache.configurationResourceName", ehcacheHibernateConfigFile);
+                    conf.setProperty("hibernate.cache.region.factory_class", "org.hibernate.cache.infinispan.InfinispanRegionFactory");
+                    if (InstanceProperties.getInfinispanconfigfilehibernate()!=null && !InstanceProperties.getInfinispanconfigfilehibernate().equals("")){
+                        conf.setProperty("hibernate.cache.infinispan.cfg", InstanceProperties.getInfinispanconfigfilehibernate());
+                    } else {
+                        conf.setProperty("hibernate.cache.infinispan.cfg", "infinispan-cache4hibernate.xml");
+                    }
 
 
 
-                    //Old Second level cache config
+                    //Old Terracotta Second level cache
+                    //conf.setProperty("hibernate.cache.use_second_level_cache", "true");
+                    //conf.setProperty("hibernate.cache.use_query_cache", "true");
+                    //conf.setProperty("hibernate.cache.region.factory_class", "net.sf.ehcache.hibernate.EhCacheRegionFactory");
+                    //String ehcacheHibernateConfigFile = "/ehcache-hibernate.xml";
+                    //String ehcacheHibernateConfigFilePlusPath = WebAppRootDir.getWebAppRootPath() + "WEB-INF/classes"+ehcacheHibernateConfigFile;
+                    //TerracottaServerConfigFileUpdate.updateFile(ehcacheHibernateConfigFilePlusPath);
+                    ////String previousValue = System.setProperty("tcserver01", "localhost"); //set host to ${tcserver01} to have it replaced with this value
+                    //conf.setProperty("net.sf.ehcache.configurationResourceName", ehcacheHibernateConfigFile);
+
+
+
+                    //Old JbosCache Second level cache config
                     //conf.setProperty("hibernate.cache.provider_class", "org.hibernate.cache.TreeCacheProvider");
                     //conf.setProperty("hibernate.cache.use_structured_entries", "true");
                     //conf.setProperty("hibernate.cache.use_query_cache", "true");
