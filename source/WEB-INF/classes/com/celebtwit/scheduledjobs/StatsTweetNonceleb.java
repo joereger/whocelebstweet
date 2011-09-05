@@ -36,20 +36,19 @@ public class StatsTweetNonceleb implements StatefulJob {
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         Logger logger = Logger.getLogger(this.getClass().getName());
         if (InstanceProperties.getRunScheduledTasksOnThisInstance()){
-            //Turned off for now, stupid rules
-            if (1==2){
-                logger.debug("execute() StatsTweetNonceleb called");
+            //Hack to turn off
+            if (true){return;}
+            logger.debug("execute() StatsTweetNonceleb called");
 
-                //List pls
-                List<Pl> pls = HibernateUtil.getSession().createCriteria(Pl.class)
-                                       .add(Restrictions.ne("twitteraccesstoken", ""))
-                                       .addOrder(Order.asc("plid"))
-                                       .setCacheable(true)
-                                       .list();
-                for (Iterator<Pl> iterator=pls.iterator(); iterator.hasNext();) {
-                    Pl pl=iterator.next();
-                    processPl(pl);
-                }
+            //List pls
+            List<Pl> pls = HibernateUtil.getSession().createCriteria(Pl.class)
+                                   .add(Restrictions.ne("twitteraccesstoken", ""))
+                                   .addOrder(Order.asc("plid"))
+                                   .setCacheable(true)
+                                   .list();
+            for (Iterator<Pl> iterator=pls.iterator(); iterator.hasNext();) {
+                Pl pl=iterator.next();
+                processPl(pl);
             }
         } else {
             logger.debug("InstanceProperties.getRunScheduledTasksOnThisInstance() is FALSE for this instance so this task is not being executed.");

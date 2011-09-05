@@ -74,7 +74,7 @@ public class CelebsWhoTweetedTwit implements CachedStuff, Serializable {
     }
 
     public int maxAgeInMinutes() {
-        return 60*24;
+        return 60*24*3;
     }
 
     public String getHtml() {

@@ -271,7 +271,8 @@
             <!-- every X mins -->
             <!--<cron-expression>0 0/15 * * * ?</cron-expression>-->
             <!-- on 40th minute at specified hours -->
-            <cron-expression>0 40 0,12 * * ?</cron-expression>
+            <!-- 5,8 is 1am and 4am EST because of Amazon machine times -->
+            <cron-expression>0 40 5,8 * * ?</cron-expression>
           </cron>
         </trigger>
     </job>

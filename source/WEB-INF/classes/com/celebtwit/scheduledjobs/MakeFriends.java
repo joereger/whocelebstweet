@@ -30,6 +30,8 @@ public class MakeFriends implements StatefulJob {
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         Logger logger = Logger.getLogger(this.getClass().getName());
+        //Hack to turn off
+        if (true){return;}
         if (InstanceProperties.getRunScheduledTasksOnThisInstance()){
             logger.debug("execute() MakeFriends called");
 

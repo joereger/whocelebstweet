@@ -79,7 +79,7 @@ public class Chatter implements CachedStuff, Serializable {
     }
 
     public int maxAgeInMinutes() {
-        return 60*24*7;
+        return 60*24*14;
     }
 
     public String getHtml() {

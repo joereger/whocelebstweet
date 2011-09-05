@@ -100,7 +100,7 @@ public class TwitterTweetlist implements CachedStuff, Serializable {
     }
 
     public int maxAgeInMinutes() {
-        return 60;
+        return 60*24;
     }
 
     public String getHtml() {
