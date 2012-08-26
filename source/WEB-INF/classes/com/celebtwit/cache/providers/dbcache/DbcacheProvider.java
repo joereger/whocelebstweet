@@ -37,10 +37,12 @@ public class DbcacheProvider implements CacheProvider {
                                                .list();
             if (dbcaches!=null && dbcaches.size()>0){
                 Dbcache dbcache = dbcaches.get(0);
-                dbcache.setDatelastaccessed(new Date());
-                dbcache.setAccesscount(dbcache.getAccesscount()+1);
+                //Note that this is disabled so that the cache doesn't have to write a database save on every request
+                //Turns out I haven't actually ever used these stats for anything... doi
+                //dbcache.setDatelastaccessed(new Date());
+                //dbcache.setAccesscount(dbcache.getAccesscount()+1);
                 //@todo performance: implement something like IAOC to cache these updates so that I don't have to call .save() on every request
-                dbcache.save();
+                //dbcache.save();
                 CacheLogger.log("Dbcache", group, key, "", true);
                 return dbcache.getVal();
             }
